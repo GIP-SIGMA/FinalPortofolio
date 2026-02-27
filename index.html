@@ -163,6 +163,10 @@
     <div class="container mx-auto px-4 sm:px-6 py-4">
         <div class="flex items-center justify-between">
             <div class="text-2xl sm:text-3xl font-extrabold gradient-text tracking-tight">Ghifari Atallah</div>
+            <div class="flex items-center space-x-3 ml-4">
+                <button id="lang-en" class="px-3 py-1 text-sm rounded-lg bg-white/20 hover:bg-cyan-500/40 transition">EN</button>
+                <button id="lang-id" class="px-3 py-1 text-sm rounded-lg bg-white/20 hover:bg-cyan-500/40 transition">ID</button>
+            </div>
             
             <div class="hidden md:flex space-x-10">
                 <a href="#home" class="relative text-lg font-medium hover:text-cyan-400 transition duration-300">Home</a>
@@ -205,8 +209,12 @@
     <section id="home" class="h-screen flex items-center justify-center relative overflow-hidden">
         <div id="canvas-container" class="absolute inset-0 z-0"></div>
         <div class="container mx-auto px-4 sm:px-6 z-10 text-center">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 gradient-text">Welcome</h1>
-            <p class="text-lg sm:text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">Heyy Let's See!!</p>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 gradient-text"
+                data-en="Welcome"
+                data-id="Selamat Datang">Welcome</h1>
+            <p class="text-lg sm:text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto"
+                data-en="Heyy Let's See!!"
+                data-id="Yuk Lihat Portofolio Gue">Heyy Let's See!!</p>
             
         </div>
     </section>
@@ -214,7 +222,9 @@
     <!-- About Section -->
    <section id="about" class="py-24 bg-transparent relative overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 relative z-10">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text">About Me</h2>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
+            data-en="About Me"
+            data-id="Tentang Saya">About Me</h2>
         <div class="max-w-5xl mx-auto">
             <!-- Background Particle Canvas -->
             <div id="about-particles" class="absolute inset-0 z-0 opacity-40"></div>
@@ -288,7 +298,9 @@
     <!-- Projects Section -->
     <section id="projects" class="py-24 bg-transparent">
         <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text">My Projects</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
+                data-en="My Projects"
+                data-id="Proyek Saya">My Projects</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project Card 1 -->
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
@@ -350,7 +362,9 @@
     <!-- Experience Section -->
     <section id="experience" class="py-24 bg-transparent relative">
         <div class="container mx-auto px-4 sm:px-6">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text">My Journey</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
+                data-en="My Journey"
+                data-id="Perjalanan Saya">My Journey</h2>
             <div class="max-w-5xl mx-auto relative">
                 <div class="progress-bar rounded-full"></div>
                 <div class="relative">
@@ -480,7 +494,9 @@
         </div>
     <section id="contact" class="py-24 bg-transparent relative overflow-hidden">
     <div class="container mx-auto px-4 sm:px-6 z-10">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text">Get in Touch</h2>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
+            data-en="Get in Touch"
+            data-id="Hubungi Saya">Get in Touch</h2>
         <div class="text-center mb-12 relative">
             <p class="text-lg sm:text-xl text-gray-200 mb-6 relative z-10">Saya terbuka untuk proyek baru, kolaborasi, atau hanya sekadar mengobrol tentang teknologi dan kreativitas. Silakan hubungi saya melalui formulir ini atau melalui media sosial.</p>
             <div class="flex justify-center space-x-6 mt-6 relative z-10">
@@ -675,4 +691,24 @@
         });
 
         animate();
+    // Language Switch System
+    const langButtons = {
+        en: document.getElementById('lang-en'),
+        id: document.getElementById('lang-id')
+    };
+
+    function setLanguage(lang) {
+        document.querySelectorAll('[data-en]').forEach(el => {
+            el.innerText = el.getAttribute(`data-${lang}`);
+        });
+        localStorage.setItem('portfolio-lang', lang);
+    }
+
+    // Button events
+    langButtons.en.addEventListener('click', () => setLanguage('en'));
+    langButtons.id.addEventListener('click', () => setLanguage('id'));
+
+    // Load saved language
+    const savedLang = localStorage.getItem('portfolio-lang') || 'en';
+    setLanguage(savedLang);
     </script>
