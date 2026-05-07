@@ -53,19 +53,7 @@
             transform: translateY(-8px);
         }
 
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.4s ease;
-        }
+       
 
         .timeline-item {
             opacity: 0;
@@ -312,13 +300,7 @@
             color: #ffffff;
         }
 
-        /* Light mode: loading screen */
-        body.light-mode #loading-screen {
-            background: rgba(240, 245, 255, 0.95);
-        }
-        body.light-mode #loading-screen .gradient-text {
-            -webkit-text-fill-color: transparent;
-        }
+       
 
         /* Light mode: floating controls */
         body.light-mode .floating-controls-group {
@@ -447,13 +429,6 @@
     <!-- FULL PAGE 3D BACKGROUND -->
     <div id="full-canvas-bg"></div>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="text-xl sm:text-3xl gradient-text flex items-center space-x-2">
-            <i class="fas fa-spinner fa-spin"></i>
-            <span data-en="Loading Portfolio..." data-id="Memuat Portofolio...">Loading Portfolio...</span>
-        </div>
-    </div>
 
     <!-- Navbar -->
     <nav class="fixed w-full z-50 bg-white/10 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
@@ -1148,18 +1123,6 @@
         gsap.to('.progress-bar', {
             scrollTrigger: { trigger: '#experience', start: 'top 80%', end: 'bottom 20%', scrub: 0.5 },
             height: '100%'
-        });
-
-        // ========== LOADING SCREEN ==========
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                gsap.to('#loading-screen', {
-                    opacity: 0,
-                    duration: 0.4,
-                    onComplete: () => document.getElementById('loading-screen').style.display =
-                        'none'
-                });
-            }, 600);
         });
     </script>
 </body>
