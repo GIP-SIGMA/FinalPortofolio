@@ -269,149 +269,10 @@
         section { scroll-margin-top: 80px; }
 
         /* ══════════════════════════════════════════
-           JOURNEY PHOTO CARDS
+           JOURNEY GALLERY — FOLDER + MODAL SYSTEM
         ══════════════════════════════════════════ */
-        .photo-scroll-wrap {
-            overflow-x: auto;
-            padding-bottom: 1.5rem;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(78,205,196,0.4) transparent;
-        }
-        .photo-scroll-wrap::-webkit-scrollbar { height: 4px; }
-        .photo-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
-        .photo-scroll-wrap::-webkit-scrollbar-thumb {
-            background: rgba(78,205,196,0.45);
-            border-radius: 99px;
-        }
 
-        .photo-row {
-            display: flex;
-            gap: 1.5rem;
-            width: max-content;
-            padding: 1.5rem 0.5rem 0.5rem;
-            align-items: flex-start;
-        }
-
-        .photo-card {
-            flex-shrink: 0;
-            width: 200px;
-            background: rgba(255,255,255,0.10);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
-            transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s ease;
-            cursor: default;
-            position: relative;
-        }
-        .photo-card:hover {
-            transform: rotate(0deg) translateY(-10px) scale(1.04) !important;
-            box-shadow: 0 24px 50px rgba(78,205,196,0.22), 0 8px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.22);
-            z-index: 10;
-        }
-
-        .photo-card .photo-img-wrap {
-            width: 100%;
-            height: 150px;
-            overflow: hidden;
-            position: relative;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        }
-        .photo-card .photo-img-wrap img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-            display: block;
-        }
-        .photo-card:hover .photo-img-wrap img { transform: scale(1.08); }
-
-        .photo-card .photo-placeholder {
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: rgba(255,255,255,0.35);
-            font-size: 0.7rem;
-            text-align: center;
-            padding: 0.5rem;
-        }
-        .photo-card .photo-placeholder i { font-size: 2rem; opacity: 0.35; }
-
-        .photo-card .photo-img-wrap::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%);
-            pointer-events: none;
-        }
-
-        .photo-card .photo-info { padding: 0.75rem 0.85rem 0.9rem; }
-
-        .photo-card .photo-title {
-            font-size: 0.78rem;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 0.45rem;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .photo-card .photo-meta { display: flex; flex-direction: column; gap: 0.2rem; }
-
-        .photo-card .photo-loc,
-        .photo-card .photo-date {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            font-size: 0.68rem;
-            color: rgba(203,213,225,0.85);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .photo-card .photo-loc i,
-        .photo-card .photo-date i {
-            color: #4ECDC4;
-            font-size: 0.62rem;
-            flex-shrink: 0;
-        }
-
-        .photo-card::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 32px; height: 32px;
-            background: linear-gradient(225deg, rgba(78,205,196,0.25), transparent 70%);
-            border-radius: 0 16px 0 0;
-            pointer-events: none;
-        }
-
-        /* Light mode – photo cards */
-        body.light-mode .photo-card {
-            background: rgba(255,255,255,0.78);
-            border-color: rgba(0,0,0,0.1);
-            box-shadow: 0 8px 28px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9);
-        }
-        body.light-mode .photo-card:hover {
-            box-shadow: 0 24px 50px rgba(31,138,130,0.18), 0 8px 20px rgba(0,0,0,0.12) !important;
-        }
-        body.light-mode .photo-card .photo-loc,
-        body.light-mode .photo-card .photo-date { color: #334155 !important; }
-        body.light-mode .photo-scroll-wrap {
-            scrollbar-color: rgba(31,138,130,0.4) transparent;
-        }
-        body.light-mode .photo-card .photo-placeholder { color: rgba(15,23,42,0.35); }
-
-        /* Journey Moments section heading underline */
+        /* Section heading underline */
         .journey-photos-section h3.section-sub { position: relative; display: inline-block; }
         .journey-photos-section h3.section-sub::after {
             content: '';
@@ -424,52 +285,352 @@
             opacity: 0.6;
         }
 
-        /* + Add photo card */
-        .photo-card-add {
-            flex-shrink: 0;
-            width: 200px;
-            height: 264px;
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 2px dashed rgba(78,205,196,0.35);
-            border-radius: 16px;
+        /* ── Folder tabs ── */
+        .jg-tabs {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 0.6rem;
-            color: rgba(78,205,196,0.6);
-            font-size: 0.72rem;
-            transition: all 0.3s ease;
+            margin-bottom: 1.75rem;
+        }
+        .jg-tab {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 20px;
+            border-radius: 99px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(203,213,225,0.85);
+            transition: all 0.25s ease;
         }
-        .photo-card-add:hover {
-            border-color: rgba(78,205,196,0.7);
-            background: rgba(78,205,196,0.07);
-            color: rgba(78,205,196,0.9);
-            transform: translateY(-4px);
+        .jg-tab:hover {
+            background: rgba(78,205,196,0.12);
+            border-color: rgba(78,205,196,0.4);
+            color: #4ECDC4;
         }
-        .photo-card-add i { font-size: 1.8rem; }
-        body.light-mode .photo-card-add {
-            border-color: rgba(31,138,130,0.35);
-            color: rgba(31,138,130,0.6);
+        .jg-tab.active {
+            background: linear-gradient(135deg, rgba(255,107,107,0.18), rgba(78,205,196,0.18));
+            border-color: rgba(78,205,196,0.55);
+            color: #4ECDC4;
+            box-shadow: 0 0 18px rgba(78,205,196,0.15);
+        }
+        .jg-tab i { font-size: 15px; }
+        .jg-count {
+            font-size: 10px;
+            font-weight: 700;
+            background: rgba(78,205,196,0.18);
+            color: #4ECDC4;
+            padding: 2px 8px;
+            border-radius: 99px;
+            letter-spacing: 0.02em;
         }
 
-        /* GSAP entrance for photo cards */
-        .photo-card, .photo-card-add {
+        /* light mode tabs */
+        body.light-mode .jg-tab {
+            background: rgba(255,255,255,0.7);
+            border-color: rgba(0,0,0,0.1);
+            color: #334155;
+        }
+        body.light-mode .jg-tab:hover {
+            background: rgba(31,138,130,0.1);
+            border-color: rgba(31,138,130,0.4);
+            color: #1f8a82;
+        }
+        body.light-mode .jg-tab.active {
+            background: linear-gradient(135deg, rgba(217,64,64,0.1), rgba(31,138,130,0.1));
+            border-color: rgba(31,138,130,0.5);
+            color: #1f8a82;
+        }
+        body.light-mode .jg-count {
+            background: rgba(31,138,130,0.12);
+            color: #1f8a82;
+        }
+
+        /* ── Folder panels ── */
+        .jg-panel { display: none; }
+        .jg-panel.active { display: block; }
+
+        .jg-folder-desc {
+            font-size: 13px;
+            color: rgba(148,163,184,0.8);
+            text-align: center;
+            margin-bottom: 1.25rem;
+            letter-spacing: 0.01em;
+        }
+        body.light-mode .jg-folder-desc { color: #64748b; }
+
+        /* ── Photo grid ── */
+        .jg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+            gap: 16px;
+        }
+
+        /* ── Photo card ── */
+        .jg-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+            cursor: pointer;
+            position: relative;
             opacity: 0;
-            transform: translateY(24px) rotate(var(--card-tilt, 0deg));
+            transform: translateY(28px);
+            transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s ease, border-color 0.25s ease;
         }
-        .photo-card.photo-visible {
-            opacity: 1;
-            transform: translateY(0) rotate(var(--card-tilt, 0deg));
-            transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.35s ease;
-        }
-        .photo-card-add.photo-visible {
+        .jg-card.jg-visible {
             opacity: 1;
             transform: translateY(0);
-            transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s, box-shadow 0.35s ease;
+        }
+        .jg-card:hover {
+            transform: translateY(-10px) scale(1.03) !important;
+            border-color: rgba(78,205,196,0.5);
+            box-shadow: 0 24px 50px rgba(78,205,196,0.2), 0 8px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+            z-index: 5;
+        }
+        .jg-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 36px; height: 36px;
+            background: linear-gradient(225deg, rgba(78,205,196,0.22), transparent 70%);
+            border-radius: 0 18px 0 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body.light-mode .jg-card {
+            background: rgba(255,255,255,0.82);
+            border-color: rgba(0,0,0,0.09);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.95);
+        }
+        body.light-mode .jg-card:hover {
+            border-color: rgba(31,138,130,0.45);
+            box-shadow: 0 24px 50px rgba(31,138,130,0.15), 0 8px 20px rgba(0,0,0,0.1) !important;
+        }
+
+        /* ── Card image ── */
+        .jg-img-wrap {
+            width: 100%;
+            height: 148px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+        }
+        .jg-img-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .jg-card:hover .jg-img-wrap img { transform: scale(1.09); }
+        .jg-img-wrap::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%);
+            pointer-events: none;
+        }
+        .jg-placeholder {
+            position: absolute; inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.68rem;
+            text-align: center; padding: 0.75rem;
+        }
+        .jg-placeholder i { font-size: 2rem; opacity: 0.3; }
+        body.light-mode .jg-placeholder { color: rgba(15,23,42,0.3); }
+
+        /* ── Card info ── */
+        .jg-info { padding: 0.75rem 0.9rem 0.95rem; }
+        .jg-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.4rem;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .jg-meta { display: flex; flex-direction: column; gap: 0.2rem; }
+        .jg-loc, .jg-date {
+            display: flex; align-items: center; gap: 0.35rem;
+            font-size: 0.68rem; color: rgba(203,213,225,0.85);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .jg-loc i, .jg-date i { color: #4ECDC4; font-size: 0.62rem; flex-shrink: 0; }
+        body.light-mode .jg-loc,
+        body.light-mode .jg-date { color: #475569; }
+        body.light-mode .jg-loc i,
+        body.light-mode .jg-date i { color: #1f8a82; }
+
+        /* ── Empty state ── */
+        .jg-empty {
+            padding: 3rem 1rem;
+            text-align: center;
+            border: 2px dashed rgba(78,205,196,0.2);
+            border-radius: 18px;
+            color: rgba(148,163,184,0.6);
+            font-size: 13px;
+        }
+        .jg-empty i { font-size: 2.5rem; display: block; margin: 0 auto 0.75rem; opacity: 0.25; }
+        body.light-mode .jg-empty { border-color: rgba(31,138,130,0.2); color: #94a3b8; }
+
+        /* ══════════════════════════════════════════
+           MODAL
+        ══════════════════════════════════════════ */
+        .jg-modal-backdrop {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.82);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 9998;
+            display: none;
+            align-items: center; justify-content: center;
+            padding: 1rem;
+        }
+        .jg-modal-backdrop.open { display: flex; }
+
+        .jg-modal {
+            background: rgba(15,23,42,0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 22px;
+            width: min(640px, 96vw);
+            max-height: 92vh;
+            overflow: auto;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+            animation: modalIn 0.3s cubic-bezier(.34,1.56,.64,1);
+        }
+        @keyframes modalIn {
+            from { opacity:0; transform:scale(0.92) translateY(20px); }
+            to   { opacity:1; transform:scale(1)    translateY(0); }
+        }
+
+        body.light-mode .jg-modal {
+            background: rgba(248,250,252,0.97);
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 32px 80px rgba(0,0,0,0.2);
+        }
+
+        .jg-modal-img {
+            width: 100%; aspect-ratio: 16/9;
+            background: #0f172a;
+            position: relative; overflow: hidden;
+            border-radius: 22px 22px 0 0;
+        }
+        .jg-modal-img img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+        }
+        .jg-modal-img .jg-placeholder {
+            border-radius: 22px 22px 0 0;
+        }
+
+        .jg-modal-body { padding: 1.5rem; }
+
+        .jg-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.85rem;
+            gap: 0.75rem;
+        }
+        .jg-modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        body.light-mode .jg-modal-title {
+            background: linear-gradient(45deg, #d94040, #1f8a82);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .jg-modal-close {
+            flex-shrink: 0;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            color: rgba(203,213,225,0.8);
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        .jg-modal-close:hover {
+            background: rgba(255,107,107,0.2);
+            border-color: rgba(255,107,107,0.4);
+            color: #FF6B6B;
+        }
+        body.light-mode .jg-modal-close {
+            background: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.1);
+            color: #64748b;
+        }
+        body.light-mode .jg-modal-close:hover { background: rgba(217,64,64,0.1); }
+
+        .jg-modal-desc {
+            font-size: 14px;
+            color: rgba(203,213,225,0.8);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        body.light-mode .jg-modal-desc { color: #475569; }
+
+        .jg-modal-meta {
+            display: flex; gap: 1.25rem; flex-wrap: wrap;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        body.light-mode .jg-modal-meta { border-color: rgba(0,0,0,0.08); }
+        .jg-modal-meta span {
+            font-size: 13px;
+            color: rgba(148,163,184,0.9);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .jg-modal-meta i { color: #4ECDC4; font-size: 13px; }
+        body.light-mode .jg-modal-meta span { color: #475569; }
+        body.light-mode .jg-modal-meta i { color: #1f8a82; }
+
+        /* folder badge inside modal */
+        .jg-modal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 99px;
+            background: rgba(78,205,196,0.12);
+            border: 1px solid rgba(78,205,196,0.3);
+            color: #4ECDC4;
+            margin-bottom: 0.6rem;
+        }
+        body.light-mode .jg-modal-badge {
+            background: rgba(31,138,130,0.1);
+            border-color: rgba(31,138,130,0.3);
+            color: #1f8a82;
         }
     </style>
 </head>
@@ -588,42 +749,42 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="Screenshot%202026-02-23%20at%2007.34.58.png" alt="Planning Digital Content" data-en-alt="Planning Digital Content" data-id-alt="Perencanaan Konten Digital" class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="Screenshot%202026-02-23%20at%2007.34.58.png" alt="Planning Digital Content" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Planning Digital Content" data-id="Perencanaan Konten Digital">Planning Digital Content</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts. It is designed to attract interest in a company's products or services by capturing attention." data-id="Pemasaran konten berfokus pada pembuatan dan pembagian materi online seperti video, blog, dan postingan media sosial. Strategi ini dirancang untuk menarik minat terhadap produk atau layanan perusahaan dengan menangkap perhatian audiens.">Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts. It is designed to attract interest in a company's products or services by capturing attention.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts. It is designed to attract interest in a company's products or services by capturing attention." data-id="Pemasaran konten berfokus pada pembuatan dan pembagian materi online seperti video, blog, dan postingan media sosial. Strategi ini dirancang untuk menarik minat terhadap produk atau layanan perusahaan dengan menangkap perhatian audiens.">Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="Screenshot%202026-02-17%20at%2013.51.15.png" alt="USP Data Collection" data-en-alt="USP Data Collection" data-id-alt="Pengumpulan Data USP" class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="Screenshot%202026-02-17%20at%2013.51.15.png" alt="USP Data Collection" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="USP Data Collection" data-id="Pengumpulan Data USP">USP Data Collection</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience." data-id="Marketplace online untuk elektronik, peralatan rumah tangga, dan perlengkapan kantor yang dirancang untuk pengalaman pengguna yang mulus.">An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience." data-id="Marketplace online untuk elektronik, peralatan rumah tangga, dan perlengkapan kantor yang dirancang untuk pengalaman pengguna yang mulus.">An online marketplace for electronics, household appliances, and office equipment.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="Screenshot%202026-02-17%20at%2013.44.55.png" alt="Values Data CSIT" data-en-alt="Values Data CSIT" data-id-alt="Nilai Data CSIT" class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="Screenshot%202026-02-17%20at%2013.44.55.png" alt="Values Data CSIT" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Values Data CSIT" data-id="Nilai Data CSIT">Values Data CSIT</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I created data values for a Japanese company, Azurite.jp, where I matched around 70 database records using Firebase and Google Analytics." data-id="Saya membuat nilai data untuk perusahaan Jepang bernama Azurite.jp, dengan mencocokkan sekitar 70 data database menggunakan Firebase dan Google Analytics.">I created data values for a Japanese company, Azurite.jp, where I matched around 70 database records using Firebase and Google Analytics.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I created data values for a Japanese company, Azurite.jp, where I matched around 70 database records using Firebase and Google Analytics." data-id="Saya membuat nilai data untuk perusahaan Jepang bernama Azurite.jp, dengan mencocokkan sekitar 70 data database menggunakan Firebase dan Google Analytics.">I created data values for Azurite.jp matching ~70 records using Firebase and Google Analytics.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="image.png" alt="Library Web Project" data-en-alt="Web Project" data-id-alt="Proyek Website" class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="image.png" alt="Library Web Project" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Library Web" data-id="Web Perpustakaan">Web Project</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="We built this website using React.js, Express, and Node.js. The project took more than two months due to limited API availability, and we used Supabase as the database." data-id="Kami membangun website ini menggunakan React.js, Express, dan Node.js. Proyek ini memakan waktu lebih dari dua bulan karena keterbatasan API, dan kami menggunakan Supabase sebagai database.">We built this website using React.js, Express, and Node.js. The project took more than two months due to limited API availability, and we used Supabase as the database.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="We built this website using React.js, Express, and Node.js. The project took more than two months due to limited API availability, and we used Supabase as the database." data-id="Kami membangun website ini menggunakan React.js, Express, dan Node.js. Proyek ini memakan waktu lebih dari dua bulan karena keterbatasan API, dan kami menggunakan Supabase sebagai database.">Built with React.js, Express, and Node.js. Used Supabase as the database.</p>
                     </div>
                 </div>
             </div>
@@ -645,7 +806,7 @@
                             <div>
                                 <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en=" IDN Boarding School" data-id="IDN Boarding School"> IDN Boarding School</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="Vocational High School | July 2024 - June 2027" data-id="SMK | Juli 2024 - Juni 2027">Vocational High School | July 2024 - June 2027</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS. Beyond the technical aspects, I also delved into design principles through Figma and Canva, which allowed me to comprehensively integrate code functionality with visual aesthetics." data-id="Saya mengawali karier di bidang Software Engineering dengan membangun fondasi yang kuat pada pengembangan front-end menggunakan HTML dan CSS. Selain aspek teknis, saya juga mendalami prinsip desain melalui Figma dan Canva, yang memungkinkan saya untuk mengintegrasikan fungsionalitas kode dengan estetika visual secara komprehensif.">I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS. Beyond the technical aspects, I also delved into design principles through Figma and Canva, which allowed me to comprehensively integrate code functionality with visual aesthetics.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS. Beyond the technical aspects, I also delved into design principles through Figma and Canva, which allowed me to comprehensively integrate code functionality with visual aesthetics." data-id="Saya mengawali karier di bidang Software Engineering dengan membangun fondasi yang kuat pada pengembangan front-end menggunakan HTML dan CSS. Selain aspek teknis, saya juga mendalami prinsip desain melalui Figma dan Canva, yang memungkinkan saya untuk mengintegrasikan fungsionalitas kode dengan estetika visual secara komprehensif.">I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS.</p>
                             </div>
                         </div>
                     </div>
@@ -656,7 +817,7 @@
                             <div>
                                 <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="First Laravel Project" data-id="Proyek Laravel Pertama">First Laravel Project</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="October 2024" data-id="Oktober 2024">October 2024</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed my first CRUD application using Laravel. This project introduced me to MVC concepts, user authentication, and basic data management." data-id="Menyelesaikan proyek aplikasi CRUD pertama saya menggunakan Laravel. Proyek ini mengenalkan saya pada konsep MVC, autentikasi pengguna, dan manajemen data sederhana.">Completed my first CRUD application using Laravel. This project introduced me to MVC concepts, user authentication, and basic data management.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed my first CRUD application using Laravel. This project introduced me to MVC concepts, user authentication, and basic data management." data-id="Menyelesaikan proyek aplikasi CRUD pertama saya menggunakan Laravel. Proyek ini mengenalkan saya pada konsep MVC, autentikasi pengguna, dan manajemen data sederhana.">Completed my first CRUD application using Laravel. This project introduced me to MVC concepts.</p>
                             </div>
                         </div>
                     </div>
@@ -667,7 +828,7 @@
                             <div>
                                 <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="Tangguh Program" data-id="Program Tangguh"> Tangguh Program</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="January 2025" data-id="Januari 2025">January 2025</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Participating in the IDN Tangguh program in Kediri, an intensive one-week training program designed to test resilience and independence. In this program, I successfully completed challenges involving independent financial management and meeting economic targets through tactical job search strategies to independently fund travel expenses." data-id="Berpartisipasi dalam program IDN Tangguh di Kediri, sebuah pelatihan intensif selama satu minggu yang dirancang untuk menguji ketahanan dan kemandirian. Dalam program ini, saya berhasil menyelesaikan tantangan berupa manajemen keuangan mandiri dan pemenuhan target ekonomi melalui strategi pencarian kerja taktis guna mendanai biaya operasional perjalanan secara mandiri.">Participating in the IDN Tangguh program in Kediri, an intensive one-week training program designed to test resilience and independence. In this program, I successfully completed challenges involving independent financial management and meeting economic targets through tactical job search strategies to independently fund travel expenses.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Participating in the IDN Tangguh program in Kediri, an intensive one-week training program designed to test resilience and independence." data-id="Berpartisipasi dalam program IDN Tangguh di Kediri, sebuah pelatihan intensif selama satu minggu yang dirancang untuk menguji ketahanan dan kemandirian.">Participating in the IDN Tangguh program in Kediri, an intensive one-week training program.</p>
                             </div>
                         </div>
                     </div>
@@ -678,7 +839,7 @@
                             <div>
                                 <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="UMKM Project" data-id="Proyek UMKM">UMKM Project</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="May 2025" data-id="Mei 2025">May 2025</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Through the UMKM Project program, I was entrusted with banner creation for a local MSME. During this week-long intensive program, I improved my interpersonal communication skills with clients and learned design skills—both executing specific briefs and independently creating creative concepts to strengthen their brand identities." data-id="Melalui program UMKM Proyek, saya dipercaya untuk menangani pembuatan banner bagi UMKM lokal. Dalam kegiatan intensif selama satu minggu ini, saya mengasah kemampuan komunikasi interpersonal dengan klien dan fleksibilitas dalam mendesain—baik dalam mengeksekusi brief spesifik maupun menciptakan konsep kreatif secara mandiri untuk memperkuat identitas merek mereka.">Through the IDN Pro Bono program, I was entrusted with banner creation for a local MSME. During this week-long intensive program, I improved my interpersonal communication skills with clients and learned design skills—both executing specific briefs and independently creating creative concepts to strengthen their brand identities.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Through the UMKM Project program, I was entrusted with banner creation for a local MSME." data-id="Melalui program UMKM Proyek, saya dipercaya untuk menangani pembuatan banner bagi UMKM lokal.">Through the UMKM Project program, I was entrusted with banner creation for a local MSME.</p>
                             </div>
                         </div>
                     </div>
@@ -689,7 +850,7 @@
                             <div>
                                 <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="Live In Lombok" data-id="Live In Lombok"> Live In Lombok</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="February 2026" data-id="Februari 2026">February 2026</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I participated in a week-long 'Live-In' program in Lombok, a school initiative designed to foster independence and professional ethics through real-world work experience. For five consecutive days, I was employed at a professional car wash facility in Mataram. The income generated from this labor was utilized to self-fund my expenses for the remainder of the trip. The program concluded with an educational tour of Lombok's natural and cultural landmarks. This experience was highly impactful, as it allowed me to develop a strong work ethic, practical field skills, and a deeper understanding of financial responsibility in a professional environment." data-id="Saya berpartisipasi dalam program Live-In selama satu minggu di Lombok, sebuah kegiatan sekolah yang dirancang untuk melatih kemandirian dan profesionalisme melalui pengalaman kerja nyata. Selama lima hari, saya bekerja secara penuh di sebuah unit usaha pencucian mobil di daerah Mataram. Seluruh penghasilan yang diperoleh selama bekerja digunakan secara mandiri untuk membiayai kebutuhan operasional hingga program selesai. Kegiatan ini ditutup dengan eksplorasi budaya dan alam di Lombok. Pengalaman ini sangat berkesan bagi saya karena memberikan wawasan nyata mengenai dinamika kerja lapangan, tanggung jawab finansial, serta manajemen waktu..">I participated in a week-long 'Live-In' program in Lombok, a school initiative designed to foster independence and professional ethics through real-world work experience. For five consecutive days, I was employed at a professional car wash facility in Mataram. The income generated from this labor was utilized to self-fund my expenses for the remainder of the trip. The program concluded with an educational tour of Lombok's natural and cultural landmarks. This experience was highly impactful, as it allowed me to develop a strong work ethic, practical field skills, and a deeper understanding of financial responsibility in a professional environment.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I participated in a week-long 'Live-In' program in Lombok, a school initiative designed to foster independence and professional ethics through real-world work experience." data-id="Saya berpartisipasi dalam program Live-In selama satu minggu di Lombok, sebuah kegiatan sekolah yang dirancang untuk melatih kemandirian dan profesionalisme melalui pengalaman kerja nyata.">I participated in a week-long 'Live-In' program in Lombok, fostering independence through real-world work experience.</p>
                             </div>
                         </div>
                     </div>
@@ -698,132 +859,164 @@
         </div>
     </section>
 
-   
-         <!-- JOURNEY PHOTO CARDS -->
-    
+    <!-- ══════════════════════════════════════════
+         JOURNEY MOMENTS — FOLDER + MODAL GALLERY
+    ══════════════════════════════════════════ -->
     <section class="journey-photos-section py-10 pb-20 bg-transparent relative z-10">
         <div class="container mx-auto px-4 sm:px-6">
-            <h3 class="section-sub text-2xl sm:text-3xl font-bold mb-8 text-center gradient-text"
+
+            <h3 class="section-sub text-2xl sm:text-3xl font-bold mb-2 text-center gradient-text"
                 data-en="Journey Moments" data-id="Momen Perjalanan">Journey Moments</h3>
+            <p class="text-center text-sm text-gray-400 mb-8 italic"
+               data-en="Click a photo to inspect & read more"
+               data-id="Klik foto untuk lihat detail">Click a photo to inspect &amp; read more</p>
 
-            <div class="photo-scroll-wrap">
-                <div class="photo-row">
+            <!-- FOLDER TABS -->
+            <div class="jg-tabs">
+                <button class="jg-tab active" onclick="jgSwitch('lombok')" id="jgtab-lombok">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span data-en="Live In Lombok" data-id="Live In Lombok">Live In Lombok</span>
+                    <span class="jg-count" id="jgcount-lombok">3</span>
+                </button>
+                <button class="jg-tab" onclick="jgSwitch('Kegiatan-sekolah')" id="jgtab-Kegiatan-sekolah">
+                    <i class="fas fa-school"></i>
+                    <span data-en="School Activity" data-id="Kegiatan-sekolah">School Activity</span>
+                    <span class="jg-count" id="jgcount-Kegiatan-sekolah">0</span>
+                </button>
+                <button class="jg-tab" onclick="jgSwitch('lainnya')" id="jgtab-lainnya">
+                    <i class="fas fa-folder"></i>
+                    <span data-en="Others" data-id="Lainnya">Others</span>
+                    <span class="jg-count" id="jgcount-lainnya">0</span>
+                </button>
+            </div>
 
-                   
-                    <div class="photo-card" style="--card-tilt:-2.5deg; transform:rotate(-2.5deg);">
-                        <div class="photo-img-wrap">
-                            <img src=""
-                                 alt="IDN Boarding School"
-                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                                 style="display:none;">
-                            <div class="photo-placeholder">
-                                <i class="fas fa-image"></i>
-                                <span>Tambahkan foto<br>IDN Boarding School</span>
-                            </div>
+            <!-- PANEL: LIVE IN LOMBOK -->
+            <div class="jg-panel active" id="jgpanel-lombok">
+                <p class="jg-folder-desc"
+                   data-en="Documentation from the Live In program in Lombok, February 2026"
+                   data-id="Dokumentasi perjalanan Live In di Lombok, Februari 2026">
+                   Documentation from the Live In program in Lombok, February 2026
+                </p>
+                <div class="jg-grid">
+
+                    <!-- Card 1 -->
+                    <div class="jg-card"
+                         onclick="jgOpenModal('IMG_4453.jpg','Live In Lombok','Mataram Monument City','Februari 2026','Live In Lombok','Visiting the iconic Mataram Monument — a historic landmark and pride of the Lombok community, symbolizing the spirit of the city.','fas fa-map-marker-alt')">
+                        <div class="jg-img-wrap">
+                            <img src="IMG_4453.jpg" alt="Mataram Monument City"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4453.jpg</span></div>
                         </div>
-                        <div class="photo-info">
-                            <div class="photo-title" data-en="IDN Boarding School" data-id="IDN Boarding School">IDN Boarding School</div>
-                            <div class="photo-meta">
-                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Semarang, Indonesia</span>
-                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Juli 2024</span>
+                        <div class="jg-info">
+                            <div class="jg-title">Live In Lombok</div>
+                            <div class="jg-meta">
+                                <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Mataram Monument City</span>
+                                <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ── Card 2: First Laravel Project ── -->
-                    <div class="photo-card" style="--card-tilt:1.8deg; transform:rotate(1.8deg);">
-                        <div class="photo-img-wrap">
-                            <img src=""
-                                 alt="First Laravel Project"
-                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                                 style="display:none;">
-                            <div class="photo-placeholder">
-                                <i class="fas fa-image"></i>
-                                <span>Tambahkan foto<br>Laravel Project</span>
-                            </div>
+                    <!-- Card 2 -->
+                    <div class="jg-card"
+                         onclick="jgOpenModal('IMG_4513.jpg','Live In Lombok','Mosque in Lombok','Februari 2026','Live In Lombok','Visiting one of the beautiful mosques in Lombok — a place of worship and religious tourism that reflects the rich Islamic heritage of the island.','fas fa-map-marker-alt')">
+                        <div class="jg-img-wrap">
+                            <img src="IMG_4513.jpg" alt="Mosque in Lombok"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4513.jpg</span></div>
                         </div>
-                        <div class="photo-info">
-                            <div class="photo-title" data-en="First Laravel Project" data-id="Proyek Laravel Pertama">First Laravel Project</div>
-                            <div class="photo-meta">
-                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Semarang, Indonesia</span>
-                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Oktober 2024</span>
+                        <div class="jg-info">
+                            <div class="jg-title">Live In Lombok</div>
+                            <div class="jg-meta">
+                                <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Mosque in Lombok</span>
+                                <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ── Card 3: Tangguh Program ── -->
-                    <div class="photo-card" style="--card-tilt:-1.2deg; transform:rotate(-1.2deg);">
-                        <div class="photo-img-wrap">
-                            <img src=""
-                                 alt="Tangguh Program"
-                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                                 style="display:none;">
-                            <div class="photo-placeholder">
-                                <i class="fas fa-image"></i>
-                                <span>Tambahkan foto<br>Program Tangguh</span>
-                            </div>
+                    <!-- Card 3 -->
+                    <div class="jg-card"
+                         onclick="jgOpenModal('IMG_4531.jpg','Live In Lombok','Carwash, Mataram','Februari 2026','Live In Lombok','A shared moment with the local community in Mataram — part of the Live In program that strengthened social bonds and real-world work experience at a professional car wash facility.','fas fa-map-marker-alt')">
+                        <div class="jg-img-wrap">
+                            <img src="IMG_4531.jpg" alt="Carwash Mataram"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4531.jpg</span></div>
                         </div>
-                        <div class="photo-info">
-                            <div class="photo-title" data-en="Tangguh Program" data-id="Program Tangguh">Tangguh Program</div>
-                            <div class="photo-meta">
-                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Kediri, Jawa Timur</span>
-                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Januari 2025</span>
+                        <div class="jg-info">
+                            <div class="jg-title">Live In Lombok</div>
+                            <div class="jg-meta">
+                                <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Carwash, Mataram</span>
+                                <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ── Card 4: UMKM Project ── -->
-                    <div class="photo-card" style="--card-tilt:2.2deg; transform:rotate(2.2deg);">
-                        <div class="photo-img-wrap">
-                            <img src=""
-                                 alt="UMKM Project"
-                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                                 style="display:none;">
-                            <div class="photo-placeholder">
-                                <i class="fas fa-image"></i>
-                                <span>Tambahkan foto<br>Proyek UMKM</span>
-                            </div>
-                        </div>
-                        <div class="photo-info">
-                            <div class="photo-title" data-en="UMKM Project" data-id="Proyek UMKM">UMKM Project</div>
-                            <div class="photo-meta">
-                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Semarang, Indonesia</span>
-                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Mei 2025</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ── Card 5: Live In Lombok ── -->
-                    <div class="photo-card" style="--card-tilt:-1.8deg; transform:rotate(-1.8deg);">
-                        <div class="photo-img-wrap">
-                            <img src=""
-                                 alt="Live In Lombok"
-                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-                                 style="display:none;">
-                            <div class="photo-placeholder">
-                                <i class="fas fa-image"></i>
-                                <span>Tambahkan foto<br>Live In Lombok</span>
-                            </div>
-                        </div>
-                        <div class="photo-info">
-                            <div class="photo-title" data-en="Live In Lombok" data-id="Live In Lombok">Live In Lombok</div>
-                            <div class="photo-meta">
-                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Mataram, Lombok</span>
-                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
-                            </div>
-                        </div>
-                    </div>
-
-                   
+                    <!-- ── Tambah foto Lombok di sini ── -->
+                    <!-- Salin blok jg-card di atas, isi onclick dengan data foto baru -->
 
                 </div>
             </div>
 
-            <p class="text-center text-xs mt-3 text-gray-400 italic select-none"
-               data-en="← Scroll to see more moments →"
-               data-id="← Geser untuk lihat lebih banyak →">← Scroll to see more moments →</p>
+            <!-- PANEL: Kegiatan-sekolah -->
+            <div class="jg-panel" id="jgpanel-Kegiatan-sekolah">
+                <p class="jg-folder-desc"
+                   data-en="School Activity activity documentation"
+                   data-id="Dokumentasi kegiatan di lingkungan Kegiatan-sekolah">School Activity activity documentation</p>
+                <div class="jg-grid" id="jggrid-Kegiatan-sekolah">
+                    <!-- Tambah foto Kegiatan-sekolah di sini dengan struktur jg-card -->
+                </div>
+                <div class="jg-empty" id="jgempty-Kegiatan-sekolah">
+                    <i class="fas fa-image"></i>
+                    <span data-en="No photos yet. Add School Activity activity photos here." data-id="Belum ada foto. Tambahkan foto kegiatan Kegiatan-sekolah di sini.">No photos yet. Add School Activity activity photos here.</span>
+                </div>
+            </div>
+
+            <!-- PANEL: LAINNYA -->
+            <div class="jg-panel" id="jgpanel-lainnya">
+                <p class="jg-folder-desc"
+                   data-en="Other moments and documentation"
+                   data-id="Momen dan dokumentasi lainnya">Other moments and documentation</p>
+                <div class="jg-grid" id="jggrid-lainnya">
+                    <!-- Tambah foto lainnya di sini dengan struktur jg-card -->
+                </div>
+                <div class="jg-empty" id="jgempty-lainnya">
+                    <i class="fas fa-folder-open"></i>
+                    <span data-en="No photos yet. Add other documentation here." data-id="Belum ada foto. Tambahkan dokumentasi lainnya di sini.">No photos yet. Add other documentation here.</span>
+                </div>
+            </div>
+
         </div>
     </section>
+
+    <!-- ══════════════════════════════════════════
+         MODAL INSPECT
+    ══════════════════════════════════════════ -->
+    <div class="jg-modal-backdrop" id="jgModal" onclick="jgCloseIfBackdrop(event)">
+        <div class="jg-modal">
+            <div class="jg-modal-img">
+                <img id="jgModalImg" src="" alt="">
+                <div class="jg-placeholder" id="jgModalPH" style="display:none">
+                    <i class="fas fa-image"></i><span>Photo not found</span>
+                </div>
+            </div>
+            <div class="jg-modal-body">
+                <div class="jg-modal-badge" id="jgModalBadge">
+                    <i class="fas fa-folder"></i>
+                    <span id="jgModalFolder"></span>
+                </div>
+                <div class="jg-modal-header">
+                    <div class="jg-modal-title" id="jgModalTitle"></div>
+                    <button class="jg-modal-close" onclick="jgCloseModal()" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="jg-modal-desc" id="jgModalDesc"></p>
+                <div class="jg-modal-meta">
+                    <span><i class="fas fa-map-marker-alt"></i><span id="jgModalLoc"></span></span>
+                    <span><i class="far fa-calendar-alt"></i><span id="jgModalDate"></span></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Certificates Section -->
     <section id="certificates" class="py-24 bg-transparent">
@@ -833,42 +1026,38 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="Sertifikat1.png" alt="AI Fundamental" data-en-alt="AI Fundamental" data-id-alt="Dasar-Dasar AI" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <img src="Sertifikat1.png" alt="AI Fundamental" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="AI Fundamental" data-id="Dasar-Dasar AI">AI Fundamental</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="This certificate demonstrates a deep understanding of fundamental AI concepts including machine learning and deep learning." data-id="Sertifikat ini membuktikan pemahaman mendalam mengenai konsep dasar AI termasuk machine learning dan deep learning.">This certificate demonstrates a deep understanding of fundamental AI concepts including machine learning and deep learning.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="This certificate demonstrates a deep understanding of fundamental AI concepts including machine learning and deep learning." data-id="Sertifikat ini membuktikan pemahaman mendalam mengenai konsep dasar AI termasuk machine learning dan deep learning.">This certificate demonstrates a deep understanding of fundamental AI concepts.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="sertifikat2.png" alt="Fundamental Dart" data-en-alt="Fundamental Dart" data-id-alt="Dasar-Dasar Dart" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <img src="sertifikat2.png" alt="Fundamental Dart" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Fundamental Dart" data-id="Dasar-Dasar Dart">Fundamental Dart</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Certification for completing the Fundamental Dart course, covering basic syntax and object-oriented programming." data-id="Sertifikasi untuk menyelesaikan kursus Dasar-Dasar Dart, mencakup sintaks dasar dan pemrograman berorientasi objek.">Certification for completing the Fundamental Dart course, covering basic syntax and object-oriented programming.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Certification for completing the Fundamental Dart course, covering basic syntax and object-oriented programming." data-id="Sertifikasi untuk menyelesaikan kursus Dasar-Dasar Dart, mencakup sintaks dasar dan pemrograman berorientasi objek.">Certification for completing the Fundamental Dart course.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="sertifikat3.jpg" alt="Fundamental CSS" data-en-alt="Fundamental CSS" data-id-alt="Dasar-Dasar CSS" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <img src="sertifikat3.jpg" alt="Fundamental CSS" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Fundamental CSS" data-id="Dasar-Dasar CSS">Fundamental CSS</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed the CSS fundamentals course covering styling, multimedia elements, and responsive layouts." data-id="Menyelesaikan kursus dasar CSS yang mencakup penataan gaya, elemen multimedia, dan tata letak responsif.">Completed the CSS fundamentals course covering styling, multimedia elements, and responsive layouts.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed the CSS fundamentals course covering styling, multimedia elements, and responsive layouts." data-id="Menyelesaikan kursus dasar CSS yang mencakup penataan gaya, elemen multimedia, dan tata letak responsif.">Completed the CSS fundamentals course covering styling and responsive layouts.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="sertifikat4.png" alt="Fundamental HTML" data-en-alt="Fundamental HTML" data-id-alt="Dasar-Dasar HTML" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <img src="sertifikat4.png" alt="Fundamental HTML" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Fundamental HTML" data-id="Dasar-Dasar HTML">Fundamental HTML</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed the HTML fundamentals course covering web document structure, multimedia, forms, and tables." data-id="Menyelesaikan kursus fundamental HTML yang mencakup struktur dokumen web, multimedia, form, dan tabel.">Completed the HTML fundamentals course covering web document structure, multimedia, forms, and tables.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed the HTML fundamentals course covering web document structure, multimedia, forms, and tables." data-id="Menyelesaikan kursus fundamental HTML yang mencakup struktur dokumen web, multimedia, form, dan tabel.">Completed the HTML fundamentals course covering web document structure.</p>
                     </div>
                 </div>
             </div>
@@ -986,52 +1175,25 @@
         partGeo.setAttribute('color',    new THREE.BufferAttribute(colArr, 3));
 
         const partMat = new THREE.ShaderMaterial({
-            uniforms: {
-                uTime:   { value: 0 },
-                uIsLight:{ value: false },
-                uMouseX: { value: 0 },
-                uMouseY: { value: 0 },
-            },
-            vertexShader: `
-                attribute vec3 color;
-                varying vec3 vColor;
-                varying float vDist;
-                uniform float uTime;
-                uniform float uMouseX;
-                uniform float uMouseY;
-                void main() {
-                    vColor = color;
-                    vec3 pos = position;
-                    float wave1 = sin(uTime * 0.25 + pos.y * 1.2) * 0.06;
-                    float wave2 = cos(uTime * 0.2  + pos.z * 0.9) * 0.05;
-                    float wave3 = sin(uTime * 0.3  + pos.x * 0.7) * 0.04;
-                    pos.x += wave1 + wave3 * 0.5;
-                    pos.y += wave2 + wave1 * 0.4;
-                    pos.z += cos(uTime * 0.22 + pos.x * 0.8) * 0.05;
-                    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
-                    vDist = length(mv.xyz);
-                    gl_PointSize = (6.5 / -mv.z) * 1.2;
-                    gl_Position = projectionMatrix * mv;
-                }
-            `,
-            fragmentShader: `
-                uniform bool uIsLight;
-                varying vec3 vColor;
-                varying float vDist;
-                void main() {
-                    float s = 1.0 - distance(gl_PointCoord, vec2(0.5));
-                    s = pow(s, 2.8);
-                    float alpha = s * 0.75;
-                    if (uIsLight) {
-                        gl_FragColor = vec4(0.06, 0.06, 0.14, alpha * 0.7);
-                    } else {
-                        gl_FragColor = vec4(vColor, alpha);
-                    }
-                }
-            `,
-            transparent: true,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false,
+            uniforms: { uTime:{value:0}, uIsLight:{value:false}, uMouseX:{value:0}, uMouseY:{value:0} },
+            vertexShader:`
+                attribute vec3 color; varying vec3 vColor; varying float vDist;
+                uniform float uTime; uniform float uMouseX; uniform float uMouseY;
+                void main(){
+                    vColor=color; vec3 pos=position;
+                    float w1=sin(uTime*.25+pos.y*1.2)*.06; float w2=cos(uTime*.2+pos.z*.9)*.05; float w3=sin(uTime*.3+pos.x*.7)*.04;
+                    pos.x+=w1+w3*.5; pos.y+=w2+w1*.4; pos.z+=cos(uTime*.22+pos.x*.8)*.05;
+                    vec4 mv=modelViewMatrix*vec4(pos,1.); vDist=length(mv.xyz);
+                    gl_PointSize=(6.5/-mv.z)*1.2; gl_Position=projectionMatrix*mv;
+                }`,
+            fragmentShader:`
+                uniform bool uIsLight; varying vec3 vColor; varying float vDist;
+                void main(){
+                    float s=1.-distance(gl_PointCoord,vec2(.5)); s=pow(s,2.8); float alpha=s*.75;
+                    if(uIsLight) gl_FragColor=vec4(.06,.06,.14,alpha*.7);
+                    else         gl_FragColor=vec4(vColor,alpha);
+                }`,
+            transparent:true, blending:THREE.AdditiveBlending, depthWrite:false
         });
 
         const points = new THREE.Points(partGeo, partMat);
@@ -1040,177 +1202,103 @@
 
         const ringGeo = new THREE.BufferGeometry();
         const ringCount = 3000;
-        const ringPos = new Float32Array(ringCount * 3);
-        const ringCol = new Float32Array(ringCount * 3);
-        for (let i = 0; i < ringCount; i++) {
-            const angle  = Math.random() * Math.PI * 2;
-            const radius = 5 + Math.random() * 6;
-            ringPos[i*3]   = Math.cos(angle) * radius;
-            ringPos[i*3+1] = (Math.random() - 0.5) * 8;
-            ringPos[i*3+2] = Math.sin(angle) * radius;
-            ringCol[i*3]   = 0.3;
-            ringCol[i*3+1] = 0.7;
-            ringCol[i*3+2] = 0.8;
+        const ringPos = new Float32Array(ringCount*3); const ringCol = new Float32Array(ringCount*3);
+        for(let i=0;i<ringCount;i++){
+            const angle=Math.random()*Math.PI*2; const radius=5+Math.random()*6;
+            ringPos[i*3]=Math.cos(angle)*radius; ringPos[i*3+1]=(Math.random()-.5)*8; ringPos[i*3+2]=Math.sin(angle)*radius;
+            ringCol[i*3]=.3; ringCol[i*3+1]=.7; ringCol[i*3+2]=.8;
         }
-        ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
-        ringGeo.setAttribute('color',    new THREE.BufferAttribute(ringCol, 3));
+        ringGeo.setAttribute('position',new THREE.BufferAttribute(ringPos,3));
+        ringGeo.setAttribute('color',new THREE.BufferAttribute(ringCol,3));
         const ringMat = new THREE.ShaderMaterial({
-            uniforms: { uTime: { value: 0 }, uIsLight: { value: false } },
-            vertexShader: `
-                attribute vec3 color;
-                varying vec3 vColor;
-                uniform float uTime;
-                void main() {
-                    vColor = color;
-                    vec3 pos = position;
-                    pos.y += sin(uTime * 0.35 + pos.x * 0.5) * 0.08;
-                    pos.x += cos(uTime * 0.3  + pos.z * 0.5) * 0.06;
-                    vec4 mv = modelViewMatrix * vec4(pos, 1.0);
-                    gl_PointSize = (3.5 / -mv.z) * 1.0;
-                    gl_Position  = projectionMatrix * mv;
-                }
-            `,
-            fragmentShader: `
-                uniform bool uIsLight;
-                varying vec3 vColor;
-                void main() {
-                    float s = 1.0 - distance(gl_PointCoord, vec2(0.5));
-                    s = pow(s, 2.2);
-                    if (uIsLight) {
-                        gl_FragColor = vec4(0.08, 0.08, 0.18, s * 0.5);
-                    } else {
-                        gl_FragColor = vec4(vColor, s * 0.55);
-                    }
-                }
-            `,
-            transparent: true,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false,
+            uniforms:{uTime:{value:0},uIsLight:{value:false}},
+            vertexShader:`attribute vec3 color;varying vec3 vColor;uniform float uTime;void main(){vColor=color;vec3 pos=position;pos.y+=sin(uTime*.35+pos.x*.5)*.08;pos.x+=cos(uTime*.3+pos.z*.5)*.06;vec4 mv=modelViewMatrix*vec4(pos,1.);gl_PointSize=(3.5/-mv.z)*1.;gl_Position=projectionMatrix*mv;}`,
+            fragmentShader:`uniform bool uIsLight;varying vec3 vColor;void main(){float s=1.-distance(gl_PointCoord,vec2(.5));s=pow(s,2.2);if(uIsLight)gl_FragColor=vec4(.08,.08,.18,s*.5);else gl_FragColor=vec4(vColor,s*.55);}`,
+            transparent:true,blending:THREE.AdditiveBlending,depthWrite:false
         });
         const ringPoints = new THREE.Points(ringGeo, ringMat);
         scene.add(ringPoints);
 
-        let clock = new THREE.Clock();
-        let mouseX = 0, mouseY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth)  *  2 - 1;
-            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-        });
+        let clock=new THREE.Clock(), mouseX=0, mouseY=0;
+        document.addEventListener('mousemove',(e)=>{ mouseX=(e.clientX/window.innerWidth)*2-1; mouseY=-(e.clientY/window.innerHeight)*2+1; });
 
-        function animateBg() {
+        function animateBg(){
             requestAnimationFrame(animateBg);
-            const elapsed = clock.getElapsedTime();
-            partMat.uniforms.uTime.value  = elapsed;
-            ringMat.uniforms.uTime.value  = elapsed;
-            points.rotation.y      += 0.0007;
-            ringPoints.rotation.y  -= 0.0005;
-            points.rotation.x       = Math.sin(elapsed * 0.18) * 0.04;
-            points.rotation.z       = Math.cos(elapsed * 0.15) * 0.03;
-            ringPoints.rotation.x   = Math.cos(elapsed * 0.2)  * 0.05;
-            ringPoints.rotation.z   = Math.sin(elapsed * 0.17) * 0.04;
-            camera.position.x += (mouseX * 0.6 - camera.position.x) * 0.015;
-            camera.position.y += (mouseY * 0.4 - camera.position.y) * 0.015;
+            const t=clock.getElapsedTime();
+            partMat.uniforms.uTime.value=t; ringMat.uniforms.uTime.value=t;
+            points.rotation.y+=.0007; ringPoints.rotation.y-=.0005;
+            points.rotation.x=Math.sin(t*.18)*.04; points.rotation.z=Math.cos(t*.15)*.03;
+            ringPoints.rotation.x=Math.cos(t*.2)*.05; ringPoints.rotation.z=Math.sin(t*.17)*.04;
+            camera.position.x+=(mouseX*.6-camera.position.x)*.015;
+            camera.position.y+=(mouseY*.4-camera.position.y)*.015;
             camera.lookAt(scene.position);
-            const breathe = 1 + Math.sin(elapsed * 0.3) * 0.015;
-            points.scale.setScalar(breathe);
-            renderer.render(scene, camera);
+            const breathe=1+Math.sin(t*.3)*.015; points.scale.setScalar(breathe);
+            renderer.render(scene,camera);
         }
         animateBg();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        window.addEventListener('resize',()=>{ camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
 
         // ══════════════════════════════════════════
         // THEME TOGGLE
         // ══════════════════════════════════════════
-        const themeBtn  = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const themeSpan = document.getElementById('theme-text');
+        const themeBtn=document.getElementById('theme-toggle');
+        const themeIcon=document.getElementById('theme-icon');
+        const themeSpan=document.getElementById('theme-text');
 
-        function applyTheme(isDark) {
-            if (isDark) {
+        function applyTheme(isDark){
+            if(isDark){
                 document.body.classList.remove('light-mode');
-                themeIcon.className = 'fas fa-moon';
-                themeSpan.textContent = (document.documentElement.lang === 'en' ? 'Dark' : 'Gelap');
-                partMat.uniforms.uIsLight.value = false;
-                ringMat.uniforms.uIsLight.value = false;
+                themeIcon.className='fas fa-moon';
+                themeSpan.textContent=(document.documentElement.lang==='en'?'Dark':'Gelap');
+                partMat.uniforms.uIsLight.value=false; ringMat.uniforms.uIsLight.value=false;
             } else {
                 document.body.classList.add('light-mode');
-                themeIcon.className = 'fas fa-sun';
-                themeSpan.textContent = (document.documentElement.lang === 'en' ? 'Light' : 'Terang');
-                partMat.uniforms.uIsLight.value = true;
-                ringMat.uniforms.uIsLight.value = true;
+                themeIcon.className='fas fa-sun';
+                themeSpan.textContent=(document.documentElement.lang==='en'?'Light':'Terang');
+                partMat.uniforms.uIsLight.value=true; ringMat.uniforms.uIsLight.value=true;
             }
         }
-
-        function setTheme(theme) {
-            applyTheme(theme === 'dark');
-            localStorage.setItem('portfolio-theme', theme);
-        }
-
-        themeBtn.addEventListener('click', () => {
-            setTheme(document.body.classList.contains('light-mode') ? 'dark' : 'light');
-        });
-
-        const savedTheme = localStorage.getItem('portfolio-theme');
-        if (savedTheme === 'light') setTheme('light');
-        else if (savedTheme === 'dark') setTheme('dark');
-        else setTheme(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        function setTheme(theme){ applyTheme(theme==='dark'); localStorage.setItem('portfolio-theme',theme); }
+        themeBtn.addEventListener('click',()=>setTheme(document.body.classList.contains('light-mode')?'dark':'light'));
+        const savedTheme=localStorage.getItem('portfolio-theme');
+        if(savedTheme==='light') setTheme('light');
+        else if(savedTheme==='dark') setTheme('dark');
+        else setTheme(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
 
         // ══════════════════════════════════════════
         // LANGUAGE SWITCHER
         // ══════════════════════════════════════════
-        const langEn = document.getElementById('lang-en');
-        const langId = document.getElementById('lang-id');
+        const langEn=document.getElementById('lang-en');
+        const langId=document.getElementById('lang-id');
 
-        function setLanguage(lang) {
-            document.documentElement.lang = lang;
-            document.querySelectorAll('[data-en]').forEach(el => {
-                const val = el.getAttribute(`data-${lang}`);
-                if (val) {
-                    if (el.tagName === 'TITLE') document.title = val;
-                    else el.textContent = val;
-                }
+        function setLanguage(lang){
+            document.documentElement.lang=lang;
+            document.querySelectorAll('[data-en]').forEach(el=>{
+                const val=el.getAttribute('data-'+lang);
+                if(val){ if(el.tagName==='TITLE') document.title=val; else el.textContent=val; }
             });
-            document.querySelectorAll('[data-en-placeholder]').forEach(el => {
-                const val = el.getAttribute(`data-${lang}-placeholder`);
-                if (val) el.placeholder = val;
-            });
-            document.querySelectorAll('[data-en-alt]').forEach(el => {
-                const val = el.getAttribute(`data-${lang}-alt`);
-                if (val) el.alt = val;
-            });
-            if (lang === 'en') {
-                langEn.classList.add('bg-cyan-500/70');
-                langId.classList.remove('bg-cyan-500/70');
-            } else {
-                langId.classList.add('bg-cyan-500/70');
-                langEn.classList.remove('bg-cyan-500/70');
-            }
-            localStorage.setItem('portfolio-lang', lang);
-            const isLight = document.body.classList.contains('light-mode');
-            themeSpan.textContent = isLight
-                ? (lang === 'en' ? 'Light' : 'Terang')
-                : (lang === 'en' ? 'Dark'  : 'Gelap');
+            document.querySelectorAll('[data-en-placeholder]').forEach(el=>{ const val=el.getAttribute('data-'+lang+'-placeholder'); if(val) el.placeholder=val; });
+            document.querySelectorAll('[data-en-alt]').forEach(el=>{ const val=el.getAttribute('data-'+lang+'-alt'); if(val) el.alt=val; });
+            if(lang==='en'){ langEn.classList.add('bg-cyan-500/70'); langId.classList.remove('bg-cyan-500/70'); }
+            else { langId.classList.add('bg-cyan-500/70'); langEn.classList.remove('bg-cyan-500/70'); }
+            localStorage.setItem('portfolio-lang',lang);
+            const isLight=document.body.classList.contains('light-mode');
+            themeSpan.textContent=isLight?(lang==='en'?'Light':'Terang'):(lang==='en'?'Dark':'Gelap');
         }
-
-        langEn.onclick = () => setLanguage('en');
-        langId.onclick = () => setLanguage('id');
-        setLanguage(localStorage.getItem('portfolio-lang') || 'en');
+        langEn.onclick=()=>setLanguage('en');
+        langId.onclick=()=>setLanguage('id');
+        setLanguage(localStorage.getItem('portfolio-lang')||'en');
 
         // ══════════════════════════════════════════
         // SMOOTH SCROLL & MOBILE MENU
         // ══════════════════════════════════════════
-        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
+        document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
+            const t=document.querySelector(this.getAttribute('href'));
+            if(t) t.scrollIntoView({behavior:'smooth'});
             document.getElementById('mobile-menu')?.classList.add('hidden');
         }));
-        document.getElementById('mobile-menu-btn')?.addEventListener('click', () =>
+        document.getElementById('mobile-menu-btn')?.addEventListener('click',()=>
             document.getElementById('mobile-menu').classList.toggle('hidden')
         );
 
@@ -1219,60 +1307,69 @@
         // ══════════════════════════════════════════
         gsap.registerPlugin(ScrollTrigger);
 
-        // Timeline items
-        gsap.utils.toArray('.timeline-item').forEach(el => {
+        gsap.utils.toArray('.timeline-item').forEach(el=>{
             gsap.fromTo(el,
-                { opacity: 0, x: el.classList.contains('left') ? -20 : 20 },
-                {
-                    scrollTrigger: { trigger: el, start: 'top 85%' },
-                    opacity: 1, x: 0, duration: 0.5
-                }
+                {opacity:0,x:el.classList.contains('left')?-20:20},
+                {scrollTrigger:{trigger:el,start:'top 85%'},opacity:1,x:0,duration:0.5}
             );
         });
 
-        // Progress bar
-        gsap.to('.progress-bar', {
-            scrollTrigger: {
-                trigger: '#experience',
-                start: 'top 80%',
-                end: 'bottom 20%',
-                scrub: 0.5
-            },
-            height: '100%'
+        gsap.to('.progress-bar',{
+            scrollTrigger:{trigger:'#experience',start:'top 80%',end:'bottom 20%',scrub:0.5},
+            height:'100%'
         });
 
-        // ── Photo cards stagger entrance ──
-        gsap.utils.toArray('.photo-card').forEach((card, i) => {
-            const tilt = parseFloat(card.style.getPropertyValue('--card-tilt') || '0');
+        // Photo cards stagger entrance
+        gsap.utils.toArray('.jg-card').forEach((card,i)=>{
             gsap.fromTo(card,
-                { opacity: 0, y: 30, rotation: tilt },
+                {opacity:0, y:30},
                 {
-                    scrollTrigger: { trigger: '.journey-photos-section', start: 'top 85%' },
-                    opacity: 1,
-                    y: 0,
-                    rotation: tilt,
-                    duration: 0.55,
-                    delay: i * 0.1,
-                    ease: 'back.out(1.4)',
-                    onComplete: () => card.classList.add('photo-visible')
+                    scrollTrigger:{trigger:'.journey-photos-section',start:'top 85%'},
+                    opacity:1, y:0, duration:0.55,
+                    delay: i * 0.12,
+                    ease:'back.out(1.4)',
+                    onComplete:()=>card.classList.add('jg-visible')
                 }
             );
         });
 
-        // Add-card entrance
-        const addCard = document.querySelector('.photo-card-add');
-        if (addCard) {
-            gsap.fromTo(addCard,
-                { opacity: 0, y: 30 },
-                {
-                    scrollTrigger: { trigger: '.journey-photos-section', start: 'top 85%' },
-                    opacity: 1, y: 0, duration: 0.5,
-                    delay: document.querySelectorAll('.photo-card').length * 0.1 + 0.05,
-                    ease: 'back.out(1.2)',
-                    onComplete: () => addCard.classList.add('photo-visible')
-                }
-            );
+        // ══════════════════════════════════════════
+        // JOURNEY GALLERY — FOLDER SWITCH
+        // ══════════════════════════════════════════
+        function jgSwitch(id){
+            document.querySelectorAll('.jg-tab').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.jg-panel').forEach(p=>p.classList.remove('active'));
+            document.getElementById('jgtab-'+id).classList.add('active');
+            document.getElementById('jgpanel-'+id).classList.add('active');
         }
+
+        // ══════════════════════════════════════════
+        // JOURNEY GALLERY — MODAL
+        // ══════════════════════════════════════════
+        function jgOpenModal(src, title, loc, date, folder, desc, icon){
+            const img=document.getElementById('jgModalImg');
+            const ph=document.getElementById('jgModalPH');
+            img.src=src; img.alt=title;
+            img.style.display='block'; ph.style.display='none';
+            img.onerror=()=>{ img.style.display='none'; ph.style.display='flex'; };
+            document.getElementById('jgModalTitle').textContent  = title;
+            document.getElementById('jgModalLoc').textContent    = loc;
+            document.getElementById('jgModalDate').textContent   = date;
+            document.getElementById('jgModalDesc').textContent   = desc;
+            document.getElementById('jgModalFolder').textContent = folder;
+            const badge = document.getElementById('jgModalBadge');
+            badge.querySelector('i').className = icon + ' fas';
+            document.getElementById('jgModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function jgCloseModal(){
+            document.getElementById('jgModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function jgCloseIfBackdrop(e){
+            if(e.target===document.getElementById('jgModal')) jgCloseModal();
+        }
+        document.addEventListener('keydown',e=>{ if(e.key==='Escape') jgCloseModal(); });
     </script>
 </body>
 </html>
