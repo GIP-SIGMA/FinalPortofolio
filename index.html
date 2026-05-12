@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title data-en="Giip Portfolio" data-id="Portofolio Giip">Giip Portfolio</title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="111646b40fe5dcfd0bf34dcd8fe9df05.jpg">
     <style>
@@ -53,19 +49,13 @@
             transform: translateY(-8px);
         }
 
-       
-
         .timeline-item {
             opacity: 0;
             transform: translateX(var(--translate-x));
             position: relative;
         }
-        .timeline-item.right {
-            --translate-x: 30px;
-        }
-        .timeline-item.left {
-            --translate-x: -30px;
-        }
+        .timeline-item.right { --translate-x: 30px; }
+        .timeline-item.left  { --translate-x: -30px; }
         .timeline-item.visible {
             opacity: 1;
             transform: translateX(0);
@@ -109,16 +99,11 @@
             position: relative;
             transition: all 0.35s ease;
         }
-        .profile-container:hover {
-            transform: scale(1.05);
-        }
+        .profile-container:hover { transform: scale(1.05); }
         .profile-container::before {
             content: '';
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(78, 205, 196, 0.2), transparent);
             z-index: -1;
@@ -138,128 +123,75 @@
 
         #full-canvas-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
         }
 
-        body>section,
-        nav,
-        #contact,
-        .mt-16,
-        #certificates,
-        #experience,
-        #projects,
-        #about,
-        #hero {
+        body > section, nav, #contact, .mt-16,
+        #certificates, #experience, #projects, #about, #hero {
             position: relative;
             z-index: 2;
         }
-        nav {
-            z-index: 50 !important;
-        }
-        .fixed.bottom-4.right-4 {
-            z-index: 9999 !important;
-        }
+        nav { z-index: 50 !important; }
+        .fixed.bottom-4.right-4 { z-index: 9999 !important; }
 
-        /* ========== DARK MODE (default) ========== */
+        /* ── DARK MODE (default) ── */
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
             color: #ffffff;
         }
-        body .text-body {
-            color: #f1f5f9;
-        }
-        body .text-muted {
-            color: #cbd5e1;
-        }
+        body .text-body  { color: #f1f5f9; }
+        body .text-muted { color: #cbd5e1; }
 
-        /* ========== LIGHT MODE ========== */
+        /* ── LIGHT MODE ── */
         body.light-mode {
             background: linear-gradient(135deg, #f5f7fa 0%, #e8edf5 50%, #f0f4f8 100%);
             color: #0f172a;
         }
-
-        /* Light mode: all body text becomes dark */
         body.light-mode p,
         body.light-mode span:not(.gradient-text):not(#typed-cursor):not(.timeline-icon),
-        body.light-mode li,
-        body.light-mode label,
-        body.light-mode h3:not(.gradient-text),
-        body.light-mode h4,
-        body.light-mode h5,
-        body.light-mode h6,
-        body.light-mode .text-gray-100,
-        body.light-mode .text-gray-200,
-        body.light-mode .text-gray-300,
-        body.light-mode .text-white,
-        body.light-mode .text-white\/90,
-        body.light-mode [class*="text-gray-"],
-        body.light-mode #typed-text,
-        body.light-mode input,
-        body.light-mode textarea,
-        body.light-mode input::placeholder,
-        body.light-mode textarea::placeholder,
-        body.light-mode .hobby-item,
-        body.light-mode nav a:not(.gradient-text),
-        body.light-mode #mobile-menu a,
+        body.light-mode li, body.light-mode label,
+        body.light-mode h3:not(.gradient-text), body.light-mode h4,
+        body.light-mode h5, body.light-mode h6,
+        body.light-mode .text-gray-100, body.light-mode .text-gray-200,
+        body.light-mode .text-gray-300, body.light-mode .text-white,
+        body.light-mode .text-white\/90, body.light-mode [class*="text-gray-"],
+        body.light-mode #typed-text, body.light-mode input,
+        body.light-mode textarea, body.light-mode input::placeholder,
+        body.light-mode textarea::placeholder, body.light-mode .hobby-item,
+        body.light-mode nav a:not(.gradient-text), body.light-mode #mobile-menu a,
         body.light-mode button#theme-toggle span,
-        body.light-mode button#lang-en,
-        body.light-mode button#lang-id {
+        body.light-mode button#lang-en, body.light-mode button#lang-id {
             color: #0f172a !important;
         }
-
-        /* Light mode: muted secondary text */
         body.light-mode .text-gray-300,
         body.light-mode p.text-gray-300,
-        body.light-mode [class*="text-gray-400"] {
-            color: #334155 !important;
-        }
-
-        /* Light mode: gradient text preserved for titles/subtitles */
+        body.light-mode [class*="text-gray-400"] { color: #334155 !important; }
         body.light-mode .gradient-text {
             background: linear-gradient(45deg, var(--gradient-start-light), var(--gradient-end-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        /* Light mode: nav */
         body.light-mode nav {
             background: rgba(255, 255, 255, 0.75) !important;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
         }
-        body.light-mode nav a:not(.gradient-text) {
-            color: #1e293b !important;
-        }
-        body.light-mode nav a:hover {
-            color: #0891b2 !important;
-        }
-        body.light-mode #mobile-menu-btn {
-            color: #1e293b !important;
-        }
-
-        /* Light mode: cards */
-        body.light-mode .bg-white\/8,
-        body.light-mode .bg-white\/10,
-        body.light-mode .bg-white\/5,
-        body.light-mode .bg-white\/20 {
+        body.light-mode nav a:not(.gradient-text) { color: #1e293b !important; }
+        body.light-mode nav a:hover { color: #0891b2 !important; }
+        body.light-mode #mobile-menu-btn { color: #1e293b !important; }
+        body.light-mode .bg-white\/8, body.light-mode .bg-white\/10,
+        body.light-mode .bg-white\/5, body.light-mode .bg-white\/20 {
             background: rgba(255, 255, 255, 0.8) !important;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             border-color: rgba(0, 0, 0, 0.1) !important;
         }
-        body.light-mode .border-white\/15,
-        body.light-mode .border-white\/20,
-        body.light-mode .border-white\/30 {
-            border-color: rgba(0, 0, 0, 0.12) !important;
-        }
+        body.light-mode .border-white\/15, body.light-mode .border-white\/20,
+        body.light-mode .border-white\/30 { border-color: rgba(0, 0, 0, 0.12) !important; }
         body.light-mode .card-glow {
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
             border-color: rgba(0, 0, 0, 0.1);
@@ -273,17 +205,8 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
         }
-
-        /* Light mode: timeline */
-        body.light-mode .timeline-icon {
-            background: #1f8a82;
-            color: #ffffff;
-        }
-        body.light-mode .progress-bar {
-            background: linear-gradient(to bottom, #1f8a82, #d94040);
-        }
-
-        /* Light mode: hobbies */
+        body.light-mode .timeline-icon { background: #1f8a82; color: #ffffff; }
+        body.light-mode .progress-bar { background: linear-gradient(to bottom, #1f8a82, #d94040); }
         body.light-mode .hobby-item {
             background: rgba(0, 0, 0, 0.04);
             border-color: rgba(0, 0, 0, 0.1);
@@ -293,16 +216,10 @@
             background: rgba(78, 205, 196, 0.18);
             border-color: #1f8a82;
         }
-
-        /* Light mode: profile badge */
         body.light-mode .profile-container .absolute.bg-gradient-to-r {
             background: linear-gradient(90deg, #2563eb, #1f8a82);
             color: #ffffff;
         }
-
-       
-
-        /* Light mode: floating controls */
         body.light-mode .floating-controls-group {
             background: rgba(255, 255, 255, 0.75) !important;
             border-color: rgba(0, 0, 0, 0.15) !important;
@@ -311,116 +228,248 @@
             color: #1e293b !important;
             background: rgba(0, 0, 0, 0.04);
         }
-        body.light-mode .floating-controls-group button:hover {
-            background: rgba(6, 182, 212, 0.3) !important;
-        }
+        body.light-mode .floating-controls-group button:hover { background: rgba(6, 182, 212, 0.3) !important; }
         body.light-mode .floating-controls-group button.bg-cyan-500\/70 {
             background: rgba(6, 182, 212, 0.5) !important;
             color: #0f172a !important;
         }
-
-        /* Light mode: contact form inputs */
-        body.light-mode input,
-        body.light-mode textarea {
+        body.light-mode input, body.light-mode textarea {
             background: rgba(255, 255, 255, 0.7) !important;
             border-color: rgba(0, 0, 0, 0.2) !important;
             color: #0f172a !important;
         }
-        body.light-mode input::placeholder,
-        body.light-mode textarea::placeholder {
-            color: #64748b !important;
-        }
-        body.light-mode input:focus,
-        body.light-mode textarea:focus {
-            ring-color: #0891b2 !important;
-            border-color: #0891b2 !important;
-        }
-        body.light-mode .bg-white\/20 {
-            background: rgba(255, 255, 255, 0.7) !important;
-        }
+        body.light-mode input::placeholder, body.light-mode textarea::placeholder { color: #64748b !important; }
+        body.light-mode .bg-white\/20 { background: rgba(255, 255, 255, 0.7) !important; }
+        body.light-mode .skill-card .text-blue-400   { color: #3b82f6 !important; }
+        body.light-mode .skill-card .text-green-400  { color: #22c55e !important; }
+        body.light-mode .skill-card .text-purple-400 { color: #a855f7 !important; }
+        body.light-mode .text-gray-400 { color: #64748b !important; }
+        body.light-mode a.text-gray-400:hover { color: #3b82f6 !important; }
 
-        /* Light mode: skill cards icon colors preserved */
-        body.light-mode .skill-card .text-blue-400 {
-            color: #3b82f6 !important;
-        }
-        body.light-mode .skill-card .text-green-400 {
-            color: #22c55e !important;
-        }
-        body.light-mode .skill-card .text-purple-400 {
-            color: #a855f7 !important;
-        }
-
-        /* Light mode: social icons */
-        body.light-mode .text-gray-400 {
-            color: #64748b !important;
-        }
-        body.light-mode a.text-gray-400:hover {
-            color: #3b82f6 !important;
-        }
-
-        /* ========== RESPONSIVE ========== */
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .timeline-item {
-                margin-left: 1.5rem;
-                margin-right: 0.5rem;
-                --translate-x: -20px !important;
-            }
-            .timeline-item .absolute {
-                left: -1rem;
-            }
-            .timeline-icon {
-                width: 1.75rem;
-                height: 1.75rem;
-                font-size: 0.85rem;
-            }
-            .progress-bar {
-                width: 3px;
-            }
-            .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
+            .timeline-item { margin-left: 1.5rem; margin-right: 0.5rem; --translate-x: -20px !important; }
+            .timeline-item .absolute { left: -1rem; }
+            .timeline-icon { width: 1.75rem; height: 1.75rem; font-size: 0.85rem; }
+            .progress-bar { width: 3px; }
+            .container { padding-left: 1rem; padding-right: 1rem; }
         }
-
         @media (max-width: 480px) {
-            .timeline-item {
-                margin-left: 0.75rem;
-            }
-            .timeline-icon {
-                width: 1.5rem;
-                height: 1.5rem;
-                font-size: 0.7rem;
-            }
-            .profile-container .absolute {
-                font-size: 0.8rem;
-                padding: 0.25rem 0.75rem;
-                bottom: -1rem;
-                white-space: nowrap;
-            }
-            .hobby-item {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
-            }
+            .timeline-item { margin-left: 0.75rem; }
+            .timeline-icon { width: 1.5rem; height: 1.5rem; font-size: 0.7rem; }
+            .profile-container .absolute { font-size: 0.8rem; padding: 0.25rem 0.75rem; bottom: -1rem; white-space: nowrap; }
+            .hobby-item { padding: 0.5rem 1rem; font-size: 0.8rem; }
         }
-
         @media (max-width: 640px) {
-            .floating-controls-group {
-                gap: 0.5rem !important;
-                padding: 0.5rem !important;
-            }
-            .floating-controls-group button {
-                padding: 0.25rem 0.7rem !important;
-                font-size: 0.7rem !important;
-                border-radius: 0.75rem !important;
-            }
-            .floating-controls-group button i {
-                font-size: 0.8rem;
-            }
+            .floating-controls-group { gap: 0.5rem !important; padding: 0.5rem !important; }
+            .floating-controls-group button { padding: 0.25rem 0.7rem !important; font-size: 0.7rem !important; border-radius: 0.75rem !important; }
+            .floating-controls-group button i { font-size: 0.8rem; }
         }
 
-        /* Smooth section transitions */
-        section {
-            scroll-margin-top: 80px;
+        section { scroll-margin-top: 80px; }
+
+        /* ══════════════════════════════════════════
+           JOURNEY PHOTO CARDS
+        ══════════════════════════════════════════ */
+        .photo-scroll-wrap {
+            overflow-x: auto;
+            padding-bottom: 1.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(78,205,196,0.4) transparent;
+        }
+        .photo-scroll-wrap::-webkit-scrollbar { height: 4px; }
+        .photo-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+        .photo-scroll-wrap::-webkit-scrollbar-thumb {
+            background: rgba(78,205,196,0.45);
+            border-radius: 99px;
+        }
+
+        .photo-row {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            padding: 1.5rem 0.5rem 0.5rem;
+            align-items: flex-start;
+        }
+
+        .photo-card {
+            flex-shrink: 0;
+            width: 200px;
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+            transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), box-shadow 0.35s ease;
+            cursor: default;
+            position: relative;
+        }
+        .photo-card:hover {
+            transform: rotate(0deg) translateY(-10px) scale(1.04) !important;
+            box-shadow: 0 24px 50px rgba(78,205,196,0.22), 0 8px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.22);
+            z-index: 10;
+        }
+
+        .photo-card .photo-img-wrap {
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        .photo-card .photo-img-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        .photo-card:hover .photo-img-wrap img { transform: scale(1.08); }
+
+        .photo-card .photo-placeholder {
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255,255,255,0.35);
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+        .photo-card .photo-placeholder i { font-size: 2rem; opacity: 0.35; }
+
+        .photo-card .photo-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        .photo-card .photo-info { padding: 0.75rem 0.85rem 0.9rem; }
+
+        .photo-card .photo-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.45rem;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .photo-card .photo-meta { display: flex; flex-direction: column; gap: 0.2rem; }
+
+        .photo-card .photo-loc,
+        .photo-card .photo-date {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.68rem;
+            color: rgba(203,213,225,0.85);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .photo-card .photo-loc i,
+        .photo-card .photo-date i {
+            color: #4ECDC4;
+            font-size: 0.62rem;
+            flex-shrink: 0;
+        }
+
+        .photo-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 32px; height: 32px;
+            background: linear-gradient(225deg, rgba(78,205,196,0.25), transparent 70%);
+            border-radius: 0 16px 0 0;
+            pointer-events: none;
+        }
+
+        /* Light mode – photo cards */
+        body.light-mode .photo-card {
+            background: rgba(255,255,255,0.78);
+            border-color: rgba(0,0,0,0.1);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+        body.light-mode .photo-card:hover {
+            box-shadow: 0 24px 50px rgba(31,138,130,0.18), 0 8px 20px rgba(0,0,0,0.12) !important;
+        }
+        body.light-mode .photo-card .photo-loc,
+        body.light-mode .photo-card .photo-date { color: #334155 !important; }
+        body.light-mode .photo-scroll-wrap {
+            scrollbar-color: rgba(31,138,130,0.4) transparent;
+        }
+        body.light-mode .photo-card .photo-placeholder { color: rgba(15,23,42,0.35); }
+
+        /* Journey Moments section heading underline */
+        .journey-photos-section h3.section-sub { position: relative; display: inline-block; }
+        .journey-photos-section h3.section-sub::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 60%;
+            margin: 6px auto 0;
+            background: linear-gradient(90deg, #FF6B6B, #4ECDC4);
+            border-radius: 99px;
+            opacity: 0.6;
+        }
+
+        /* + Add photo card */
+        .photo-card-add {
+            flex-shrink: 0;
+            width: 200px;
+            height: 264px;
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px dashed rgba(78,205,196,0.35);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            color: rgba(78,205,196,0.6);
+            font-size: 0.72rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .photo-card-add:hover {
+            border-color: rgba(78,205,196,0.7);
+            background: rgba(78,205,196,0.07);
+            color: rgba(78,205,196,0.9);
+            transform: translateY(-4px);
+        }
+        .photo-card-add i { font-size: 1.8rem; }
+        body.light-mode .photo-card-add {
+            border-color: rgba(31,138,130,0.35);
+            color: rgba(31,138,130,0.6);
+        }
+
+        /* GSAP entrance for photo cards */
+        .photo-card, .photo-card-add {
+            opacity: 0;
+            transform: translateY(24px) rotate(var(--card-tilt, 0deg));
+        }
+        .photo-card.photo-visible {
+            opacity: 1;
+            transform: translateY(0) rotate(var(--card-tilt, 0deg));
+            transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.35s ease;
+        }
+        .photo-card-add.photo-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s, box-shadow 0.35s ease;
         }
     </style>
 </head>
@@ -429,31 +478,32 @@
     <!-- FULL PAGE 3D BACKGROUND -->
     <div id="full-canvas-bg"></div>
 
-
     <!-- Navbar -->
     <nav class="fixed w-full z-50 bg-white/10 backdrop-blur-2xl border-b border-white/10 shadow-2xl">
         <div class="container mx-auto px-4 sm:px-6 py-2 sm:py-3 md:py-4">
             <div class="flex items-center justify-between">
                 <div class="text-lg xs:text-xl sm:text-2xl md:text-3xl font-extrabold gradient-text tracking-tight whitespace-nowrap">Ghifari Atallah</div>
                 <div class="hidden md:flex space-x-3 lg:space-x-6 xl:space-x-10">
-                    <a href="#home" class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Home" data-id="Beranda">Home</a>
-                    <a href="#about" class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="About" data-id="Tentang">About</a>
-                    <a href="#projects" class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Projects" data-id="Proyek">Projects</a>
-                    <a href="#experience" class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Experience" data-id="Pengalaman">Experience</a>
+                    <a href="#home"         class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Home"         data-id="Beranda">Home</a>
+                    <a href="#about"        class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="About"        data-id="Tentang">About</a>
+                    <a href="#projects"     class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Projects"     data-id="Proyek">Projects</a>
+                    <a href="#experience"   class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Experience"   data-id="Pengalaman">Experience</a>
                     <a href="#certificates" class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Certificates" data-id="Sertifikat">Certificates</a>
-                    <a href="#contact" class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Contact" data-id="Kontak">Contact</a>
+                    <a href="#contact"      class="relative text-sm lg:text-base xl:text-lg font-medium hover:text-cyan-400 transition duration-300 text-white" data-en="Contact"      data-id="Kontak">Contact</a>
                 </div>
                 <button id="mobile-menu-btn" class="md:hidden focus:outline-none text-white p-1.5 hover:bg-white/10 rounded-lg transition">
-                    <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
                 </button>
             </div>
             <div id="mobile-menu" class="hidden md:hidden mt-3 space-y-2 px-2 pb-3">
-                <a href="#home" class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Home</a>
-                <a href="#about" class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">About</a>
-                <a href="#projects" class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Projects</a>
-                <a href="#experience" class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Experience</a>
+                <a href="#home"         class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Home</a>
+                <a href="#about"        class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">About</a>
+                <a href="#projects"     class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Projects</a>
+                <a href="#experience"   class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Experience</a>
                 <a href="#certificates" class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Certificates</a>
-                <a href="#contact" class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Contact</a>
+                <a href="#contact"      class="block text-center py-2 px-4 text-white text-sm font-medium rounded-full bg-white/10 border border-white/20 backdrop-blur-lg hover:bg-cyan-500/40 transition-all">Contact</a>
             </div>
         </div>
     </nav>
@@ -472,10 +522,8 @@
     <section id="about" class="py-12 md:py-24 bg-transparent relative z-10">
         <div class="container mx-auto px-4 sm:px-6">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
-                data-en="About Me"
-                data-id="Tentang Saya">About Me</h2>
+                data-en="About Me" data-id="Tentang Saya">About Me</h2>
 
-            <!-- Foto Profil -->
             <div class="flex justify-center mb-16 relative">
                 <div class="profile-container w-64 h-64 sm:w-80 sm:h-80 relative group">
                     <div class="w-full h-full rounded-full overflow-hidden border-6 border-gradient-to-r from-blue-500 to-cyan-400 shadow-2xl transform transition-all duration-1000 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(78,205,196,0.7)]">
@@ -509,30 +557,22 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
                 <div class="relative bg-white/8 border border-white/15 p-10 rounded-2xl card-glow backdrop-blur-xl transition-all duration-300 hover:scale-102 skill-card shadow-xl">
-                    <div class="text-6xl mb-6 text-blue-400 transition-transform duration-300">
-                        <i class="fa-brands fa-searchengin"></i>
-                    </div>
+                    <div class="text-6xl mb-6 text-blue-400"><i class="fa-brands fa-searchengin"></i></div>
                     <h3 class="text-xl md:text-2xl font-extrabold mb-3 gradient-text" data-en="SEO Analyst" data-id="Analis SEO">SEO Analyst</h3>
                     <p class="text-gray-300 text-sm md:text-base font-light">SEMrush, Google Analytics, Google Search Console, Google PageSpeed Insights</p>
                 </div>
                 <div class="relative bg-white/8 border border-white/15 p-10 rounded-2xl card-glow backdrop-blur-xl transition-all duration-300 hover:scale-102 skill-card shadow-xl">
-                    <div class="text-6xl mb-6 text-green-400 transition-transform duration-300">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
+                    <div class="text-6xl mb-6 text-green-400"><i class="fas fa-paint-brush"></i></div>
                     <h3 class="text-xl md:text-2xl font-extrabold mb-3 gradient-text" data-en="UI/UX Design" data-id="Desain UI/UX">UI/UX Design</h3>
                     <p class="text-gray-300 text-sm md:text-base font-light">Figma, Adobe Photoshop, Adobe Illustrator</p>
                 </div>
                 <div class="relative bg-white/8 border border-white/15 p-10 rounded-2xl card-glow backdrop-blur-xl transition-all duration-300 hover:scale-102 skill-card shadow-xl">
-                    <div class="text-6xl mb-6 text-purple-400 transition-transform duration-300">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
+                    <div class="text-6xl mb-6 text-purple-400"><i class="fa-solid fa-chart-line"></i></div>
                     <h3 class="text-xl md:text-2xl font-extrabold mb-3 gradient-text" data-en="Data Analyst" data-id="Analis Data">Data Analyst</h3>
                     <p class="text-gray-300 text-sm md:text-base font-light">Firebase, Google Analytics</p>
                 </div>
                 <div class="relative bg-white/8 border border-white/15 p-10 rounded-2xl card-glow backdrop-blur-xl transition-all duration-300 hover:scale-102 skill-card shadow-xl">
-                    <div class="text-6xl mb-6 text-purple-400 transition-transform duration-300">
-                        <i class="fa-solid fa-code"></i>
-                    </div>
+                    <div class="text-6xl mb-6 text-purple-400"><i class="fa-solid fa-code"></i></div>
                     <h3 class="text-xl md:text-2xl font-extrabold mb-3 gradient-text" data-en="Web Developer" data-id="Pengembang Web">Web Developer</h3>
                     <p class="text-gray-300 text-sm md:text-base font-light">HTML, CSS, JavaScript, React, Node.js</p>
                 </div>
@@ -544,71 +584,46 @@
     <section id="projects" class="py-24 bg-transparent">
         <div class="container mx-auto px-4 sm:px-6">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
-                data-en="My Projects"
-                data-id="Proyek Saya">My Projects</h2>
+                data-en="My Projects" data-id="Proyek Saya">My Projects</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="Screenshot%202026-02-23%20at%2007.34.58.png"
-                             alt="Planning Digital Content"
-                             data-en-alt="Planning Digital Content"
-                             data-id-alt="Perencanaan Konten Digital"
-                             class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="Screenshot%202026-02-23%20at%2007.34.58.png" alt="Planning Digital Content" data-en-alt="Planning Digital Content" data-id-alt="Perencanaan Konten Digital" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Planning Digital Content" data-id="Perencanaan Konten Digital">Planning Digital Content</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts. It is designed to attract interest in a company's products or services by capturing attention."
-                           data-id="Pemasaran konten berfokus pada pembuatan dan pembagian materi online seperti video, blog, dan postingan media sosial. Strategi ini dirancang untuk menarik minat terhadap produk atau layanan perusahaan dengan menangkap perhatian audiens.">Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts. It is designed to attract interest in a company's products or services by capturing attention.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts. It is designed to attract interest in a company's products or services by capturing attention." data-id="Pemasaran konten berfokus pada pembuatan dan pembagian materi online seperti video, blog, dan postingan media sosial. Strategi ini dirancang untuk menarik minat terhadap produk atau layanan perusahaan dengan menangkap perhatian audiens.">Content marketing is based on creating and sharing online material such as videos, blogs, and social media posts. It is designed to attract interest in a company's products or services by capturing attention.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="Screenshot%202026-02-17%20at%2013.51.15.png"
-                             alt="USP Data Collection"
-                             data-en-alt="USP Data Collection"
-                             data-id-alt="Pengumpulan Data USP"
-                             class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="Screenshot%202026-02-17%20at%2013.51.15.png" alt="USP Data Collection" data-en-alt="USP Data Collection" data-id-alt="Pengumpulan Data USP" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="USP Data Collection" data-id="Pengumpulan Data USP">USP Data Collection</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience."
-                           data-id="Marketplace online untuk elektronik, peralatan rumah tangga, dan perlengkapan kantor yang dirancang untuk pengalaman pengguna yang mulus.">An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience." data-id="Marketplace online untuk elektronik, peralatan rumah tangga, dan perlengkapan kantor yang dirancang untuk pengalaman pengguna yang mulus.">An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="Screenshot%202026-02-17%20at%2013.44.55.png"
-                             alt="Values Data CSIT"
-                             data-en-alt="Values Data CSIT"
-                             data-id-alt="Nilai Data CSIT"
-                             class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="Screenshot%202026-02-17%20at%2013.44.55.png" alt="Values Data CSIT" data-en-alt="Values Data CSIT" data-id-alt="Nilai Data CSIT" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Values Data CSIT" data-id="Nilai Data CSIT">Values Data CSIT</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="I created data values for a Japanese company, Azurite.jp, where I matched around 70 database records using Firebase and Google Analytics."
-                           data-id="Saya membuat nilai data untuk perusahaan Jepang bernama Azurite.jp, dengan mencocokkan sekitar 70 data database menggunakan Firebase dan Google Analytics.">I created data values for a Japanese company, Azurite.jp, where I matched around 70 database records using Firebase and Google Analytics.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I created data values for a Japanese company, Azurite.jp, where I matched around 70 database records using Firebase and Google Analytics." data-id="Saya membuat nilai data untuk perusahaan Jepang bernama Azurite.jp, dengan mencocokkan sekitar 70 data database menggunakan Firebase dan Google Analytics.">I created data values for a Japanese company, Azurite.jp, where I matched around 70 database records using Firebase and Google Analytics.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-56 relative overflow-hidden">
-                        <img src="image.png"
-                             alt="Library Web Project"
-                             data-en-alt="Web Project"
-                             data-id-alt="Proyek Website"
-                             class="w-full h-full object-cover transition-transform duration-300">
+                        <img src="image.png" alt="Library Web Project" data-en-alt="Web Project" data-id-alt="Proyek Website" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Library Web" data-id="Web Perpustakaan">Web Project</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="We built this website using React.js, Express, and Node.js. The project took more than two months due to limited API availability, and we used Supabase as the database."
-                           data-id="Kami membangun website ini menggunakan React.js, Express, dan Node.js. Proyek ini memakan waktu lebih dari dua bulan karena keterbatasan API, dan kami menggunakan Supabase sebagai database.">We built this website using React.js, Express, and Node.js. The project took more than two months due to limited API availability, and we used Supabase as the database.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="We built this website using React.js, Express, and Node.js. The project took more than two months due to limited API availability, and we used Supabase as the database." data-id="Kami membangun website ini menggunakan React.js, Express, dan Node.js. Proyek ini memakan waktu lebih dari dua bulan karena keterbatasan API, dan kami menggunakan Supabase sebagai database.">We built this website using React.js, Express, and Node.js. The project took more than two months due to limited API availability, and we used Supabase as the database.</p>
                     </div>
                 </div>
             </div>
@@ -619,74 +634,194 @@
     <section id="experience" class="py-24 bg-transparent relative">
         <div class="container mx-auto px-4 sm:px-6">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
-                data-en="My Journey"
-                data-id="Perjalanan Saya">My Journey</h2>
+                data-en="My Journey" data-id="Perjalanan Saya">My Journey</h2>
             <div class="max-w-5xl mx-auto relative">
                 <div class="progress-bar rounded-full"></div>
                 <div class="relative">
                     <div class="mb-12 sm:w-1/2 sm:pr-6 timeline-item left">
                         <div class="absolute w-4 h-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full left-[-8px] mt-3 z-10"></div>
                         <div class="bg-white/5 border border-white/15 backdrop-blur-lg p-6 rounded-xl card-glow flex items-start transition-all duration-300 hover:scale-102">
-                            <div class="timeline-icon mr-4 shadow-md">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
+                            <div class="timeline-icon mr-4 shadow-md"><i class="fas fa-briefcase"></i></div>
                             <div>
                                 <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en=" IDN Boarding School" data-id="IDN Boarding School"> IDN Boarding School</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="Vocational High School | July 2024 - June 2027" data-id="SMK | Juli 2024 - Juni 2027">Vocational High School | July 2024 - June 2027</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                                   data-en="I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS. Beyond the technical aspects, I also delved into design principles through Figma and Canva, which allowed me to comprehensively integrate code functionality with visual aesthetics."
-                                   data-id="Saya mengawali karier di bidang Software Engineering dengan membangun fondasi yang kuat pada pengembangan front-end menggunakan HTML dan CSS. Selain aspek teknis, saya juga mendalami prinsip desain melalui Figma dan Canva, yang memungkinkan saya untuk mengintegrasikan fungsionalitas kode dengan estetika visual secara komprehensif.">I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS. Beyond the technical aspects, I also delved into design principles through Figma and Canva, which allowed me to comprehensively integrate code functionality with visual aesthetics.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS. Beyond the technical aspects, I also delved into design principles through Figma and Canva, which allowed me to comprehensively integrate code functionality with visual aesthetics." data-id="Saya mengawali karier di bidang Software Engineering dengan membangun fondasi yang kuat pada pengembangan front-end menggunakan HTML dan CSS. Selain aspek teknis, saya juga mendalami prinsip desain melalui Figma dan Canva, yang memungkinkan saya untuk mengintegrasikan fungsionalitas kode dengan estetika visual secara komprehensif.">I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS. Beyond the technical aspects, I also delved into design principles through Figma and Canva, which allowed me to comprehensively integrate code functionality with visual aesthetics.</p>
                             </div>
                         </div>
                     </div>
                     <div class="mb-12 sm:w-1/2 sm:ml-auto sm:pl-6 timeline-item right">
                         <div class="absolute w-4 h-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full left-[-8px] mt-3 z-10"></div>
                         <div class="bg-white/5 border border-white/15 backdrop-blur-lg p-6 rounded-xl card-glow flex items-start transition-all duration-300 hover:scale-102">
-                            <div class="timeline-icon mr-4 shadow-md">
-                                <i class="fas fa-code"></i>
-                            </div>
+                            <div class="timeline-icon mr-4 shadow-md"><i class="fas fa-code"></i></div>
                             <div>
                                 <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="First Laravel Project" data-id="Proyek Laravel Pertama">First Laravel Project</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="October 2024" data-id="Oktober 2024">October 2024</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                                   data-en="Completed my first CRUD application using Laravel. This project introduced me to MVC concepts, user authentication, and basic data management."
-                                   data-id="Menyelesaikan proyek aplikasi CRUD pertama saya menggunakan Laravel. Proyek ini mengenalkan saya pada konsep MVC, autentikasi pengguna, dan manajemen data sederhana.">Completed my first CRUD application using Laravel. This project introduced me to MVC concepts, user authentication, and basic data management.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed my first CRUD application using Laravel. This project introduced me to MVC concepts, user authentication, and basic data management." data-id="Menyelesaikan proyek aplikasi CRUD pertama saya menggunakan Laravel. Proyek ini mengenalkan saya pada konsep MVC, autentikasi pengguna, dan manajemen data sederhana.">Completed my first CRUD application using Laravel. This project introduced me to MVC concepts, user authentication, and basic data management.</p>
                             </div>
                         </div>
                     </div>
                     <div class="mb-12 sm:w-1/2 sm:pr-6 timeline-item left">
                         <div class="absolute w-4 h-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full left-[-8px] mt-3 z-10"></div>
                         <div class="bg-white/10 border border-white/20 backdrop-blur-md p-6 rounded-xl card-glow flex items-start transform transition-all duration-300 hover:scale-105">
-                            <div class="timeline-icon mr-4 shadow-md">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
+                            <div class="timeline-icon mr-4 shadow-md"><i class="fas fa-graduation-cap"></i></div>
                             <div>
-                                <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="IDN Tangguh Program" data-id="Program IDN Tangguh">IDN Tangguh Program</h3>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="Tangguh Program" data-id="Program Tangguh"> Tangguh Program</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="January 2025" data-id="Januari 2025">January 2025</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                                   data-en="Participating in the IDN Tangguh program in Kediri, an intensive one-week training program designed to test resilience and independence. In this program, I successfully completed challenges involving independent financial management and meeting economic targets through tactical job search strategies to independently fund travel expenses."
-                                   data-id="Berpartisipasi dalam program IDN Tangguh di Kediri, sebuah pelatihan intensif selama satu minggu yang dirancang untuk menguji ketahanan dan kemandirian. Dalam program ini, saya berhasil menyelesaikan tantangan berupa manajemen keuangan mandiri dan pemenuhan target ekonomi melalui strategi pencarian kerja taktis guna mendanai biaya operasional perjalanan secara mandiri.">Participating in the IDN Tangguh program in Kediri, an intensive one-week training program designed to test resilience and independence. In this program, I successfully completed challenges involving independent financial management and meeting economic targets through tactical job search strategies to independently fund travel expenses.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Participating in the IDN Tangguh program in Kediri, an intensive one-week training program designed to test resilience and independence. In this program, I successfully completed challenges involving independent financial management and meeting economic targets through tactical job search strategies to independently fund travel expenses." data-id="Berpartisipasi dalam program IDN Tangguh di Kediri, sebuah pelatihan intensif selama satu minggu yang dirancang untuk menguji ketahanan dan kemandirian. Dalam program ini, saya berhasil menyelesaikan tantangan berupa manajemen keuangan mandiri dan pemenuhan target ekonomi melalui strategi pencarian kerja taktis guna mendanai biaya operasional perjalanan secara mandiri.">Participating in the IDN Tangguh program in Kediri, an intensive one-week training program designed to test resilience and independence. In this program, I successfully completed challenges involving independent financial management and meeting economic targets through tactical job search strategies to independently fund travel expenses.</p>
                             </div>
                         </div>
                     </div>
                     <div class="mb-12 sm:w-1/2 sm:ml-auto sm:pl-6 timeline-item right">
                         <div class="absolute w-4 h-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full left-[-8px] mt-3 z-10"></div>
                         <div class="bg-white/10 border border-white/20 backdrop-blur-md p-6 rounded-xl card-glow flex items-start transform transition-all duration-300 hover:scale-105">
-                            <div class="timeline-icon mr-4 shadow-md">
-                                <i class="fas fa-university"></i>
-                            </div>
+                            <div class="timeline-icon mr-4 shadow-md"><i class="fas fa-university"></i></div>
                             <div>
-                                <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="IDN Probono Project" data-id="Proyek IDN Probono">IDN Probono Project</h3>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="UMKM Project" data-id="Proyek UMKM">UMKM Project</h3>
                                 <p class="text-gray-300 text-sm md:text-base mb-2" data-en="May 2025" data-id="Mei 2025">May 2025</p>
-                                <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                                   data-en="Through the IDN Pro Bono program, I was entrusted with banner creation for a local MSME. During this week-long intensive program, I improved my interpersonal communication skills with clients and learned design skills—both executing specific briefs and independently creating creative concepts to strengthen their brand identities."
-                                   data-id="Melalui program IDN Pro Bono, saya dipercaya untuk menangani pembuatan banner bagi UMKM lokal. Dalam kegiatan intensif selama satu minggu ini, saya mengasah kemampuan komunikasi interpersonal dengan klien dan fleksibilitas dalam mendesain—baik dalam mengeksekusi brief spesifik maupun menciptakan konsep kreatif secara mandiri untuk memperkuat identitas merek mereka.">Through the IDN Pro Bono program, I was entrusted with banner creation for a local MSME. During this week-long intensive program, I improved my interpersonal communication skills with clients and learned design skills—both executing specific briefs and independently creating creative concepts to strengthen their brand identities.</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Through the UMKM Project program, I was entrusted with banner creation for a local MSME. During this week-long intensive program, I improved my interpersonal communication skills with clients and learned design skills—both executing specific briefs and independently creating creative concepts to strengthen their brand identities." data-id="Melalui program UMKM Proyek, saya dipercaya untuk menangani pembuatan banner bagi UMKM lokal. Dalam kegiatan intensif selama satu minggu ini, saya mengasah kemampuan komunikasi interpersonal dengan klien dan fleksibilitas dalam mendesain—baik dalam mengeksekusi brief spesifik maupun menciptakan konsep kreatif secara mandiri untuk memperkuat identitas merek mereka.">Through the IDN Pro Bono program, I was entrusted with banner creation for a local MSME. During this week-long intensive program, I improved my interpersonal communication skills with clients and learned design skills—both executing specific briefs and independently creating creative concepts to strengthen their brand identities.</p>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="mb-12 sm:w-1/2 sm:pr-6 timeline-item left">
+                        <div class="absolute w-4 h-4 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full left-[-8px] mt-3 z-10"></div>
+                        <div class="bg-white/10 border border-white/20 backdrop-blur-md p-6 rounded-xl card-glow flex items-start transform transition-all duration-300 hover:scale-105">
+                            <div class="timeline-icon mr-4 shadow-md"><i class="fas fa-graduation-cap"></i></div>
+                            <div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 gradient-text" data-en="Live In Lombok" data-id="Live In Lombok"> Live In Lombok</h3>
+                                <p class="text-gray-300 text-sm md:text-base mb-2" data-en="February 2026" data-id="Februari 2026">February 2026</p>
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="I participated in a week-long 'Live-In' program in Lombok, a school initiative designed to foster independence and professional ethics through real-world work experience. For five consecutive days, I was employed at a professional car wash facility in Mataram. The income generated from this labor was utilized to self-fund my expenses for the remainder of the trip. The program concluded with an educational tour of Lombok's natural and cultural landmarks. This experience was highly impactful, as it allowed me to develop a strong work ethic, practical field skills, and a deeper understanding of financial responsibility in a professional environment." data-id="Saya berpartisipasi dalam program Live-In selama satu minggu di Lombok, sebuah kegiatan sekolah yang dirancang untuk melatih kemandirian dan profesionalisme melalui pengalaman kerja nyata. Selama lima hari, saya bekerja secara penuh di sebuah unit usaha pencucian mobil di daerah Mataram. Seluruh penghasilan yang diperoleh selama bekerja digunakan secara mandiri untuk membiayai kebutuhan operasional hingga program selesai. Kegiatan ini ditutup dengan eksplorasi budaya dan alam di Lombok. Pengalaman ini sangat berkesan bagi saya karena memberikan wawasan nyata mengenai dinamika kerja lapangan, tanggung jawab finansial, serta manajemen waktu..">I participated in a week-long 'Live-In' program in Lombok, a school initiative designed to foster independence and professional ethics through real-world work experience. For five consecutive days, I was employed at a professional car wash facility in Mataram. The income generated from this labor was utilized to self-fund my expenses for the remainder of the trip. The program concluded with an educational tour of Lombok's natural and cultural landmarks. This experience was highly impactful, as it allowed me to develop a strong work ethic, practical field skills, and a deeper understanding of financial responsibility in a professional environment.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+   
+         <!-- JOURNEY PHOTO CARDS -->
+    
+    <section class="journey-photos-section py-10 pb-20 bg-transparent relative z-10">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h3 class="section-sub text-2xl sm:text-3xl font-bold mb-8 text-center gradient-text"
+                data-en="Journey Moments" data-id="Momen Perjalanan">Journey Moments</h3>
+
+            <div class="photo-scroll-wrap">
+                <div class="photo-row">
+
+                   
+                    <div class="photo-card" style="--card-tilt:-2.5deg; transform:rotate(-2.5deg);">
+                        <div class="photo-img-wrap">
+                            <img src=""
+                                 alt="IDN Boarding School"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                 style="display:none;">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-image"></i>
+                                <span>Tambahkan foto<br>IDN Boarding School</span>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <div class="photo-title" data-en="IDN Boarding School" data-id="IDN Boarding School">IDN Boarding School</div>
+                            <div class="photo-meta">
+                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Semarang, Indonesia</span>
+                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Juli 2024</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Card 2: First Laravel Project ── -->
+                    <div class="photo-card" style="--card-tilt:1.8deg; transform:rotate(1.8deg);">
+                        <div class="photo-img-wrap">
+                            <img src=""
+                                 alt="First Laravel Project"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                 style="display:none;">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-image"></i>
+                                <span>Tambahkan foto<br>Laravel Project</span>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <div class="photo-title" data-en="First Laravel Project" data-id="Proyek Laravel Pertama">First Laravel Project</div>
+                            <div class="photo-meta">
+                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Semarang, Indonesia</span>
+                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Oktober 2024</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Card 3: Tangguh Program ── -->
+                    <div class="photo-card" style="--card-tilt:-1.2deg; transform:rotate(-1.2deg);">
+                        <div class="photo-img-wrap">
+                            <img src=""
+                                 alt="Tangguh Program"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                 style="display:none;">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-image"></i>
+                                <span>Tambahkan foto<br>Program Tangguh</span>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <div class="photo-title" data-en="Tangguh Program" data-id="Program Tangguh">Tangguh Program</div>
+                            <div class="photo-meta">
+                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Kediri, Jawa Timur</span>
+                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Januari 2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Card 4: UMKM Project ── -->
+                    <div class="photo-card" style="--card-tilt:2.2deg; transform:rotate(2.2deg);">
+                        <div class="photo-img-wrap">
+                            <img src=""
+                                 alt="UMKM Project"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                 style="display:none;">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-image"></i>
+                                <span>Tambahkan foto<br>Proyek UMKM</span>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <div class="photo-title" data-en="UMKM Project" data-id="Proyek UMKM">UMKM Project</div>
+                            <div class="photo-meta">
+                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Semarang, Indonesia</span>
+                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Mei 2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Card 5: Live In Lombok ── -->
+                    <div class="photo-card" style="--card-tilt:-1.8deg; transform:rotate(-1.8deg);">
+                        <div class="photo-img-wrap">
+                            <img src=""
+                                 alt="Live In Lombok"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                 style="display:none;">
+                            <div class="photo-placeholder">
+                                <i class="fas fa-image"></i>
+                                <span>Tambahkan foto<br>Live In Lombok</span>
+                            </div>
+                        </div>
+                        <div class="photo-info">
+                            <div class="photo-title" data-en="Live In Lombok" data-id="Live In Lombok">Live In Lombok</div>
+                            <div class="photo-meta">
+                                <span class="photo-loc"><i class="fas fa-map-marker-alt"></i>Mataram, Lombok</span>
+                                <span class="photo-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+
+                </div>
+            </div>
+
+            <p class="text-center text-xs mt-3 text-gray-400 italic select-none"
+               data-en="← Scroll to see more moments →"
+               data-id="← Geser untuk lihat lebih banyak →">← Scroll to see more moments →</p>
         </div>
     </section>
 
@@ -694,78 +829,53 @@
     <section id="certificates" class="py-24 bg-transparent">
         <div class="container mx-auto px-4 sm:px-6">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-16 text-center gradient-text"
-                data-en="My Certificates"
-                data-id="Sertifikat Saya">My Certificates</h2>
+                data-en="My Certificates" data-id="Sertifikat Saya">My Certificates</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="Sertifikat1.png"
-                             alt="AI Fundamental"
-                             data-en-alt="AI Fundamental"
-                             data-id-alt="Dasar-Dasar AI"
-                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        <img src="Sertifikat1.png" alt="AI Fundamental" data-en-alt="AI Fundamental" data-id-alt="Dasar-Dasar AI" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="AI Fundamental" data-id="Dasar-Dasar AI">AI Fundamental</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="This certificate demonstrates a deep understanding of fundamental AI concepts including machine learning and deep learning."
-                           data-id="Sertifikat ini membuktikan pemahaman mendalam mengenai konsep dasar AI termasuk machine learning dan deep learning.">This certificate demonstrates a deep understanding of fundamental AI concepts including machine learning and deep learning.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="This certificate demonstrates a deep understanding of fundamental AI concepts including machine learning and deep learning." data-id="Sertifikat ini membuktikan pemahaman mendalam mengenai konsep dasar AI termasuk machine learning dan deep learning.">This certificate demonstrates a deep understanding of fundamental AI concepts including machine learning and deep learning.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="sertifikat2.png"
-                             alt="Fundamental Dart"
-                             data-en-alt="Fundamental Dart"
-                             data-id-alt="Dasar-Dasar Dart"
-                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        <img src="sertifikat2.png" alt="Fundamental Dart" data-en-alt="Fundamental Dart" data-id-alt="Dasar-Dasar Dart" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Fundamental Dart" data-id="Dasar-Dasar Dart">Fundamental Dart</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="Certification for completing the Fundamental Dart course, covering basic syntax and object-oriented programming."
-                           data-id="Sertifikasi untuk menyelesaikan kursus Dasar-Dasar Dart, mencakup sintaks dasar dan pemrograman berorientasi objek.">Certification for completing the Fundamental Dart course, covering basic syntax and object-oriented programming.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Certification for completing the Fundamental Dart course, covering basic syntax and object-oriented programming." data-id="Sertifikasi untuk menyelesaikan kursus Dasar-Dasar Dart, mencakup sintaks dasar dan pemrograman berorientasi objek.">Certification for completing the Fundamental Dart course, covering basic syntax and object-oriented programming.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="sertifikat3.jpg"
-                             alt="Fundamental CSS"
-                             data-en-alt="Fundamental CSS"
-                             data-id-alt="Dasar-Dasar CSS"
-                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        <img src="sertifikat3.jpg" alt="Fundamental CSS" data-en-alt="Fundamental CSS" data-id-alt="Dasar-Dasar CSS" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Fundamental CSS" data-id="Dasar-Dasar CSS">Fundamental CSS</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="Completed the CSS fundamentals course covering styling, multimedia elements, and responsive layouts."
-                           data-id="Menyelesaikan kursus dasar CSS yang mencakup penataan gaya, elemen multimedia, dan tata letak responsif.">Completed the CSS fundamentals course covering styling, multimedia elements, and responsive layouts.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed the CSS fundamentals course covering styling, multimedia elements, and responsive layouts." data-id="Menyelesaikan kursus dasar CSS yang mencakup penataan gaya, elemen multimedia, dan tata letak responsif.">Completed the CSS fundamentals course covering styling, multimedia elements, and responsive layouts.</p>
                     </div>
                 </div>
                 <div class="bg-white/8 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden card-glow transition-all duration-300 group shadow-xl">
                     <div class="h-80 relative overflow-hidden">
-                        <img src="sertifikat4.png"
-                             alt="Fundamental HTML"
-                             data-en-alt="Fundamental HTML"
-                             data-id-alt="Dasar-Dasar HTML"
-                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        <img src="sertifikat4.png" alt="Fundamental HTML" data-en-alt="Fundamental HTML" data-id-alt="Dasar-Dasar HTML" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl md:text-2xl font-bold mb-3 gradient-text" data-en="Fundamental HTML" data-id="Dasar-Dasar HTML">Fundamental HTML</h3>
-                        <p class="text-gray-300 text-sm md:text-base leading-relaxed"
-                           data-en="Completed the HTML fundamentals course covering web document structure, multimedia, forms, and tables."
-                           data-id="Menyelesaikan kursus fundamental HTML yang mencakup struktur dokumen web, multimedia, form, dan tabel.">Completed the HTML fundamentals course covering web document structure, multimedia, forms, and tables.</p>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-en="Completed the HTML fundamentals course covering web document structure, multimedia, forms, and tables." data-id="Menyelesaikan kursus fundamental HTML yang mencakup struktur dokumen web, multimedia, form, dan tabel.">Completed the HTML fundamentals course covering web document structure, multimedia, forms, and tables.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Hobbies & Contact Section -->
+    <!-- Hobbies -->
     <div class="mt-8 md:mt-16 text-center relative z-10">
         <h3 class="text-xl md:text-2xl lg:text-3xl font-extrabold mb-6 gradient-text" data-en="Hobbies" data-id="Hobi">Hobbies</h3>
         <div class="flex flex-wrap justify-center gap-4 md:gap-8">
@@ -775,6 +885,7 @@
         </div>
     </div>
 
+    <!-- Contact Section -->
     <section id="contact" class="py-12 md:py-20 lg:py-24 bg-transparent relative overflow-hidden">
         <div class="container mx-auto px-4 sm:px-6 z-10">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-10 md:mb-16 text-center gradient-text" data-en="Get in Touch" data-id="Hubungi Saya">Get in Touch</h2>
@@ -822,17 +933,18 @@
     </div>
 
     <script>
-        // ========== TYPING ANIMATION ==========
+        // ══════════════════════════════════════════
+        // TYPING ANIMATION
+        // ══════════════════════════════════════════
         const typedTextEl = document.getElementById('typed-text');
         const roles = ['Frontend Developer', 'SEO Analyst', 'AI Enthusiast', 'DKV'];
-        let roleIndex = 0,
-            charIndex = 0,
-            isDeleting = false;
+        let roleIndex = 0, charIndex = 0, isDeleting = false;
 
         function typeRole() {
             const current = roles[roleIndex];
-            typedTextEl.textContent = !isDeleting ? current.substring(0, charIndex + 1) : current.substring(0, charIndex -
-                1);
+            typedTextEl.textContent = !isDeleting
+                ? current.substring(0, charIndex + 1)
+                : current.substring(0, charIndex - 1);
             charIndex += isDeleting ? -1 : 1;
             if (!isDeleting && charIndex === current.length) {
                 isDeleting = true;
@@ -841,14 +953,18 @@
                 isDeleting = false;
                 roleIndex = (roleIndex + 1) % roles.length;
                 setTimeout(typeRole, 80);
-            } else setTimeout(typeRole, isDeleting ? 40 : 80);
+            } else {
+                setTimeout(typeRole, isDeleting ? 40 : 80);
+            }
         }
         document.addEventListener('DOMContentLoaded', () => setTimeout(typeRole, 500));
 
-        // ========== 3D BACKGROUND - DINAMIS & PELAN ==========
+        // ══════════════════════════════════════════
+        // 3D BACKGROUND
+        // ══════════════════════════════════════════
         const containerBg = document.getElementById('full-canvas-bg');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const scene    = new THREE.Scene();
+        const camera   = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0x000000, 0);
@@ -858,25 +974,25 @@
         const posArr = new Float32Array(particlesCount * 3);
         const colArr = new Float32Array(particlesCount * 3);
         for (let i = 0; i < particlesCount; i++) {
-            posArr[i * 3] = (Math.random() - 0.5) * 16;
-            posArr[i * 3 + 1] = (Math.random() - 0.5) * 14;
-            posArr[i * 3 + 2] = (Math.random() - 0.5) * 20;
-            colArr[i * 3] = 0.2 + Math.random() * 0.6;
-            colArr[i * 3 + 1] = 0.55 + Math.random() * 0.45;
-            colArr[i * 3 + 2] = 0.65 + Math.random() * 0.35;
+            posArr[i*3]   = (Math.random() - 0.5) * 16;
+            posArr[i*3+1] = (Math.random() - 0.5) * 14;
+            posArr[i*3+2] = (Math.random() - 0.5) * 20;
+            colArr[i*3]   = 0.2 + Math.random() * 0.6;
+            colArr[i*3+1] = 0.55 + Math.random() * 0.45;
+            colArr[i*3+2] = 0.65 + Math.random() * 0.35;
         }
         const partGeo = new THREE.BufferGeometry();
         partGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
-        partGeo.setAttribute('color', new THREE.BufferAttribute(colArr, 3));
+        partGeo.setAttribute('color',    new THREE.BufferAttribute(colArr, 3));
 
         const partMat = new THREE.ShaderMaterial({
             uniforms: {
-                uTime: { value: 0 },
-                uIsLight: { value: false },
+                uTime:   { value: 0 },
+                uIsLight:{ value: false },
                 uMouseX: { value: 0 },
                 uMouseY: { value: 0 },
             },
-            vertexShader: /* glsl */ `
+            vertexShader: `
                 attribute vec3 color;
                 varying vec3 vColor;
                 varying float vDist;
@@ -886,21 +1002,19 @@
                 void main() {
                     vColor = color;
                     vec3 pos = position;
-                    // Gerakan gelombang lembut multi-layer
                     float wave1 = sin(uTime * 0.25 + pos.y * 1.2) * 0.06;
-                    float wave2 = cos(uTime * 0.2 + pos.z * 0.9) * 0.05;
-                    float wave3 = sin(uTime * 0.3 + pos.x * 0.7) * 0.04;
+                    float wave2 = cos(uTime * 0.2  + pos.z * 0.9) * 0.05;
+                    float wave3 = sin(uTime * 0.3  + pos.x * 0.7) * 0.04;
                     pos.x += wave1 + wave3 * 0.5;
                     pos.y += wave2 + wave1 * 0.4;
                     pos.z += cos(uTime * 0.22 + pos.x * 0.8) * 0.05;
                     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
-                    float dist = length(mv.xyz);
-                    vDist = dist;
+                    vDist = length(mv.xyz);
                     gl_PointSize = (6.5 / -mv.z) * 1.2;
                     gl_Position = projectionMatrix * mv;
                 }
             `,
-            fragmentShader: /* glsl */ `
+            fragmentShader: `
                 uniform bool uIsLight;
                 varying vec3 vColor;
                 varying float vDist;
@@ -924,29 +1038,25 @@
         scene.add(points);
         camera.position.z = 8;
 
-        // Secondary subtle particle ring
         const ringGeo = new THREE.BufferGeometry();
         const ringCount = 3000;
         const ringPos = new Float32Array(ringCount * 3);
         const ringCol = new Float32Array(ringCount * 3);
         for (let i = 0; i < ringCount; i++) {
-            const angle = Math.random() * Math.PI * 2;
+            const angle  = Math.random() * Math.PI * 2;
             const radius = 5 + Math.random() * 6;
-            ringPos[i * 3] = Math.cos(angle) * radius;
-            ringPos[i * 3 + 1] = (Math.random() - 0.5) * 8;
-            ringPos[i * 3 + 2] = Math.sin(angle) * radius;
-            ringCol[i * 3] = 0.3;
-            ringCol[i * 3 + 1] = 0.7;
-            ringCol[i * 3 + 2] = 0.8;
+            ringPos[i*3]   = Math.cos(angle) * radius;
+            ringPos[i*3+1] = (Math.random() - 0.5) * 8;
+            ringPos[i*3+2] = Math.sin(angle) * radius;
+            ringCol[i*3]   = 0.3;
+            ringCol[i*3+1] = 0.7;
+            ringCol[i*3+2] = 0.8;
         }
         ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
-        ringGeo.setAttribute('color', new THREE.BufferAttribute(ringCol, 3));
+        ringGeo.setAttribute('color',    new THREE.BufferAttribute(ringCol, 3));
         const ringMat = new THREE.ShaderMaterial({
-            uniforms: {
-                uTime: { value: 0 },
-                uIsLight: { value: false },
-            },
-            vertexShader: /* glsl */ `
+            uniforms: { uTime: { value: 0 }, uIsLight: { value: false } },
+            vertexShader: `
                 attribute vec3 color;
                 varying vec3 vColor;
                 uniform float uTime;
@@ -954,13 +1064,13 @@
                     vColor = color;
                     vec3 pos = position;
                     pos.y += sin(uTime * 0.35 + pos.x * 0.5) * 0.08;
-                    pos.x += cos(uTime * 0.3 + pos.z * 0.5) * 0.06;
+                    pos.x += cos(uTime * 0.3  + pos.z * 0.5) * 0.06;
                     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
                     gl_PointSize = (3.5 / -mv.z) * 1.0;
-                    gl_Position = projectionMatrix * mv;
+                    gl_Position  = projectionMatrix * mv;
                 }
             `,
-            fragmentShader: /* glsl */ `
+            fragmentShader: `
                 uniform bool uIsLight;
                 varying vec3 vColor;
                 void main() {
@@ -981,39 +1091,28 @@
         scene.add(ringPoints);
 
         let clock = new THREE.Clock();
-        let mouseX = 0,
-            mouseY = 0;
-
+        let mouseX = 0, mouseY = 0;
         document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseX = (e.clientX / window.innerWidth)  *  2 - 1;
             mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
         });
 
         function animateBg() {
             requestAnimationFrame(animateBg);
             const elapsed = clock.getElapsedTime();
-            partMat.uniforms.uTime.value = elapsed;
-            ringMat.uniforms.uTime.value = elapsed;
-
-            // Rotasi sangat pelan
-            points.rotation.y += 0.0007;
-            ringPoints.rotation.y -= 0.0005;
-
-            // Osilasi lembut pada sumbu X dan Z
-            points.rotation.x = Math.sin(elapsed * 0.18) * 0.04;
-            points.rotation.z = Math.cos(elapsed * 0.15) * 0.03;
-            ringPoints.rotation.x = Math.cos(elapsed * 0.2) * 0.05;
-            ringPoints.rotation.z = Math.sin(elapsed * 0.17) * 0.04;
-
-            // Kamera bergerak sangat halus mengikuti mouse
+            partMat.uniforms.uTime.value  = elapsed;
+            ringMat.uniforms.uTime.value  = elapsed;
+            points.rotation.y      += 0.0007;
+            ringPoints.rotation.y  -= 0.0005;
+            points.rotation.x       = Math.sin(elapsed * 0.18) * 0.04;
+            points.rotation.z       = Math.cos(elapsed * 0.15) * 0.03;
+            ringPoints.rotation.x   = Math.cos(elapsed * 0.2)  * 0.05;
+            ringPoints.rotation.z   = Math.sin(elapsed * 0.17) * 0.04;
             camera.position.x += (mouseX * 0.6 - camera.position.x) * 0.015;
             camera.position.y += (mouseY * 0.4 - camera.position.y) * 0.015;
             camera.lookAt(scene.position);
-
-            // Breathing effect pada skala
             const breathe = 1 + Math.sin(elapsed * 0.3) * 0.015;
             points.scale.setScalar(breathe);
-
             renderer.render(scene, camera);
         }
         animateBg();
@@ -1024,10 +1123,12 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // ========== THEME TOGGLE ==========
-        const themeBtn = document.getElementById('theme-toggle'),
-            themeIcon = document.getElementById('theme-icon'),
-            themeSpan = document.getElementById('theme-text');
+        // ══════════════════════════════════════════
+        // THEME TOGGLE
+        // ══════════════════════════════════════════
+        const themeBtn  = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeSpan = document.getElementById('theme-text');
 
         function applyTheme(isDark) {
             if (isDark) {
@@ -1051,21 +1152,19 @@
         }
 
         themeBtn.addEventListener('click', () => {
-            const isLight = document.body.classList.contains('light-mode');
-            setTheme(isLight ? 'dark' : 'light');
+            setTheme(document.body.classList.contains('light-mode') ? 'dark' : 'light');
         });
 
         const savedTheme = localStorage.getItem('portfolio-theme');
         if (savedTheme === 'light') setTheme('light');
         else if (savedTheme === 'dark') setTheme('dark');
-        else {
-            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-            setTheme(prefersLight ? 'light' : 'dark');
-        }
+        else setTheme(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
 
-        // ========== LANGUAGE SWITCHER ==========
-        const langEn = document.getElementById('lang-en'),
-            langId = document.getElementById('lang-id');
+        // ══════════════════════════════════════════
+        // LANGUAGE SWITCHER
+        // ══════════════════════════════════════════
+        const langEn = document.getElementById('lang-en');
+        const langId = document.getElementById('lang-id');
 
         function setLanguage(lang) {
             document.documentElement.lang = lang;
@@ -1093,37 +1192,87 @@
             }
             localStorage.setItem('portfolio-lang', lang);
             const isLight = document.body.classList.contains('light-mode');
-            themeSpan.textContent = isLight ? (lang === 'en' ? 'Light' : 'Terang') : (lang === 'en' ? 'Dark' :
-            'Gelap');
+            themeSpan.textContent = isLight
+                ? (lang === 'en' ? 'Light' : 'Terang')
+                : (lang === 'en' ? 'Dark'  : 'Gelap');
         }
+
         langEn.onclick = () => setLanguage('en');
         langId.onclick = () => setLanguage('id');
         setLanguage(localStorage.getItem('portfolio-lang') || 'en');
 
-        // ========== SMOOTH SCROLL & MOBILE MENU ==========
+        // ══════════════════════════════════════════
+        // SMOOTH SCROLL & MOBILE MENU
+        // ══════════════════════════════════════════
         document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) target.scrollIntoView({ behavior: 'smooth' });
             document.getElementById('mobile-menu')?.classList.add('hidden');
         }));
-        document.getElementById('mobile-menu-btn')?.addEventListener('click', () => document.getElementById(
-            'mobile-menu').classList.toggle('hidden'));
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', () =>
+            document.getElementById('mobile-menu').classList.toggle('hidden')
+        );
 
-        // ========== GSAP ANIMATIONS ==========
+        // ══════════════════════════════════════════
+        // GSAP ANIMATIONS
+        // ══════════════════════════════════════════
         gsap.registerPlugin(ScrollTrigger);
+
+        // Timeline items
         gsap.utils.toArray('.timeline-item').forEach(el => {
-            gsap.fromTo(el, { opacity: 0, x: el.classList.contains('left') ? -20 : 20 }, {
-                scrollTrigger: { trigger: el, start: 'top 85%' },
-                opacity: 1,
-                x: 0,
-                duration: 0.5
-            });
+            gsap.fromTo(el,
+                { opacity: 0, x: el.classList.contains('left') ? -20 : 20 },
+                {
+                    scrollTrigger: { trigger: el, start: 'top 85%' },
+                    opacity: 1, x: 0, duration: 0.5
+                }
+            );
         });
+
+        // Progress bar
         gsap.to('.progress-bar', {
-            scrollTrigger: { trigger: '#experience', start: 'top 80%', end: 'bottom 20%', scrub: 0.5 },
+            scrollTrigger: {
+                trigger: '#experience',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                scrub: 0.5
+            },
             height: '100%'
         });
+
+        // ── Photo cards stagger entrance ──
+        gsap.utils.toArray('.photo-card').forEach((card, i) => {
+            const tilt = parseFloat(card.style.getPropertyValue('--card-tilt') || '0');
+            gsap.fromTo(card,
+                { opacity: 0, y: 30, rotation: tilt },
+                {
+                    scrollTrigger: { trigger: '.journey-photos-section', start: 'top 85%' },
+                    opacity: 1,
+                    y: 0,
+                    rotation: tilt,
+                    duration: 0.55,
+                    delay: i * 0.1,
+                    ease: 'back.out(1.4)',
+                    onComplete: () => card.classList.add('photo-visible')
+                }
+            );
+        });
+
+        // Add-card entrance
+        const addCard = document.querySelector('.photo-card-add');
+        if (addCard) {
+            gsap.fromTo(addCard,
+                { opacity: 0, y: 30 },
+                {
+                    scrollTrigger: { trigger: '.journey-photos-section', start: 'top 85%' },
+                    opacity: 1, y: 0, duration: 0.5,
+                    delay: document.querySelectorAll('.photo-card').length * 0.1 + 0.05,
+                    ease: 'back.out(1.2)',
+                    onComplete: () => addCard.classList.add('photo-visible')
+                }
+            );
+        }
     </script>
 </body>
 </html>
