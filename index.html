@@ -22,17 +22,74 @@
             --shadow: 5px 5px 0px #0d0d0d;
             --shadow-lg: 8px 8px 0px #0d0d0d;
             --radius: 4px;
+            --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: 'Syne', sans-serif;
             background-color: var(--bg);
             color: var(--black);
             overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent1);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+            display: none;
+        }
+        .custom-cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--accent1);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease;
+            mix-blend-mode: difference;
+            display: none;
+        }
+        .custom-cursor.hover {
+            transform: translate(-50%, -50%) scale(1.8);
+            border-color: var(--accent3);
+            border-width: 3px;
+        }
+        .custom-cursor-dot.hover {
+            transform: translate(-50%, -50%) scale(0.5);
+            background: var(--accent3);
+        }
+        @media (hover: hover) {
+            .custom-cursor,
+            .custom-cursor-dot {
+                display: block;
+            }
+        }
+        @media (max-width: 768px) {
+            .custom-cursor,
+            .custom-cursor-dot {
+                display: none !important;
+            }
         }
 
         /* ═══ NOISE TEXTURE OVERLAY ═══ */
@@ -43,12 +100,76 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 999;
+            animation: noiseShift 0.5s steps(3) infinite;
+        }
+        @keyframes noiseShift {
+            0%,
+            100% {
+                opacity: 0.035;
+            }
+            33% {
+                opacity: 0.045;
+            }
+            66% {
+                opacity: 0.03;
+            }
+        }
+
+        /* ═══ FLOATING PARTICLES ═══ */
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0.08;
+            animation: floatParticle linear infinite;
+            pointer-events: none;
+            user-select: none;
+        }
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+                transform: translateY(90vh) rotate(36deg) scale(1);
+            }
+            90% {
+                opacity: 0.08;
+                transform: translateY(10vh) rotate(324deg) scale(0.8);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
         }
 
         /* ═══ SCROLLBAR ═══ */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--black); border: 2px solid var(--bg); }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--black);
+            border: 2px solid var(--bg);
+            animation: scrollbarPulse 3s ease-in-out infinite;
+        }
+        @keyframes scrollbarPulse {
+            0%,
+            100% {
+                background: var(--black);
+            }
+            50% {
+                background: var(--accent1);
+            }
+        }
 
         /* ═══ UTILITY ═══ */
         .nb-box {
@@ -72,6 +193,24 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             background: var(--accent3);
+            transition: all 0.2s var(--transition-bounce);
+            animation: tagWiggle 4s ease-in-out infinite;
+        }
+        @keyframes tagWiggle {
+            0%,
+            100% {
+                transform: rotate(0);
+            }
+            25% {
+                transform: rotate(0.5deg);
+            }
+            75% {
+                transform: rotate(-0.5deg);
+            }
+        }
+        .tag:hover {
+            transform: scale(1.08) rotate(-1deg);
+            box-shadow: 4px 4px 0 var(--black);
         }
         .section-label {
             font-family: 'Space Mono', monospace;
@@ -82,6 +221,16 @@
             color: var(--black);
             opacity: 0.5;
             margin-bottom: 8px;
+            animation: labelBlink 2s ease-in-out infinite;
+        }
+        @keyframes labelBlink {
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.8;
+            }
         }
         h2.section-title {
             font-family: 'Unbounded', sans-serif;
@@ -97,11 +246,13 @@
             border: 2px solid rgba(255, 107, 53, 0.25);
             outline: 1px dashed rgba(255, 107, 53, 0.15);
             box-shadow: inset 0 0 0 1px rgba(255, 107, 53, 0.08);
+            transition: border-color 0.4s ease;
         }
         section::before {
             content: attr(id);
             position: absolute;
-            top: 10px; left: 10px;
+            top: 10px;
+            left: 10px;
             font-family: 'Space Mono', monospace;
             font-size: 10px;
             font-weight: 700;
@@ -114,7 +265,17 @@
             letter-spacing: 0.08em;
             pointer-events: none;
             z-index: 10;
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+            animation: sectionBadgePulse 3s ease-in-out infinite;
+        }
+        @keyframes sectionBadgePulse {
+            0%,
+            100% {
+                box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+            }
+            50% {
+                box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+            }
         }
         [data-theme="dark"] section {
             border-color: rgba(255, 230, 109, 0.25);
@@ -129,11 +290,22 @@
         /* ═══ NAVBAR ═══ */
         nav {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
             background: var(--black);
             border-bottom: 3px solid var(--black);
             padding: 0 2rem;
+            animation: navSlideDown 0.6s var(--transition-bounce);
+        }
+        @keyframes navSlideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
         }
         .nav-inner {
             max-width: 1200px;
@@ -150,8 +322,31 @@
             color: var(--accent3);
             text-decoration: none;
             letter-spacing: -0.02em;
+            position: relative;
+            transition: all 0.3s var(--transition-bounce);
         }
-        .nav-links { display: flex; gap: 0; }
+        .nav-logo:hover {
+            color: var(--accent1);
+            transform: scale(1.05);
+            text-shadow: 2px 2px 0 rgba(255, 107, 53, 0.4);
+        }
+        .nav-logo::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent1);
+            transition: width 0.3s var(--transition-bounce);
+        }
+        .nav-logo:hover::after {
+            width: 100%;
+        }
+        .nav-links {
+            display: flex;
+            gap: 0;
+        }
         .nav-links a {
             font-family: 'Space Mono', monospace;
             font-size: 12px;
@@ -161,13 +356,29 @@
             text-decoration: none;
             padding: 8px 16px;
             border: 1px solid transparent;
-            transition: all 0.15s;
+            transition: all 0.2s var(--transition-bounce);
             letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent3);
+            transition: left 0.3s var(--transition-bounce);
+            z-index: -1;
+        }
+        .nav-links a:hover::before {
+            left: 0;
         }
         .nav-links a:hover {
-            background: var(--accent3);
             color: var(--black);
             border-color: var(--accent3);
+            transform: translateY(-2px);
         }
         #mobile-menu-btn {
             display: none;
@@ -177,11 +388,28 @@
             padding: 6px 10px;
             cursor: pointer;
             border-radius: 2px;
+            transition: all 0.2s var(--transition-bounce);
+        }
+        #mobile-menu-btn:hover {
+            background: var(--accent3);
+            color: var(--black);
+            transform: scale(1.1);
         }
         #mobile-menu {
             display: none;
             background: var(--black);
             border-top: 2px solid #333;
+            animation: mobileMenuIn 0.3s var(--transition-bounce);
+        }
+        @keyframes mobileMenuIn {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 400px;
+            }
         }
         #mobile-menu a {
             display: block;
@@ -194,16 +422,33 @@
             padding: 14px 2rem;
             border-bottom: 1px solid #222;
             letter-spacing: 0.05em;
+            transition: all 0.2s ease;
         }
-        #mobile-menu a:hover { background: var(--accent3); color: var(--black); }
+        #mobile-menu a:hover {
+            background: var(--accent3);
+            color: var(--black);
+            padding-left: 2.5rem;
+        }
 
         /* ═══ FLOATING CONTROLS ═══ */
         .floating-controls {
             position: fixed;
-            bottom: 20px; right: 20px;
+            bottom: 20px;
+            right: 20px;
             z-index: 9999;
             display: flex;
             gap: 6px;
+            animation: floatIn 0.6s var(--transition-bounce) 0.8s both;
+        }
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .ctrl-btn {
             font-family: 'Space Mono', monospace;
@@ -216,12 +461,49 @@
             cursor: pointer;
             text-transform: uppercase;
             box-shadow: 3px 3px 0 var(--accent3);
-            transition: all 0.1s;
+            transition: all 0.2s var(--transition-bounce);
             border-radius: 2px;
+            position: relative;
+            overflow: hidden;
         }
-        .ctrl-btn:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--accent3); }
-        .ctrl-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--accent3); }
-        .ctrl-btn.active { background: var(--accent3); color: var(--black); border-color: var(--black); box-shadow: 3px 3px 0 var(--black); }
+        .ctrl-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent3);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s var(--transition-bounce);
+            z-index: -1;
+        }
+        .ctrl-btn:hover::after {
+            transform: scaleX(1);
+        }
+        .ctrl-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--accent3);
+            color: var(--black);
+        }
+        .ctrl-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0 var(--accent3);
+        }
+        .ctrl-btn.active {
+            background: var(--accent3);
+            color: var(--black);
+            border-color: var(--black);
+            box-shadow: 3px 3px 0 var(--black);
+            animation: activeBtnPulse 2s ease-in-out infinite;
+        }
+        @keyframes activeBtnPulse {
+            0%,
+            100% {
+                box-shadow: 3px 3px 0 var(--black);
+            }
+            50% {
+                box-shadow: 5px 5px 0 var(--black);
+            }
+        }
 
         /* ═══ HERO ═══ */
         #home {
@@ -241,8 +523,23 @@
             gap: 0;
             align-items: center;
             width: 100%;
+            position: relative;
+            z-index: 2;
         }
-        .hero-left { padding-right: 3rem; }
+        .hero-left {
+            padding-right: 3rem;
+            animation: heroLeftIn 0.8s var(--transition-bounce) 0.3s both;
+        }
+        @keyframes heroLeftIn {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -258,9 +555,31 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 24px;
+            animation: badgeBounce 2s var(--transition-bounce) infinite;
         }
-        .hero-badge::before { content: '●'; color: var(--black); animation: blink 1s infinite; }
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        @keyframes badgeBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        .hero-badge::before {
+            content: '●';
+            color: var(--black);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
         .hero-name {
             font-family: 'Unbounded', sans-serif;
             font-size: clamp(2.5rem, 6vw, 5rem);
@@ -276,6 +595,29 @@
             padding: 0 8px;
             margin-left: -4px;
             width: fit-content;
+            animation: glitchText 5s ease-in-out infinite;
+        }
+        @keyframes glitchText {
+            0%,
+            90%,
+            100% {
+                transform: translate(0);
+            }
+            91% {
+                transform: translate(-3px, 2px);
+            }
+            92% {
+                transform: translate(3px, -2px);
+            }
+            93% {
+                transform: translate(-2px, -1px);
+            }
+            94% {
+                transform: translate(2px, 1px);
+            }
+            95% {
+                transform: translate(0);
+            }
         }
         .hero-role-wrap {
             font-family: 'Space Mono', monospace;
@@ -285,7 +627,19 @@
             margin-bottom: 32px;
             min-height: 2em;
         }
-        #typed-cursor { color: var(--accent1); }
+        #typed-cursor {
+            color: var(--accent1);
+            animation: cursorBlink 0.7s step-end infinite;
+        }
+        @keyframes cursorBlink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
         .hero-cta {
             display: flex;
             gap: 12px;
@@ -305,10 +659,28 @@
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.12s;
+            transition: all 0.2s var(--transition-bounce);
             border-radius: 2px;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-primary:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--accent1); }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s;
+        }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        .btn-primary:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--accent1);
+        }
         .btn-secondary {
             font-family: 'Space Mono', monospace;
             font-size: 13px;
@@ -323,23 +695,83 @@
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.12s;
+            transition: all 0.2s var(--transition-bounce);
             border-radius: 2px;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-secondary:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--black); }
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08), transparent);
+            transition: left 0.5s;
+        }
+        .btn-secondary:hover::before {
+            left: 100%;
+        }
+        .btn-secondary:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--black);
+        }
 
         /* Hero right — stacked cards */
-        .hero-right { position: relative; display: flex; justify-content: center; align-items: center; }
+        .hero-right {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: heroRightIn 0.8s var(--transition-bounce) 0.5s both;
+        }
+        @keyframes heroRightIn {
+            from {
+                opacity: 0;
+                transform: translateX(60px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
         .profile-card-wrap {
             position: relative;
             width: 320px;
             height: 380px;
+            animation: floatCard 6s ease-in-out infinite;
+        }
+        @keyframes floatCard {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-8px);
+            }
+            75% {
+                transform: translateY(4px);
+            }
         }
         .profile-shadow {
             position: absolute;
             inset: 8px -8px -8px 8px;
             background: var(--black);
             border-radius: var(--radius);
+            animation: shadowShift 6s ease-in-out infinite;
+        }
+        @keyframes shadowShift {
+            0%,
+            100% {
+                inset: 8px -8px -8px 8px;
+            }
+            25% {
+                inset: 4px -4px -12px 12px;
+            }
+            75% {
+                inset: 12px -12px -4px 4px;
+            }
         }
         .profile-card {
             position: absolute;
@@ -348,16 +780,23 @@
             border: var(--border);
             border-radius: var(--radius);
             overflow: hidden;
+            transition: transform 0.3s var(--transition-bounce);
         }
         .profile-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.5s ease;
+        }
+        .profile-card:hover img {
+            transform: scale(1.05);
         }
         .profile-name-tag {
             position: absolute;
-            bottom: 0; left: 0; right: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
             background: var(--black);
             color: var(--accent3);
             font-family: 'Unbounded', sans-serif;
@@ -376,6 +815,11 @@
             padding: 12px 18px;
             border-radius: var(--radius);
             font-family: 'Space Mono', monospace;
+            transition: all 0.3s var(--transition-bounce);
+        }
+        .stat-card:hover {
+            transform: translate(-4px, -6px) !important;
+            box-shadow: 8px 8px 0 var(--black);
         }
         .stat-card .num {
             font-family: 'Unbounded', sans-serif;
@@ -383,6 +827,16 @@
             font-weight: 900;
             color: var(--black);
             line-height: 1;
+            animation: countPulse 3s ease-in-out infinite;
+        }
+        @keyframes countPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
         }
         .stat-card .label {
             font-size: 10px;
@@ -392,8 +846,36 @@
             opacity: 0.6;
             letter-spacing: 0.08em;
         }
-        .stat-card-1 { top: -20px; right: -60px; background: var(--accent5); }
-        .stat-card-2 { bottom: 60px; left: -70px; background: var(--accent2); }
+        .stat-card-1 {
+            top: -20px;
+            right: -60px;
+            background: var(--accent5);
+            animation: statFloat1 4s ease-in-out infinite;
+        }
+        @keyframes statFloat1 {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .stat-card-2 {
+            bottom: 60px;
+            left: -70px;
+            background: var(--accent2);
+            animation: statFloat2 4s ease-in-out 1s infinite;
+        }
+        @keyframes statFloat2 {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
 
         /* Hero decorations */
         .hero-deco {
@@ -404,7 +886,21 @@
             pointer-events: none;
             user-select: none;
         }
-        .hero-deco-1 { font-size: 18vw; bottom: -20px; right: -20px; color: var(--black); }
+        .hero-deco-1 {
+            font-size: 18vw;
+            bottom: -20px;
+            right: -20px;
+            color: var(--black);
+            animation: decoRotate 20s linear infinite;
+        }
+        @keyframes decoRotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         /* ═══ MARQUEE ═══ */
         .marquee-strip {
@@ -414,6 +910,29 @@
             padding: 14px 0;
             overflow: hidden;
             white-space: nowrap;
+            position: relative;
+        }
+        .marquee-strip::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            background: linear-gradient(to right, var(--black), transparent);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .marquee-strip::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            background: linear-gradient(to left, var(--black), transparent);
+            z-index: 2;
+            pointer-events: none;
         }
         .marquee-inner {
             display: inline-block;
@@ -427,21 +946,42 @@
             color: var(--accent3);
             letter-spacing: 0.05em;
             margin-right: 48px;
+            transition: color 0.3s;
         }
         .marquee-inner span.dot {
             color: var(--accent1);
             margin-right: 48px;
             font-size: 18px;
             vertical-align: middle;
+            animation: dotSpin 2s linear infinite;
+            display: inline-block;
         }
-        @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        @keyframes dotSpin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
 
         /* ═══ ABOUT ═══ */
         #about {
             padding: 100px 2rem;
             background: var(--bg);
         }
-        .about-inner { max-width: 1200px; margin: 0 auto; }
+        .about-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
         .about-header {
             display: flex;
             justify-content: space-between;
@@ -464,15 +1004,30 @@
             border-radius: var(--radius);
             position: relative;
             overflow: hidden;
+            transition: all 0.3s var(--transition-bounce);
+        }
+        .about-card:hover {
+            transform: translate(-4px, -6px);
+            box-shadow: 12px 12px 0 var(--black);
         }
         .about-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 5px;
+            transition: height 0.3s var(--transition-bounce);
         }
-        .about-card.card-orange::before { background: var(--accent1); }
-        .about-card.card-teal::before { background: var(--accent2); }
+        .about-card:hover::before {
+            height: 8px;
+        }
+        .about-card.card-orange::before {
+            background: var(--accent1);
+        }
+        .about-card.card-teal::before {
+            background: var(--accent2);
+        }
         .about-card h3 {
             font-family: 'Unbounded', sans-serif;
             font-size: 1.2rem;
@@ -499,18 +1054,47 @@
             box-shadow: var(--shadow);
             border-radius: var(--radius);
             text-align: center;
-            transition: all 0.12s;
+            transition: all 0.3s var(--transition-bounce);
             cursor: default;
+            position: relative;
+            overflow: hidden;
         }
-        .skill-card:hover { transform: translate(-4px,-4px); box-shadow: 9px 9px 0 var(--black); }
-        .skill-card:nth-child(1) { background: var(--accent3); }
-        .skill-card:nth-child(2) { background: var(--accent5); }
-        .skill-card:nth-child(3) { background: var(--accent2); }
-        .skill-card:nth-child(4) { background: var(--accent6); }
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .skill-card:hover::after {
+            opacity: 1;
+        }
+        .skill-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 9px 9px 0 var(--black);
+        }
+        .skill-card:nth-child(1) {
+            background: var(--accent3);
+        }
+        .skill-card:nth-child(2) {
+            background: var(--accent5);
+        }
+        .skill-card:nth-child(3) {
+            background: var(--accent2);
+        }
+        .skill-card:nth-child(4) {
+            background: var(--accent6);
+        }
         .skill-icon {
             font-size: 2.2rem;
             margin-bottom: 12px;
             display: block;
+            transition: transform 0.3s var(--transition-bounce);
+        }
+        .skill-card:hover .skill-icon {
+            transform: scale(1.3) rotate(-10deg);
         }
         .skill-card h4 {
             font-family: 'Unbounded', sans-serif;
@@ -532,10 +1116,31 @@
             padding: 100px 2rem;
             background: var(--black);
         }
-        .projects-inner { max-width: 1200px; margin: 0 auto; }
-        #projects .section-label { color: var(--white); opacity: 0.4; }
-        #projects h2.section-title { color: var(--white); }
-        #projects h2.section-title span { color: var(--accent3); }
+        .projects-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        #projects .section-label {
+            color: var(--white);
+            opacity: 0.4;
+        }
+        #projects h2.section-title {
+            color: var(--white);
+        }
+        #projects h2.section-title span {
+            color: var(--accent3);
+            display: inline-block;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+        @keyframes titleGlow {
+            0%,
+            100% {
+                text-shadow: 0 0 0 transparent;
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255, 230, 109, 0.5);
+            }
+        }
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -548,10 +1153,14 @@
             box-shadow: 5px 5px 0 var(--accent3);
             border-radius: var(--radius);
             overflow: hidden;
-            transition: all 0.15s;
+            transition: all 0.3s var(--transition-bounce);
             position: relative;
         }
-        .project-card:hover { transform: translate(-4px,-4px); box-shadow: 9px 9px 0 var(--accent1); }
+        .project-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 9px 9px 0 var(--accent1);
+            border-color: var(--accent3);
+        }
         .project-img {
             height: 200px;
             overflow: hidden;
@@ -559,15 +1168,19 @@
             border-bottom: 2px solid #333;
         }
         .project-img img {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
         }
-        .project-card:hover .project-img img { transform: scale(1.06); }
+        .project-card:hover .project-img img {
+            transform: scale(1.08);
+        }
         .project-num {
             position: absolute;
-            top: 12px; left: 12px;
+            top: 12px;
+            left: 12px;
             font-family: 'Unbounded', sans-serif;
             font-size: 11px;
             font-weight: 900;
@@ -577,8 +1190,15 @@
             border: 1px solid var(--black);
             border-radius: 2px;
             letter-spacing: 0.05em;
+            transition: all 0.3s var(--transition-bounce);
         }
-        .project-body { padding: 20px; }
+        .project-card:hover .project-num {
+            background: var(--accent1);
+            color: white;
+        }
+        .project-body {
+            padding: 20px;
+        }
         .project-body h3 {
             font-family: 'Unbounded', sans-serif;
             font-size: 0.9rem;
@@ -586,6 +1206,10 @@
             color: var(--accent3);
             margin-bottom: 10px;
             letter-spacing: -0.01em;
+            transition: color 0.3s;
+        }
+        .project-card:hover .project-body h3 {
+            color: var(--accent1);
         }
         .project-body p {
             font-size: 13px;
@@ -593,7 +1217,10 @@
             line-height: 1.65;
             margin-bottom: 16px;
         }
-        .project-links { display: flex; gap: 8px; }
+        .project-links {
+            display: flex;
+            gap: 8px;
+        }
         .project-link {
             font-family: 'Space Mono', monospace;
             font-size: 11px;
@@ -604,20 +1231,29 @@
             border: 1px solid #444;
             box-shadow: 2px 2px 0 var(--accent3);
             text-decoration: none;
-            transition: all 0.1s;
+            transition: all 0.2s var(--transition-bounce);
             border-radius: 2px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
-        .project-link:hover { background: var(--accent3); color: var(--black); border-color: var(--black); }
+        .project-link:hover {
+            background: var(--accent3);
+            color: var(--black);
+            border-color: var(--black);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--accent1);
+        }
 
         /* ═══ EXPERIENCE ═══ */
         #experience {
             padding: 100px 2rem;
             background: var(--bg);
         }
-        .exp-inner { max-width: 1000px; margin: 0 auto; }
+        .exp-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
         .timeline {
             position: relative;
             margin-top: 60px;
@@ -626,10 +1262,21 @@
             content: '';
             position: absolute;
             left: 50%;
-            top: 0; bottom: 0;
+            top: 0;
+            bottom: 0;
             width: 4px;
             background: var(--black);
             transform: translateX(-50%);
+            animation: timelinePulse 4s ease-in-out infinite;
+        }
+        @keyframes timelinePulse {
+            0%,
+            100% {
+                background: var(--black);
+            }
+            50% {
+                background: var(--accent1);
+            }
         }
         .tl-item {
             display: flex;
@@ -639,7 +1286,7 @@
             position: relative;
             opacity: 0;
             transform: translateX(-30px);
-            transition: all 0.5s ease;
+            transition: all 0.6s var(--transition-bounce);
         }
         .tl-item.right {
             justify-content: flex-start;
@@ -647,18 +1294,38 @@
             padding-left: calc(50% + 36px);
             transform: translateX(30px);
         }
-        .tl-item.visible { opacity: 1; transform: translateX(0); }
+        .tl-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
         .tl-dot {
             position: absolute;
             left: 50%;
             top: 20px;
             transform: translateX(-50%);
-            width: 24px; height: 24px;
+            width: 24px;
+            height: 24px;
             background: var(--accent1);
             border: 3px solid var(--black);
             border-radius: 50%;
             z-index: 2;
             box-shadow: 2px 2px 0 var(--black);
+            transition: all 0.3s var(--transition-bounce);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%,
+            100% {
+                box-shadow: 2px 2px 0 var(--black);
+            }
+            50% {
+                box-shadow: 5px 5px 0 var(--black);
+                transform: translateX(-50%) scale(1.2);
+            }
+        }
+        .tl-item:hover .tl-dot {
+            background: var(--accent3);
+            transform: translateX(-50%) scale(1.3);
         }
         .tl-card {
             background: var(--white);
@@ -667,24 +1334,44 @@
             padding: 24px;
             border-radius: var(--radius);
             max-width: 420px;
-            transition: all 0.12s;
+            transition: all 0.3s var(--transition-bounce);
             position: relative;
             overflow: hidden;
         }
         .tl-card::before {
             content: '';
             position: absolute;
-            left: 0; top: 0; bottom: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
             width: 5px;
+            transition: width 0.3s var(--transition-bounce);
         }
-        .tl-item:nth-child(1) .tl-card::before { background: var(--accent1); }
-        .tl-item:nth-child(2) .tl-card::before { background: var(--accent2); }
-        .tl-item:nth-child(3) .tl-card::before { background: var(--accent3); }
-        .tl-item:nth-child(4) .tl-card::before { background: var(--accent5); }
-        .tl-item:nth-child(5) .tl-card::before { background: var(--accent6); }
-        .tl-card:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--black); }
+        .tl-card:hover::before {
+            width: 8px;
+        }
+        .tl-item:nth-child(1) .tl-card::before {
+            background: var(--accent1);
+        }
+        .tl-item:nth-child(2) .tl-card::before {
+            background: var(--accent2);
+        }
+        .tl-item:nth-child(3) .tl-card::before {
+            background: var(--accent3);
+        }
+        .tl-item:nth-child(4) .tl-card::before {
+            background: var(--accent5);
+        }
+        .tl-item:nth-child(5) .tl-card::before {
+            background: var(--accent6);
+        }
+        .tl-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--black);
+        }
         .tl-card .tl-icon {
-            width: 36px; height: 36px;
+            width: 36px;
+            height: 36px;
             background: var(--black);
             color: var(--accent3);
             display: flex;
@@ -693,6 +1380,12 @@
             border-radius: 2px;
             font-size: 14px;
             margin-bottom: 12px;
+            transition: all 0.3s var(--transition-bounce);
+        }
+        .tl-card:hover .tl-icon {
+            background: var(--accent1);
+            color: white;
+            transform: rotate(-5deg) scale(1.1);
         }
         .tl-card h3 {
             font-family: 'Unbounded', sans-serif;
@@ -710,16 +1403,28 @@
             letter-spacing: 0.08em;
             margin-bottom: 10px;
         }
-        .tl-card p { font-size: 13px; line-height: 1.7; color: #444; }
+        .tl-card p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #444;
+        }
 
         /* ═══ JOURNEY GALLERY ═══ */
         .journey-photos-section {
             padding: 80px 2rem;
             background: var(--black);
         }
-        .gallery-inner { max-width: 1200px; margin: 0 auto; }
-        .gallery-inner .section-label { color: var(--white); opacity: 0.4; }
-        .gallery-inner h2.section-title { color: var(--white); }
+        .gallery-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .gallery-inner .section-label {
+            color: var(--white);
+            opacity: 0.4;
+        }
+        .gallery-inner h2.section-title {
+            color: var(--white);
+        }
 
         /* tabs */
         .jg-tabs {
@@ -743,15 +1448,28 @@
             letter-spacing: 0.06em;
             cursor: pointer;
             border-radius: 2px;
-            transition: all 0.12s;
+            transition: all 0.2s var(--transition-bounce);
             box-shadow: 3px 3px 0 transparent;
         }
-        .jg-tab:hover { border-color: var(--accent3); color: var(--accent3); }
+        .jg-tab:hover {
+            border-color: var(--accent3);
+            color: var(--accent3);
+            transform: translateY(-2px);
+        }
         .jg-tab.active {
             background: var(--accent3);
             border-color: var(--accent3);
             color: var(--black);
             box-shadow: 3px 3px 0 var(--white);
+            animation: tabActive 0.4s var(--transition-bounce);
+        }
+        @keyframes tabActive {
+            from {
+                transform: scale(0.95);
+            }
+            to {
+                transform: scale(1);
+            }
         }
         .jg-count {
             background: var(--black);
@@ -760,10 +1478,38 @@
             padding: 2px 8px;
             border-radius: 2px;
             font-weight: 700;
+            transition: all 0.3s;
         }
-        .jg-tab.active .jg-count { background: var(--black); color: var(--accent3); }
-        .jg-panel { display: none; }
-        .jg-panel.active { display: block; }
+        .jg-tab.active .jg-count {
+            background: var(--black);
+            color: var(--accent3);
+            animation: countPop 0.4s var(--transition-bounce);
+        }
+        @keyframes countPop {
+            from {
+                transform: scale(1.4);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        .jg-panel {
+            display: none;
+            animation: panelFadeIn 0.4s ease;
+        }
+        @keyframes panelFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .jg-panel.active {
+            display: block;
+        }
         .jg-folder-desc {
             font-family: 'Space Mono', monospace;
             font-size: 12px;
@@ -784,37 +1530,54 @@
             border-radius: var(--radius);
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.12s;
+            transition: all 0.3s var(--transition-bounce);
             opacity: 0;
             transform: translateY(20px);
         }
-        .jg-card.jg-visible { opacity: 1; transform: translateY(0); }
-        .jg-card:hover { transform: translate(-4px,-4px); box-shadow: 9px 9px 0 var(--accent1); border-color: var(--accent3); }
+        .jg-card.jg-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .jg-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 9px 9px 0 var(--accent1);
+            border-color: var(--accent3);
+        }
         .jg-img-wrap {
-            width: 100%; height: 160px;
+            width: 100%;
+            height: 160px;
             overflow: hidden;
             position: relative;
             background: #111;
         }
         .jg-img-wrap img {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
         }
-        .jg-card:hover .jg-img-wrap img { transform: scale(1.08); }
+        .jg-card:hover .jg-img-wrap img {
+            transform: scale(1.1);
+        }
         .jg-placeholder {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             display: none;
             flex-direction: column;
-            align-items: center; justify-content: center;
+            align-items: center;
+            justify-content: center;
             gap: 8px;
             color: #444;
             font-size: 0.7rem;
             text-align: center;
         }
-        .jg-placeholder i { font-size: 2rem; }
-        .jg-info { padding: 14px 16px; }
+        .jg-placeholder i {
+            font-size: 2rem;
+        }
+        .jg-info {
+            padding: 14px 16px;
+        }
         .jg-title {
             font-family: 'Unbounded', sans-serif;
             font-size: 0.72rem;
@@ -824,9 +1587,18 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: color 0.3s;
         }
-        .jg-meta { display: flex; flex-direction: column; gap: 4px; }
-        .jg-loc, .jg-date {
+        .jg-card:hover .jg-title {
+            color: var(--accent1);
+        }
+        .jg-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .jg-loc,
+        .jg-date {
             font-family: 'Space Mono', monospace;
             font-size: 10px;
             color: #666;
@@ -834,15 +1606,43 @@
             align-items: center;
             gap: 6px;
         }
-        .jg-loc i, .jg-date i { color: var(--accent2); }
+        .jg-loc i,
+        .jg-date i {
+            color: var(--accent2);
+        }
         .jg-empty {
             padding: 48px 24px;
             text-align: center;
             border: 2px dashed #333;
             border-radius: var(--radius);
             color: #555;
+            animation: emptyPulse 3s ease-in-out infinite;
         }
-        .jg-empty i { font-size: 2.5rem; display: block; margin-bottom: 12px; opacity: 0.3; }
+        @keyframes emptyPulse {
+            0%,
+            100% {
+                border-color: #333;
+            }
+            50% {
+                border-color: #555;
+            }
+        }
+        .jg-empty i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 12px;
+            opacity: 0.3;
+            animation: emptyIconBounce 2s ease-in-out infinite;
+        }
+        @keyframes emptyIconBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
         .jg-empty span {
             font-family: 'Space Mono', monospace;
             font-size: 12px;
@@ -850,14 +1650,27 @@
 
         /* Modal */
         .jg-modal-backdrop {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.88);
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
             z-index: 9998;
             display: none;
-            align-items: center; justify-content: center;
+            align-items: center;
+            justify-content: center;
             padding: 1rem;
         }
-        .jg-modal-backdrop.open { display: flex; }
+        .jg-modal-backdrop.open {
+            display: flex;
+            animation: backdropIn 0.3s ease;
+        }
+        @keyframes backdropIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
         .jg-modal {
             background: var(--white);
             border: var(--border);
@@ -866,16 +1679,33 @@
             width: min(620px, 96vw);
             max-height: 90vh;
             overflow: auto;
-            animation: modalIn 0.25s cubic-bezier(.34,1.56,.64,1);
+            animation: modalIn 0.35s cubic-bezier(.34, 1.56, .64, 1);
         }
-        @keyframes modalIn { from{opacity:0;transform:scale(0.9) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.85) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
         .jg-modal-img {
-            width: 100%; aspect-ratio: 16/9;
+            width: 100%;
+            aspect-ratio: 16/9;
             background: #111;
             overflow: hidden;
         }
-        .jg-modal-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .jg-modal-body { padding: 24px; }
+        .jg-modal-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .jg-modal-body {
+            padding: 24px;
+        }
         .jg-modal-badge {
             display: inline-flex;
             align-items: center;
@@ -908,14 +1738,20 @@
             background: var(--black);
             border: none;
             color: var(--white);
-            width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             font-size: 14px;
             border-radius: 2px;
-            transition: background 0.1s;
+            transition: all 0.2s var(--transition-bounce);
         }
-        .jg-modal-close:hover { background: var(--accent1); }
+        .jg-modal-close:hover {
+            background: var(--accent1);
+            transform: rotate(90deg) scale(1.1);
+        }
         .jg-modal-desc {
             font-size: 14px;
             color: #444;
@@ -937,15 +1773,22 @@
             align-items: center;
             gap: 6px;
         }
-        .jg-modal-meta i { color: var(--accent1); }
+        .jg-modal-meta i {
+            color: var(--accent1);
+        }
 
         /* ═══ CERTIFICATES ═══ */
         #certificates {
             padding: 100px 2rem;
             background: var(--accent3);
         }
-        .certs-inner { max-width: 1200px; margin: 0 auto; }
-        #certificates .section-label { opacity: 0.6; }
+        .certs-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        #certificates .section-label {
+            opacity: 0.6;
+        }
         .certs-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -958,21 +1801,46 @@
             box-shadow: var(--shadow);
             border-radius: var(--radius);
             overflow: hidden;
-            transition: all 0.12s;
+            transition: all 0.3s var(--transition-bounce);
         }
-        .cert-card:hover { transform: translate(-4px,-4px); box-shadow: 9px 9px 0 var(--black); }
-        .cert-img { height: 200px; overflow: hidden; border-bottom: var(--border); }
-        .cert-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
-        .cert-card:hover .cert-img img { transform: scale(1.04); }
-        .cert-body { padding: 20px; }
+        .cert-card:hover {
+            transform: translate(-4px, -4px) rotate(-0.5deg);
+            box-shadow: 9px 9px 0 var(--black);
+        }
+        .cert-img {
+            height: 200px;
+            overflow: hidden;
+            border-bottom: var(--border);
+        }
+        .cert-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .cert-card:hover .cert-img img {
+            transform: scale(1.06);
+        }
+        .cert-body {
+            padding: 20px;
+        }
         .cert-body h3 {
             font-family: 'Unbounded', sans-serif;
             font-size: 0.82rem;
             font-weight: 900;
             margin-bottom: 8px;
             letter-spacing: -0.01em;
+            transition: color 0.3s;
         }
-        .cert-body p { font-size: 12px; color: #555; line-height: 1.65; }
+        .cert-card:hover .cert-body h3 {
+            color: var(--accent1);
+        }
+        .cert-body p {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.65;
+        }
 
         /* ═══ HOBBIES ═══ */
         .hobbies-section {
@@ -980,14 +1848,22 @@
             background: var(--bg);
             text-align: center;
         }
-        .hobbies-inner { max-width: 600px; margin: 0 auto; }
+        .hobbies-inner {
+            max-width: 600px;
+            margin: 0 auto;
+        }
         .hobbies-inner h3 {
             font-family: 'Unbounded', sans-serif;
             font-size: 1.5rem;
             font-weight: 900;
             margin-bottom: 28px;
         }
-        .hobbies-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+        .hobbies-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
         .hobby-tag {
             font-family: 'Space Mono', monospace;
             font-size: 13px;
@@ -999,23 +1875,58 @@
             box-shadow: var(--shadow);
             background: var(--white);
             border-radius: 2px;
-            transition: all 0.1s;
+            transition: all 0.3s var(--transition-bounce);
             cursor: default;
+            animation: hobbyFloat 4s ease-in-out infinite;
         }
-        .hobby-tag:nth-child(1) { background: var(--accent1); color: var(--white); }
-        .hobby-tag:nth-child(2) { background: var(--accent2); }
-        .hobby-tag:nth-child(3) { background: var(--accent5); }
-        .hobby-tag:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--black); }
+        .hobby-tag:nth-child(1) {
+            background: var(--accent1);
+            color: var(--white);
+            animation-delay: 0s;
+        }
+        .hobby-tag:nth-child(2) {
+            background: var(--accent2);
+            animation-delay: 0.5s;
+        }
+        .hobby-tag:nth-child(3) {
+            background: var(--accent5);
+            animation-delay: 1s;
+        }
+        @keyframes hobbyFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        .hobby-tag:hover {
+            transform: translate(-3px, -6px);
+            box-shadow: 8px 8px 0 var(--black);
+            animation: none;
+        }
 
         /* ═══ CONTACT ═══ */
         #contact {
             padding: 100px 2rem;
             background: var(--black);
         }
-        .contact-inner { max-width: 1100px; margin: 0 auto; }
-        #contact .section-label { color: #555; }
-        #contact h2.section-title { color: var(--white); }
-        #contact h2.section-title span { color: var(--accent3); }
+        .contact-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        #contact .section-label {
+            color: #555;
+        }
+        #contact h2.section-title {
+            color: var(--white);
+        }
+        #contact h2.section-title span {
+            color: var(--accent3);
+            display: inline-block;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1036,7 +1947,11 @@
             line-height: 1.75;
             margin-bottom: 32px;
         }
-        .social-links { display: flex; gap: 12px; flex-wrap: wrap; }
+        .social-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
         .social-link {
             display: flex;
             align-items: center;
@@ -1051,9 +1966,15 @@
             box-shadow: 3px 3px 0 var(--accent3);
             text-decoration: none;
             border-radius: 2px;
-            transition: all 0.1s;
+            transition: all 0.2s var(--transition-bounce);
         }
-        .social-link:hover { background: var(--accent3); color: var(--black); border-color: var(--accent3); box-shadow: 3px 3px 0 var(--white); }
+        .social-link:hover {
+            background: var(--accent3);
+            color: var(--black);
+            border-color: var(--accent3);
+            box-shadow: 3px 3px 0 var(--white);
+            transform: translate(-2px, -2px);
+        }
         .email-box {
             margin-top: 28px;
             display: inline-flex;
@@ -1063,8 +1984,25 @@
             background: #111;
             border: 2px solid #333;
             border-radius: 2px;
+            transition: all 0.3s var(--transition-bounce);
         }
-        .email-box i { color: var(--accent1); }
+        .email-box:hover {
+            border-color: var(--accent1);
+            box-shadow: 4px 4px 0 var(--accent1);
+        }
+        .email-box i {
+            color: var(--accent1);
+            animation: emailIconBounce 2s ease-in-out infinite;
+        }
+        @keyframes emailIconBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
         .email-box span {
             font-family: 'Space Mono', monospace;
             font-size: 12px;
@@ -1078,6 +2016,10 @@
             box-shadow: 8px 8px 0 var(--accent3);
             padding: 32px;
             border-radius: var(--radius);
+            transition: all 0.3s var(--transition-bounce);
+        }
+        .contact-form:hover {
+            box-shadow: 12px 12px 0 var(--accent3);
         }
         .form-field {
             margin-bottom: 16px;
@@ -1094,7 +2036,7 @@
             font-size: 13px;
             border-radius: 2px;
             outline: none;
-            transition: border-color 0.15s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
         .form-field input::placeholder,
         .form-field textarea::placeholder {
@@ -1102,10 +2044,21 @@
             text-transform: uppercase;
             font-size: 11px;
             letter-spacing: 0.06em;
+            transition: color 0.3s;
         }
         .form-field input:focus,
-        .form-field textarea:focus { border-color: var(--accent3); }
-        .form-field textarea { height: 120px; resize: vertical; }
+        .form-field textarea:focus {
+            border-color: var(--accent3);
+            box-shadow: 0 0 0 4px rgba(255, 230, 109, 0.1);
+        }
+        .form-field input:focus::placeholder,
+        .form-field textarea:focus::placeholder {
+            color: var(--accent3);
+        }
+        .form-field textarea {
+            height: 120px;
+            resize: vertical;
+        }
         .btn-submit {
             width: 100%;
             padding: 16px;
@@ -1120,10 +2073,29 @@
             letter-spacing: 0.08em;
             cursor: pointer;
             border-radius: 2px;
-            transition: all 0.12s;
+            transition: all 0.2s var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-submit:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--black); }
-        .btn-submit:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--black); }
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        .btn-submit:hover::after {
+            transform: translateX(100%);
+        }
+        .btn-submit:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--black);
+        }
+        .btn-submit:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--black);
+        }
 
         /* ═══ FOOTER ═══ */
         footer {
@@ -1138,654 +2110,997 @@
             color: #555;
             letter-spacing: 0.06em;
         }
-        footer span { color: var(--accent3); }
+        footer span {
+            color: var(--accent3);
+            animation: footerGlow 3s ease-in-out infinite;
+        }
+        @keyframes footerGlow {
+            0%,
+            100% {
+                color: var(--accent3);
+            }
+            50% {
+                color: var(--accent1);
+            }
+        }
 
         /* ═══ RESPONSIVE ═══ */
         @media (max-width: 900px) {
-            .hero-grid { grid-template-columns: 1fr; }
-            .hero-left { padding-right: 0; order: 2; text-align: center; }
-            .hero-right { order: 1; margin-bottom: 40px; }
-            .hero-cta { justify-content: center; }
-            .about-grid { grid-template-columns: 1fr; }
-            .skills-grid { grid-template-columns: repeat(2, 1fr); }
-            .projects-grid { grid-template-columns: repeat(2, 1fr); }
-            .certs-grid { grid-template-columns: repeat(2, 1fr); }
-            .contact-grid { grid-template-columns: 1fr; }
-            .timeline::before { left: 24px; }
-            .tl-item, .tl-item.right {
-                padding-right: 0; padding-left: 64px;
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-left {
+                padding-right: 0;
+                order: 2;
+                text-align: center;
+            }
+            .hero-right {
+                order: 1;
+                margin-bottom: 40px;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .certs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline::before {
+                left: 24px;
+            }
+            .tl-item,
+            .tl-item.right {
+                padding-right: 0;
+                padding-left: 64px;
                 justify-content: flex-start;
                 transform: translateX(-20px);
             }
-            .tl-item.right { transform: translateX(-20px); }
-            .tl-dot { left: 24px; }
+            .tl-item.right {
+                transform: translateX(-20px);
+            }
+            .tl-dot {
+                left: 24px;
+            }
         }
         @media (max-width: 600px) {
-            nav { padding: 0 1rem; }
-            .nav-links { display: none; }
-            #mobile-menu-btn { display: block; }
-            .hero-name { font-size: 2.2rem; }
-            .stat-card-1, .stat-card-2 { display: none; }
-            .projects-grid { grid-template-columns: 1fr; }
-            .skills-grid { grid-template-columns: repeat(2, 1fr); }
-            .certs-grid { grid-template-columns: 1fr; }
-            .floating-controls { bottom: 12px; right: 12px; }
-            .ctrl-btn { padding: 7px 10px; font-size: 10px; }
-            .profile-card-wrap { width: 260px; height: 310px; }
+            nav {
+                padding: 0 1rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            #mobile-menu-btn {
+                display: block;
+            }
+            .hero-name {
+                font-size: 2.2rem;
+            }
+            .stat-card-1,
+            .stat-card-2 {
+                display: none;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .certs-grid {
+                grid-template-columns: 1fr;
+            }
+            .floating-controls {
+                bottom: 12px;
+                right: 12px;
+            }
+            .ctrl-btn {
+                padding: 7px 10px;
+                font-size: 10px;
+            }
+            .profile-card-wrap {
+                width: 260px;
+                height: 310px;
+            }
         }
 
         /* scroll animation */
-        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.55s ease; }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s var(--transition-bounce);
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ═══ SPARKLE ON CLICK ═══ */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10002;
+            animation: sparkleBurst 0.7s ease-out forwards;
+        }
+        @keyframes sparkleBurst {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        /* ═══ PRELOADER ═══ */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-box {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--black);
+            animation: loaderSpin 1s var(--transition-bounce) infinite;
+        }
+        @keyframes loaderSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(90deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            75% {
+                transform: rotate(270deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav>
-    <div class="nav-inner">
-        <a class="nav-logo" href="#home">GHIFARI.</a>
-        <div class="nav-links">
-            <a href="#home" data-en="Home" data-id="Beranda">Home</a>
-            <a href="#about" data-en="About" data-id="Tentang">About</a>
-            <a href="#projects" data-en="Projects" data-id="Proyek">Projects</a>
-            <a href="#experience" data-en="Experience" data-id="Pengalaman">Experience</a>
-            <a href="#certificates" data-en="Certificates" data-id="Sertifikat">Certificates</a>
-            <a href="#contact" data-en="Contact" data-id="Kontak">Contact</a>
-        </div>
-        <button id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader-box" style="background:var(--accent3);"></div>
     </div>
-    <div id="mobile-menu">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#certificates">Certificates</a>
-        <a href="#contact">Contact</a>
-    </div>
-</nav>
 
-<!-- HERO -->
-<section id="home">
-    <div class="hero-deco hero-deco-1">GA</div>
-    <div class="hero-grid">
-        <div class="hero-left">
-            <div class="hero-badge">Available for work</div>
-            <h1 class="hero-name">
-                Hi, I'm<span>Ghiffari</span>
-            </h1>
-            <div class="hero-role-wrap">
-                <span id="typed-text"></span><span id="typed-cursor">|</span>
+    <!-- CUSTOM CURSOR -->
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
+
+    <!-- FLOATING PARTICLES -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-inner">
+            <a class="nav-logo" href="#home">GHIFARI.</a>
+            <div class="nav-links">
+                <a href="#home" data-en="Home" data-id="Beranda">Home</a>
+                <a href="#about" data-en="About" data-id="Tentang">About</a>
+                <a href="#projects" data-en="Projects" data-id="Proyek">Projects</a>
+                <a href="#experience" data-en="Experience" data-id="Pengalaman">Experience</a>
+                <a href="#certificates" data-en="Certificates" data-id="Sertifikat">Certificates</a>
+                <a href="#contact" data-en="Contact" data-id="Kontak">Contact</a>
             </div>
-            <div class="hero-cta">
-                <a href="#projects" class="btn-primary" data-en="View Projects" data-id="Lihat Proyek">View Projects</a>
-                <a href="#contact" class="btn-secondary" data-en="Contact Me" data-id="Hubungi Saya">Contact Me</a>
-            </div>
+            <button id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
         </div>
-        <div class="hero-right">
-            <div class="profile-card-wrap">
-                <div class="profile-shadow"></div>
-                <div class="profile-card">
-                    <img src="ChatGPT Image 15 Mei 2026, 13.45.00.png" alt="Profile Photo">
-                    <div class="profile-name-tag">GHIFFARI ATALLAH</div>
-                </div>
-            </div>
-            <div class="stat-card stat-card-1">
-                <div class="num">7+</div>
-                <div class="label">Certificates</div>
-            </div>
-            <div class="stat-card stat-card-2">
-                <div class="num">5+</div>
-                <div class="label">Projects</div>
-            </div>
+        <div id="mobile-menu">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+            <a href="#certificates">Certificates</a>
+            <a href="#contact">Contact</a>
         </div>
-    </div>
-</section>
+    </nav>
 
-<!-- MARQUEE -->
-<div class="marquee-strip">
-    <div class="marquee-inner">
-        <span>SEO Analyst</span><span class="dot">★</span>
-        <span>UI/UX Design</span><span class="dot">★</span>
-        <span>Web Developer</span><span class="dot">★</span>
-        <span>Data Analyst</span><span class="dot">★</span>
-        <span>Frontend Dev</span><span class="dot">★</span>
-        <span>AI Enthusiast</span><span class="dot">★</span>
-        <span>SEO Analyst</span><span class="dot">★</span>
-        <span>UI/UX Design</span><span class="dot">★</span>
-        <span>Web Developer</span><span class="dot">★</span>
-        <span>Data Analyst</span><span class="dot">★</span>
-        <span>Frontend Dev</span><span class="dot">★</span>
-        <span>AI Enthusiast</span><span class="dot">★</span>
-    </div>
-</div>
-
-<!-- ABOUT -->
-<section id="about">
-    <div class="about-inner">
-        <div class="about-header">
-            <div>
-                <p class="section-label">// 01 — about</p>
-                <h2 class="section-title" data-en="About Me" data-id="Tentang Saya">About Me</h2>
-            </div>
-            <span class="tag">@GipAtlh23</span>
-        </div>
-        <div class="about-grid fade-up">
-            <div class="about-card card-orange">
-                <h3 data-en="Who Am I?" data-id="Siapa Saya?">Who Am I?</h3>
-                <p data-en="I am a passionate SEO Analyst with a strong background in web development and digital marketing. With a keen eye for detail and a love for data-driven strategies, I specialize in optimizing websites to improve search engine rankings and enhance user experience." data-id="Saya adalah SEO Analyst yang bersemangat dengan latar belakang kuat di web development dan digital marketing. Dengan perhatian tinggi terhadap detail dan strategi berbasis data, saya fokus mengoptimalkan website untuk meningkatkan peringkat mesin pencari dan pengalaman pengguna.">I am a passionate SEO Analyst with a strong background in web development and digital marketing. With a keen eye for detail and a love for data-driven strategies, I specialize in optimizing websites to improve search engine rankings and enhance user experience.</p>
-            </div>
-            <div class="about-card card-teal">
-                <h3 data-en="Vision & Mission" data-id="Visi & Misi">Vision & Mission</h3>
-                <p data-en="My vision is to create digital solutions that are not only functional but also deliver captivating user experiences. I believe technology should be accessible and add value to everyday life." data-id="Visi saya adalah menciptakan solusi digital yang tidak hanya fungsional, tetapi juga memberikan pengalaman pengguna yang menarik. Saya percaya teknologi harus mudah diakses dan memberi nilai tambah dalam kehidupan sehari-hari.">My vision is to create digital solutions that are not only functional but also deliver captivating user experiences. I believe technology should be accessible and add value to everyday life.</p>
-            </div>
-        </div>
-        <div class="skills-grid fade-up">
-            <div class="skill-card">
-                <span class="skill-icon">🔍</span>
-                <h4 data-en="SEO Analyst" data-id="Analis SEO">SEO Analyst</h4>
-                <p>SEMrush · Google Analytics · Search Console · PageSpeed</p>
-            </div>
-            <div class="skill-card">
-                <span class="skill-icon">🎨</span>
-                <h4 data-en="UI/UX Design" data-id="Desain UI/UX">UI/UX Design</h4>
-                <p>Figma · Adobe Photoshop · Adobe Illustrator</p>
-            </div>
-            <div class="skill-card">
-                <span class="skill-icon">📊</span>
-                <h4 data-en="Data Analyst" data-id="Analis Data">Data Analyst</h4>
-                <p>Firebase · Google Analytics</p>
-            </div>
-            <div class="skill-card">
-                <span class="skill-icon">💻</span>
-                <h4 data-en="Web Developer" data-id="Pengembang Web">Web Developer</h4>
-                <p>HTML · CSS · JavaScript · React · Node.js</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-    <div class="projects-inner">
-        <p class="section-label">// 02 — projects</p>
-        <h2 class="section-title" data-en="My <span>Projects</span>" data-id="Proyek <span>Saya</span>">My <span>Projects</span></h2>
-        <div class="projects-grid">
-
-            <div class="project-card fade-up">
-                <div class="project-img">
-                    <img src="Screenshot%202026-02-23%20at%2007.34.58.png" alt="Planning Digital Content">
-                    <span class="project-num">01</span>
+    <!-- HERO -->
+    <section id="home">
+        <div class="hero-deco hero-deco-1">GA</div>
+        <div class="hero-grid">
+            <div class="hero-left">
+                <div class="hero-badge">Available for work</div>
+                <h1 class="hero-name">
+                    Hi, I'm<span>Ghiffari</span>
+                </h1>
+                <div class="hero-role-wrap">
+                    <span id="typed-text"></span><span id="typed-cursor">|</span>
                 </div>
-                <div class="project-body">
-                    <h3 data-en="Planning Digital Content" data-id="Perencanaan Konten Digital">Planning Digital Content</h3>
-                    <p data-en="Content marketing based on creating and sharing online material such as videos, blogs, and social media posts." data-id="Pemasaran konten berbasis pembuatan dan pembagian materi online seperti video, blog, dan postingan media sosial.">Content marketing based on creating and sharing online material such as videos, blogs, and social media posts.</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn-primary" data-en="View Projects" data-id="Lihat Proyek">View Projects</a>
+                    <a href="#contact" class="btn-secondary" data-en="Contact Me" data-id="Hubungi Saya">Contact Me</a>
                 </div>
             </div>
-
-            <div class="project-card fade-up">
-                <div class="project-img">
-                    <img src="Screenshot%202026-02-17%20at%2013.51.15.png" alt="USP Data Collection">
-                    <span class="project-num">02</span>
-                </div>
-                <div class="project-body">
-                    <h3 data-en="USP Data Collection" data-id="Pengumpulan Data USP">USP Data Collection</h3>
-                    <p data-en="An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience." data-id="Marketplace online untuk elektronik, peralatan rumah tangga, dan perlengkapan kantor.">An online marketplace for electronics, household appliances, and office equipment.</p>
-                </div>
-            </div>
-
-            <div class="project-card fade-up">
-                <div class="project-img">
-                    <img src="Screenshot%202026-02-17%20at%2013.44.55.png" alt="Values Data CSIT">
-                    <span class="project-num">03</span>
-                </div>
-                <div class="project-body">
-                    <h3 data-en="Values Data CSIT" data-id="Nilai Data CSIT">Values Data CSIT</h3>
-                    <p data-en="Data values for Azurite.jp, matching ~70 database records using Firebase and Google Analytics." data-id="Nilai data untuk Azurite.jp, mencocokkan ~70 data menggunakan Firebase dan Google Analytics.">Data values for Azurite.jp, matching ~70 records using Firebase and Google Analytics.</p>
-                </div>
-            </div>
-
-            <div class="project-card fade-up">
-                <div class="project-img">
-                    <img src="image.png" alt="Library Web Project">
-                    <span class="project-num">04</span>
-                </div>
-                <div class="project-body">
-                    <h3 data-en="Library Web" data-id="Web Perpustakaan">Library Web</h3>
-                    <p data-en="Built with React.js, Express, and Node.js. Used Supabase as the database." data-id="Dibangun menggunakan React.js, Express, dan Node.js. Menggunakan Supabase sebagai database.">Built with React.js, Express, and Node.js. Used Supabase as database.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/YusufxAlbana/salahuddin-library" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> GitHub</a>
-                        <a href="https://salahuddinlibrary.my.id/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
+            <div class="hero-right">
+                <div class="profile-card-wrap">
+                    <div class="profile-shadow"></div>
+                    <div class="profile-card">
+                        <img src="ChatGPT Image 15 Mei 2026, 13.45.00.png" alt="Profile Photo"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="display:none;position:absolute;inset:0;background:#333;color:#fff;flex-direction:column;align-items:center;justify-content:center;">
+                            <i class="fas fa-user" style="font-size:3rem;"></i><span>Photo</span>
+                        </div>
+                        <div class="profile-name-tag">GHIFFARI ATALLAH</div>
                     </div>
                 </div>
-            </div>
-
-            <div class="project-card fade-up">
-                <div class="project-img">
-                    <img src="Screenshot 2026-05-20 at 14.22.13.png" alt="Web UMKM Project">
-                    <span class="project-num">05</span>
+                <div class="stat-card stat-card-1">
+                    <div class="num">7+</div>
+                    <div class="label">Certificates</div>
                 </div>
-                <div class="project-body">
-                    <h3 data-en="Web UMKM Project" data-id="Web UMKM">Web UMKM Project</h3>
-                    <p data-en="Responsive landing page for Rumah Makan Jati. Built using HTML, CSS, and JavaScript." data-id="Landing page responsif untuk Rumah Makan Jati. Dibangun menggunakan HTML, CSS, dan JavaScript.">Responsive landing page for Rumah Makan Jati. Built with HTML, CSS, and JavaScript.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/YusufxAlbana/uji-kompetisi" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> GitHub</a>
-                    </div>
+                <div class="stat-card stat-card-2">
+                    <div class="num">5+</div>
+                    <div class="label">Projects</div>
                 </div>
             </div>
+        </div>
+    </section>
 
+    <!-- MARQUEE -->
+    <div class="marquee-strip">
+        <div class="marquee-inner">
+            <span>SEO Analyst</span><span class="dot">★</span>
+            <span>UI/UX Design</span><span class="dot">★</span>
+            <span>Web Developer</span><span class="dot">★</span>
+            <span>Data Analyst</span><span class="dot">★</span>
+            <span>Frontend Dev</span><span class="dot">★</span>
+            <span>AI Enthusiast</span><span class="dot">★</span>
+            <span>SEO Analyst</span><span class="dot">★</span>
+            <span>UI/UX Design</span><span class="dot">★</span>
+            <span>Web Developer</span><span class="dot">★</span>
+            <span>Data Analyst</span><span class="dot">★</span>
+            <span>Frontend Dev</span><span class="dot">★</span>
+            <span>AI Enthusiast</span><span class="dot">★</span>
         </div>
     </div>
-</section>
 
-<!-- EXPERIENCE -->
-<section id="experience">
-    <div class="exp-inner">
-        <p class="section-label">// 03 — experience</p>
-        <h2 class="section-title" data-en="My Journey" data-id="Perjalanan Saya">My Journey</h2>
-        <div class="timeline">
-
-            <div class="tl-item left">
-                <div class="tl-dot"></div>
-                <div class="tl-card">
-                    <div class="tl-icon"><i class="fas fa-briefcase"></i></div>
-                    <h3 data-en="IDN Boarding School" data-id="IDN Boarding School">IDN Boarding School</h3>
-                    <div class="tl-period" data-en="Vocational High School · July 2024 – June 2027" data-id="SMK · Juli 2024 – Juni 2027">Vocational High School · July 2024 – June 2027</div>
-                    <p data-en="I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS, alongside design principles through Figma and Canva." data-id="Saya mengawali karier di bidang Software Engineering dengan membangun fondasi front-end menggunakan HTML dan CSS, serta prinsip desain melalui Figma dan Canva.">I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS, alongside design principles through Figma and Canva.</p>
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="about-inner">
+            <div class="about-header">
+                <div>
+                    <p class="section-label">// 01 — about</p>
+                    <h2 class="section-title" data-en="About Me" data-id="Tentang Saya">About Me</h2>
+                </div>
+                <span class="tag">@GipAtlh23</span>
+            </div>
+            <div class="about-grid fade-up">
+                <div class="about-card card-orange">
+                    <h3 data-en="Who Am I?" data-id="Siapa Saya?">Who Am I?</h3>
+                    <p data-en="I am a passionate SEO Analyst with a strong background in web development and digital marketing. With a keen eye for detail and a love for data-driven strategies, I specialize in optimizing websites to improve search engine rankings and enhance user experience."
+                    data-id="Saya adalah SEO Analyst yang bersemangat dengan latar belakang kuat di web development dan digital marketing. Dengan perhatian tinggi terhadap detail dan strategi berbasis data, saya fokus mengoptimalkan website untuk meningkatkan peringkat mesin pencari dan pengalaman pengguna.">I am a passionate SEO Analyst with a strong background in web development and digital marketing. With a keen eye for detail and a love for data-driven strategies, I specialize in optimizing websites to improve search engine rankings and enhance user experience.</p>
+                </div>
+                <div class="about-card card-teal">
+                    <h3 data-en="Vision & Mission" data-id="Visi & Misi">Vision & Mission</h3>
+                    <p data-en="My vision is to create digital solutions that are not only functional but also deliver captivating user experiences. I believe technology should be accessible and add value to everyday life."
+                    data-id="Visi saya adalah menciptakan solusi digital yang tidak hanya fungsional, tetapi juga memberikan pengalaman pengguna yang menarik. Saya percaya teknologi harus mudah diakses dan memberi nilai tambah dalam kehidupan sehari-hari.">My vision is to create digital solutions that are not only functional but also deliver captivating user experiences. I believe technology should be accessible and add value to everyday life.</p>
                 </div>
             </div>
-
-            <div class="tl-item right">
-                <div class="tl-dot"></div>
-                <div class="tl-card">
-                    <div class="tl-icon"><i class="fas fa-code"></i></div>
-                    <h3 data-en="First Laravel Project" data-id="Proyek Laravel Pertama">First Laravel Project</h3>
-                    <div class="tl-period" data-en="October 2024" data-id="Oktober 2024">October 2024</div>
-                    <p data-en="Completed my first CRUD application using Laravel. Introduced me to MVC concepts, user authentication, and basic data management." data-id="Menyelesaikan proyek CRUD pertama menggunakan Laravel. Mengenalkan konsep MVC, autentikasi pengguna, dan manajemen data.">Completed my first CRUD application using Laravel. Introduced to MVC concepts, user authentication, and basic data management.</p>
+            <div class="skills-grid fade-up">
+                <div class="skill-card">
+                    <span class="skill-icon">🔍</span>
+                    <h4 data-en="SEO Analyst" data-id="Analis SEO">SEO Analyst</h4>
+                    <p>SEMrush · Google Analytics · Search Console · PageSpeed</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">🎨</span>
+                    <h4 data-en="UI/UX Design" data-id="Desain UI/UX">UI/UX Design</h4>
+                    <p>Figma · Adobe Photoshop · Adobe Illustrator</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">📊</span>
+                    <h4 data-en="Data Analyst" data-id="Analis Data">Data Analyst</h4>
+                    <p>Firebase · Google Analytics</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">💻</span>
+                    <h4 data-en="Web Developer" data-id="Pengembang Web">Web Developer</h4>
+                    <p>HTML · CSS · JavaScript · React · Node.js</p>
                 </div>
             </div>
-
-            <div class="tl-item left">
-                <div class="tl-dot"></div>
-                <div class="tl-card">
-                    <div class="tl-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h3 data-en="Tangguh Program" data-id="Program Tangguh">Tangguh Program</h3>
-                    <div class="tl-period" data-en="January 2025" data-id="Januari 2025">January 2025</div>
-                    <p data-en="Intensive one-week training in Kediri designed to test resilience and independence." data-id="Pelatihan intensif satu minggu di Kediri yang dirancang untuk menguji ketahanan dan kemandirian.">Intensive one-week training in Kediri designed to test resilience and independence.</p>
-                </div>
-            </div>
-
-            <div class="tl-item right">
-                <div class="tl-dot"></div>
-                <div class="tl-card">
-                    <div class="tl-icon"><i class="fas fa-store"></i></div>
-                    <h3 data-en="UMKM Project" data-id="Proyek UMKM">UMKM Project</h3>
-                    <div class="tl-period" data-en="May 2025" data-id="Mei 2025">May 2025</div>
-                    <p data-en="Entrusted with banner creation for a local MSME through the UMKM Project program." data-id="Dipercaya menangani pembuatan banner bagi UMKM lokal melalui program UMKM Proyek.">Entrusted with banner creation for a local MSME through the UMKM Project program.</p>
-                </div>
-            </div>
-
-            <div class="tl-item left">
-                <div class="tl-dot"></div>
-                <div class="tl-card">
-                    <div class="tl-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <h3 data-en="Live In Lombok" data-id="Live In Lombok">Live In Lombok</h3>
-                    <div class="tl-period" data-en="February 2026" data-id="Februari 2026">February 2026</div>
-                    <p data-en="Week-long Live-In program in Lombok fostering independence and professional ethics through real-world work experience." data-id="Program Live-In satu minggu di Lombok yang melatih kemandirian dan profesionalisme melalui pengalaman kerja nyata.">Week-long Live-In program in Lombok fostering independence and professional ethics through real-world work experience.</p>
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- JOURNEY GALLERY -->
-<section class="journey-photos-section">
-    <div class="gallery-inner">
-        <p class="section-label">// 04 — moments</p>
-        <h2 class="section-title" data-en="Journey Moments" data-id="Momen Perjalanan">Journey Moments</h2>
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="projects-inner">
+            <p class="section-label">// 02 — projects</p>
+            <h2 class="section-title" data-en="My <span>Projects</span>" data-id="Proyek <span>Saya</span>">My <span>Projects</span></h2>
+            <div class="projects-grid">
 
-        <div class="jg-tabs">
-            <button class="jg-tab active" onclick="jgSwitch('lombok')" id="jgtab-lombok">
-                <i class="fas fa-map-marker-alt"></i>
-                <span data-en="Live In Lombok" data-id="Live In Lombok">Live In Lombok</span>
-                <span class="jg-count" id="jgcount-lombok">3</span>
-            </button>
-            <button class="jg-tab" onclick="jgSwitch('Kegiatan-sekolah')" id="jgtab-Kegiatan-sekolah">
-                <i class="fas fa-school"></i>
-                <span data-en="School Activity" data-id="Kegiatan Sekolah">School Activity</span>
-                <span class="jg-count" id="jgcount-Kegiatan-sekolah">0</span>
-            </button>
-            <button class="jg-tab" onclick="jgSwitch('lainnya')" id="jgtab-lainnya">
-                <i class="fas fa-folder"></i>
-                <span data-en="Others" data-id="Lainnya">Others</span>
-                <span class="jg-count" id="jgcount-lainnya">0</span>
-            </button>
-        </div>
-
-        <div class="jg-panel active" id="jgpanel-lombok">
-            <p class="jg-folder-desc" data-en="Documentation from the Live In program in Lombok, February 2026" data-id="Dokumentasi perjalanan Live In di Lombok, Februari 2026">Documentation from the Live In program in Lombok, February 2026</p>
-            <div class="jg-grid">
-                <div class="jg-card" onclick="jgOpenModal('IMG_4453.jpg','Live In Lombok','Mataram Monument City','Februari 2026','Live In Lombok','Visiting the iconic Mataram Monument — a historic landmark and pride of the Lombok community, symbolizing the spirit of the city.','fas fa-map-marker-alt')">
-                    <div class="jg-img-wrap">
-                        <img src="IMG_4453.jpg" alt="Mataram Monument" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                        <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4453.jpg</span></div>
+                <div class="project-card fade-up">
+                    <div class="project-img">
+                        <img src="Screenshot%202026-02-23%20at%2007.34.58.png" alt="Planning Digital Content"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#222;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-image" style="font-size:2rem;color:#555;"></i><span style="color:#555;">Screenshot</span></div>
+                        <span class="project-num">01</span>
                     </div>
-                    <div class="jg-info">
-                        <div class="jg-title">Live In Lombok</div>
-                        <div class="jg-meta">
-                            <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Mataram Monument City</span>
-                            <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
+                    <div class="project-body">
+                        <h3 data-en="Planning Digital Content" data-id="Perencanaan Konten Digital">Planning Digital Content</h3>
+                        <p data-en="Content marketing based on creating and sharing online material such as videos, blogs, and social media posts."
+                        data-id="Pemasaran konten berbasis pembuatan dan pembagian materi online seperti video, blog, dan postingan media sosial.">Content marketing based on creating and sharing online material such as videos, blogs, and social media posts.</p>
+                    </div>
+                </div>
+
+                <div class="project-card fade-up">
+                    <div class="project-img">
+                        <img src="Screenshot%202026-02-17%20at%2013.51.15.png" alt="USP Data Collection"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#222;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-image" style="font-size:2rem;color:#555;"></i><span style="color:#555;">Screenshot</span></div>
+                        <span class="project-num">02</span>
+                    </div>
+                    <div class="project-body">
+                        <h3 data-en="USP Data Collection" data-id="Pengumpulan Data USP">USP Data Collection</h3>
+                        <p data-en="An online marketplace for electronics, household appliances, and office equipment, designed for a seamless user experience."
+                        data-id="Marketplace online untuk elektronik, peralatan rumah tangga, dan perlengkapan kantor.">An online marketplace for electronics, household appliances, and office equipment.</p>
+                    </div>
+                </div>
+
+                <div class="project-card fade-up">
+                    <div class="project-img">
+                        <img src="Screenshot%202026-02-17%20at%2013.44.55.png" alt="Values Data CSIT"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#222;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-image" style="font-size:2rem;color:#555;"></i><span style="color:#555;">Screenshot</span></div>
+                        <span class="project-num">03</span>
+                    </div>
+                    <div class="project-body">
+                        <h3 data-en="Values Data CSIT" data-id="Nilai Data CSIT">Values Data CSIT</h3>
+                        <p data-en="Data values for Azurite.jp, matching ~70 database records using Firebase and Google Analytics."
+                        data-id="Nilai data untuk Azurite.jp, mencocokkan ~70 data menggunakan Firebase dan Google Analytics.">Data values for Azurite.jp, matching ~70 records using Firebase and Google Analytics.</p>
+                    </div>
+                </div>
+
+                <div class="project-card fade-up">
+                    <div class="project-img">
+                        <img src="image.png" alt="Library Web Project"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#222;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-image" style="font-size:2rem;color:#555;"></i><span style="color:#555;">image.png</span></div>
+                        <span class="project-num">04</span>
+                    </div>
+                    <div class="project-body">
+                        <h3 data-en="Library Web" data-id="Web Perpustakaan">Library Web</h3>
+                        <p data-en="Built with React.js, Express, and Node.js. Used Supabase as the database."
+                        data-id="Dibangun menggunakan React.js, Express, dan Node.js. Menggunakan Supabase sebagai database.">Built with React.js, Express, and Node.js. Used Supabase as database.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/YusufxAlbana/salahuddin-library" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> GitHub</a>
+                            <a href="https://salahuddinlibrary.my.id/" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>
                         </div>
                     </div>
                 </div>
-                <div class="jg-card" onclick="jgOpenModal('IMG_4513.jpg','Live In Lombok','Mosque in Lombok','Februari 2026','Live In Lombok','Visiting one of the beautiful mosques in Lombok — a place of worship and religious tourism that reflects the rich Islamic heritage of the island.','fas fa-map-marker-alt')">
-                    <div class="jg-img-wrap">
-                        <img src="IMG_4513.jpg" alt="Mosque in Lombok" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                        <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4513.jpg</span></div>
+
+                <div class="project-card fade-up">
+                    <div class="project-img">
+                        <img src="Screenshot 2026-05-20 at 14.22.13.png" alt="Web UMKM Project"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#222;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-image" style="font-size:2rem;color:#555;"></i><span style="color:#555;">Screenshot</span></div>
+                        <span class="project-num">05</span>
                     </div>
-                    <div class="jg-info">
-                        <div class="jg-title">Live In Lombok</div>
-                        <div class="jg-meta">
-                            <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Mosque in Lombok</span>
-                            <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
+                    <div class="project-body">
+                        <h3 data-en="Web UMKM Project" data-id="Web UMKM">Web UMKM Project</h3>
+                        <p data-en="Responsive landing page for Rumah Makan Jati. Built using HTML, CSS, and JavaScript."
+                        data-id="Landing page responsif untuk Rumah Makan Jati. Dibangun menggunakan HTML, CSS, dan JavaScript.">Responsive landing page for Rumah Makan Jati. Built with HTML, CSS, and JavaScript.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/YusufxAlbana/uji-kompetisi" target="_blank" class="project-link"><i class="fa-brands fa-github"></i> GitHub</a>
                         </div>
                     </div>
                 </div>
-                <div class="jg-card" onclick="jgOpenModal('IMG_4531.jpg','Live In Lombok','Carwash, Mataram','Februari 2026','Live In Lombok','A shared moment with the local community in Mataram — part of the Live In program that strengthened social bonds and real-world work experience at a professional car wash facility.','fas fa-map-marker-alt')">
-                    <div class="jg-img-wrap">
-                        <img src="IMG_4531.jpg" alt="Carwash Mataram" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                        <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4531.jpg</span></div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+        <div class="exp-inner">
+            <p class="section-label">// 03 — experience</p>
+            <h2 class="section-title" data-en="My Journey" data-id="Perjalanan Saya">My Journey</h2>
+            <div class="timeline">
+
+                <div class="tl-item left">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card">
+                        <div class="tl-icon"><i class="fas fa-briefcase"></i></div>
+                        <h3 data-en="IDN Boarding School" data-id="IDN Boarding School">IDN Boarding School</h3>
+                        <div class="tl-period" data-en="Vocational High School · July 2024 – June 2027" data-id="SMK · Juli 2024 – Juni 2027">Vocational High School · July 2024 – June 2027</div>
+                        <p data-en="I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS, alongside design principles through Figma and Canva."
+                        data-id="Saya mengawali karier di bidang Software Engineering dengan membangun fondasi front-end menggunakan HTML dan CSS, serta prinsip desain melalui Figma dan Canva.">I began my career in Software Engineering by building a strong foundation in front-end development using HTML and CSS, alongside design principles through Figma and Canva.</p>
                     </div>
-                    <div class="jg-info">
-                        <div class="jg-title">Live In Lombok</div>
-                        <div class="jg-meta">
-                            <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Carwash, Mataram</span>
-                            <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
+                </div>
+
+                <div class="tl-item right">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card">
+                        <div class="tl-icon"><i class="fas fa-code"></i></div>
+                        <h3 data-en="First Laravel Project" data-id="Proyek Laravel Pertama">First Laravel Project</h3>
+                        <div class="tl-period" data-en="October 2024" data-id="Oktober 2024">October 2024</div>
+                        <p data-en="Completed my first CRUD application using Laravel. Introduced me to MVC concepts, user authentication, and basic data management."
+                        data-id="Menyelesaikan proyek CRUD pertama menggunakan Laravel. Mengenalkan konsep MVC, autentikasi pengguna, dan manajemen data.">Completed my first CRUD application using Laravel. Introduced to MVC concepts, user authentication, and basic data management.</p>
+                    </div>
+                </div>
+
+                <div class="tl-item left">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card">
+                        <div class="tl-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3 data-en="Tangguh Program" data-id="Program Tangguh">Tangguh Program</h3>
+                        <div class="tl-period" data-en="January 2025" data-id="Januari 2025">January 2025</div>
+                        <p data-en="Intensive one-week training in Kediri designed to test resilience and independence."
+                        data-id="Pelatihan intensif satu minggu di Kediri yang dirancang untuk menguji ketahanan dan kemandirian.">Intensive one-week training in Kediri designed to test resilience and independence.</p>
+                    </div>
+                </div>
+
+                <div class="tl-item right">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card">
+                        <div class="tl-icon"><i class="fas fa-store"></i></div>
+                        <h3 data-en="UMKM Project" data-id="Proyek UMKM">UMKM Project</h3>
+                        <div class="tl-period" data-en="May 2025" data-id="Mei 2025">May 2025</div>
+                        <p data-en="Entrusted with banner creation for a local MSME through the UMKM Project program."
+                        data-id="Dipercaya menangani pembuatan banner bagi UMKM lokal melalui program UMKM Proyek.">Entrusted with banner creation for a local MSME through the UMKM Project program.</p>
+                    </div>
+                </div>
+
+                <div class="tl-item left">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card">
+                        <div class="tl-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <h3 data-en="Live In Lombok" data-id="Live In Lombok">Live In Lombok</h3>
+                        <div class="tl-period" data-en="February 2026" data-id="Februari 2026">February 2026</div>
+                        <p data-en="Week-long Live-In program in Lombok fostering independence and professional ethics through real-world work experience."
+                        data-id="Program Live-In satu minggu di Lombok yang melatih kemandirian dan profesionalisme melalui pengalaman kerja nyata.">Week-long Live-In program in Lombok fostering independence and professional ethics through real-world work experience.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- JOURNEY GALLERY -->
+    <section class="journey-photos-section">
+        <div class="gallery-inner">
+            <p class="section-label">// 04 — moments</p>
+            <h2 class="section-title" data-en="Journey Moments" data-id="Momen Perjalanan">Journey Moments</h2>
+
+            <div class="jg-tabs">
+                <button class="jg-tab active" onclick="jgSwitch('lombok')" id="jgtab-lombok">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span data-en="Live In Lombok" data-id="Live In Lombok">Live In Lombok</span>
+                    <span class="jg-count" id="jgcount-lombok">3</span>
+                </button>
+                <button class="jg-tab" onclick="jgSwitch('Kegiatan-sekolah')" id="jgtab-Kegiatan-sekolah">
+                    <i class="fas fa-school"></i>
+                    <span data-en="School Activity" data-id="Kegiatan Sekolah">School Activity</span>
+                    <span class="jg-count" id="jgcount-Kegiatan-sekolah">0</span>
+                </button>
+                <button class="jg-tab" onclick="jgSwitch('lainnya')" id="jgtab-lainnya">
+                    <i class="fas fa-folder"></i>
+                    <span data-en="Others" data-id="Lainnya">Others</span>
+                    <span class="jg-count" id="jgcount-lainnya">0</span>
+                </button>
+            </div>
+
+            <div class="jg-panel active" id="jgpanel-lombok">
+                <p class="jg-folder-desc" data-en="Documentation from the Live In program in Lombok, February 2026" data-id="Dokumentasi perjalanan Live In di Lombok, Februari 2026">Documentation from the Live In program in Lombok, February 2026</p>
+                <div class="jg-grid">
+                    <div class="jg-card" onclick="jgOpenModal('IMG_4453.jpg','Live In Lombok','Mataram Monument City','Februari 2026','Live In Lombok','Visiting the iconic Mataram Monument — a historic landmark and pride of the Lombok community, symbolizing the spirit of the city.','fas fa-map-marker-alt')">
+                        <div class="jg-img-wrap">
+                            <img src="IMG_4453.jpg" alt="Mataram Monument" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4453.jpg</span></div>
+                        </div>
+                        <div class="jg-info">
+                            <div class="jg-title">Live In Lombok</div>
+                            <div class="jg-meta">
+                                <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Mataram Monument City</span>
+                                <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jg-card" onclick="jgOpenModal('IMG_4513.jpg','Live In Lombok','Mosque in Lombok','Februari 2026','Live In Lombok','Visiting one of the beautiful mosques in Lombok — a place of worship and religious tourism that reflects the rich Islamic heritage of the island.','fas fa-map-marker-alt')">
+                        <div class="jg-img-wrap">
+                            <img src="IMG_4513.jpg" alt="Mosque in Lombok" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4513.jpg</span></div>
+                        </div>
+                        <div class="jg-info">
+                            <div class="jg-title">Live In Lombok</div>
+                            <div class="jg-meta">
+                                <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Mosque in Lombok</span>
+                                <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jg-card" onclick="jgOpenModal('IMG_4531.jpg','Live In Lombok','Carwash, Mataram','Februari 2026','Live In Lombok','A shared moment with the local community in Mataram — part of the Live In program that strengthened social bonds and real-world work experience at a professional car wash facility.','fas fa-map-marker-alt')">
+                        <div class="jg-img-wrap">
+                            <img src="IMG_4531.jpg" alt="Carwash Mataram" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div class="jg-placeholder"><i class="fas fa-image"></i><span>IMG_4531.jpg</span></div>
+                        </div>
+                        <div class="jg-info">
+                            <div class="jg-title">Live In Lombok</div>
+                            <div class="jg-meta">
+                                <span class="jg-loc"><i class="fas fa-map-marker-alt"></i>Carwash, Mataram</span>
+                                <span class="jg-date"><i class="far fa-calendar-alt"></i>Februari 2026</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="jg-panel" id="jgpanel-Kegiatan-sekolah">
-            <p class="jg-folder-desc">School Activity documentation</p>
-            <div class="jg-grid" id="jggrid-Kegiatan-sekolah"></div>
-            <div class="jg-empty" id="jgempty-Kegiatan-sekolah">
-                <i class="fas fa-image"></i>
-                <span data-en="No photos yet." data-id="Belum ada foto.">No photos yet.</span>
+            <div class="jg-panel" id="jgpanel-Kegiatan-sekolah">
+                <p class="jg-folder-desc">School Activity documentation</p>
+                <div class="jg-grid" id="jggrid-Kegiatan-sekolah"></div>
+                <div class="jg-empty" id="jgempty-Kegiatan-sekolah">
+                    <i class="fas fa-image"></i>
+                    <span data-en="No photos yet." data-id="Belum ada foto.">No photos yet.</span>
+                </div>
             </div>
-        </div>
 
-        <div class="jg-panel" id="jgpanel-lainnya">
-            <p class="jg-folder-desc">Other moments and documentation</p>
-            <div class="jg-grid" id="jggrid-lainnya"></div>
-            <div class="jg-empty" id="jgempty-lainnya">
-                <i class="fas fa-folder-open"></i>
-                <span data-en="No photos yet." data-id="Belum ada foto.">No photos yet.</span>
+            <div class="jg-panel" id="jgpanel-lainnya">
+                <p class="jg-folder-desc">Other moments and documentation</p>
+                <div class="jg-grid" id="jggrid-lainnya"></div>
+                <div class="jg-empty" id="jgempty-lainnya">
+                    <i class="fas fa-folder-open"></i>
+                    <span data-en="No photos yet." data-id="Belum ada foto.">No photos yet.</span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- MODAL -->
-<div class="jg-modal-backdrop" id="jgModal" onclick="jgCloseIfBackdrop(event)">
-    <div class="jg-modal">
-        <div class="jg-modal-img">
-            <img id="jgModalImg" src="" alt="">
-            <div class="jg-placeholder" id="jgModalPH" style="display:none"><i class="fas fa-image"></i><span>Photo not found</span></div>
-        </div>
-        <div class="jg-modal-body">
-            <div class="jg-modal-badge"><i class="fas fa-folder"></i><span id="jgModalFolder"></span></div>
-            <div class="jg-modal-header">
-                <div class="jg-modal-title" id="jgModalTitle"></div>
-                <button class="jg-modal-close" onclick="jgCloseModal()"><i class="fas fa-times"></i></button>
+    <!-- MODAL -->
+    <div class="jg-modal-backdrop" id="jgModal" onclick="jgCloseIfBackdrop(event)">
+        <div class="jg-modal">
+            <div class="jg-modal-img">
+                <img id="jgModalImg" src="" alt="">
+                <div class="jg-placeholder" id="jgModalPH" style="display:none"><i class="fas fa-image"></i><span>Photo not found</span></div>
             </div>
-            <p class="jg-modal-desc" id="jgModalDesc"></p>
-            <div class="jg-modal-meta">
-                <span><i class="fas fa-map-marker-alt"></i><span id="jgModalLoc"></span></span>
-                <span><i class="far fa-calendar-alt"></i><span id="jgModalDate"></span></span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- CERTIFICATES -->
-<section id="certificates">
-    <div class="certs-inner">
-        <p class="section-label">// 05 — certificates</p>
-        <h2 class="section-title" data-en="My Certificates" data-id="Sertifikat Saya">My Certificates</h2>
-        <div class="certs-grid">
-            <div class="cert-card fade-up">
-                <div class="cert-img"><img src="Sertifikat1.png" alt="AI Fundamental"></div>
-                <div class="cert-body">
-                    <h3 data-en="AI Fundamental" data-id="Dasar-Dasar AI">AI Fundamental</h3>
-                    <p data-en="Deep understanding of fundamental AI concepts including machine learning and deep learning." data-id="Pemahaman mendalam mengenai konsep dasar AI termasuk machine learning dan deep learning.">Deep understanding of fundamental AI concepts including machine learning and deep learning.</p>
+            <div class="jg-modal-body">
+                <div class="jg-modal-badge"><i class="fas fa-folder"></i><span id="jgModalFolder"></span></div>
+                <div class="jg-modal-header">
+                    <div class="jg-modal-title" id="jgModalTitle"></div>
+                    <button class="jg-modal-close" onclick="jgCloseModal()"><i class="fas fa-times"></i></button>
                 </div>
-            </div>
-            <div class="cert-card fade-up">
-                <div class="cert-img"><img src="sertifikat2.png" alt="Fundamental Dart"></div>
-                <div class="cert-body">
-                    <h3 data-en="Fundamental Dart" data-id="Dasar-Dasar Dart">Fundamental Dart</h3>
-                    <p data-en="Basic syntax and object-oriented programming in Dart." data-id="Sintaks dasar dan pemrograman berorientasi objek dalam Dart.">Basic syntax and object-oriented programming in Dart.</p>
-                </div>
-            </div>
-            <div class="cert-card fade-up">
-                <div class="cert-img"><img src="sertifikat3.jpg" alt="Fundamental CSS"></div>
-                <div class="cert-body">
-                    <h3 data-en="Fundamental CSS" data-id="Dasar-Dasar CSS">Fundamental CSS</h3>
-                    <p data-en="Styling, multimedia elements, and responsive layouts." data-id="Penataan gaya, elemen multimedia, dan tata letak responsif.">Styling, multimedia elements, and responsive layouts.</p>
-                </div>
-            </div>
-            <div class="cert-card fade-up">
-                <div class="cert-img"><img src="sertifikat4.png" alt="Fundamental HTML"></div>
-                <div class="cert-body">
-                    <h3 data-en="Fundamental HTML" data-id="Dasar-Dasar HTML">Fundamental HTML</h3>
-                    <p data-en="Web document structure, multimedia, forms, and tables." data-id="Struktur dokumen web, multimedia, form, dan tabel.">Web document structure, multimedia, forms, and tables.</p>
-                </div>
-            </div>
-            <div class="cert-card fade-up">
-                <div class="cert-img"><img src="Sertifikat6.png" alt="SEO With AI"></div>
-                <div class="cert-body">
-                    <h3 data-en="SEO With AI" data-id="SEO Dengan AI">SEO With AI</h3>
-                    <p data-en="Optimizing websites using AI tools for keyword research, content optimization, and technical SEO." data-id="Mengoptimalkan website menggunakan alat AI untuk riset kata kunci, optimasi konten, dan SEO teknis.">Optimizing websites using AI tools for keyword research, content optimization, and technical SEO.</p>
-                </div>
-            </div>
-            <div class="cert-card fade-up">
-                <div class="cert-img"><img src="Sertifikat5.png" alt="Web with WordPress"></div>
-                <div class="cert-body">
-                    <h3 data-en="Web with WordPress" data-id="Web dengan WordPress">Web with WordPress</h3>
-                    <p data-en="Building a website using WordPress, covering CMS fundamentals and site publishing." data-id="Membangun situs web menggunakan WordPress, mencakup dasar CMS dan penerbitan situs.">Building a website using WordPress, covering CMS fundamentals and site publishing.</p>
-                </div>
-            </div>
-            <div class="cert-card fade-up">
-                <div class="cert-img"><img src="Sertifikat7.png" alt="Data Analyst With AI"></div>
-                <div class="cert-body">
-                    <h3 data-en="Data Analyst With AI" data-id="Analis Data Dengan AI">Data Analyst With AI</h3>
-                    <p data-en="Processing and analyzing data using AI, creating visualizations, and data-driven decision-making." data-id="Mengolah dan menganalisis data menggunakan AI, membuat visualisasi, dan pengambilan keputusan berbasis data.">Processing and analyzing data using AI, creating visualizations, and supporting data-driven decisions.</p>
+                <p class="jg-modal-desc" id="jgModalDesc"></p>
+                <div class="jg-modal-meta">
+                    <span><i class="fas fa-map-marker-alt"></i><span id="jgModalLoc"></span></span>
+                    <span><i class="far fa-calendar-alt"></i><span id="jgModalDate"></span></span>
                 </div>
             </div>
         </div>
     </div>
-</section>
 
-<!-- HOBBIES -->
-<section class="hobbies-section">
-    <div class="hobbies-inner">
-        <h3 data-en="Hobbies" data-id="Hobi">Hobbies</h3>
-        <div class="hobbies-tags">
-            <span class="hobby-tag" data-en="📸 Photography" data-id="📸 Fotografi">📸 Photography</span>
-            <span class="hobby-tag" data-en="✈️ Travel" data-id="✈️ Traveling">✈️ Travel</span>
-            <span class="hobby-tag" data-en="🎵 Music" data-id="🎵 Musik">🎵 Music</span>
-        </div>
-    </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-    <div class="contact-inner">
-        <p class="section-label">// 06 — contact</p>
-        <h2 class="section-title" data-en="Get in <span>Touch</span>" data-id="Hubungi <span>Saya</span>">Get in <span>Touch</span></h2>
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h3 data-en="Let's Work Together" data-id="Mari Bekerja Sama">Let's Work Together</h3>
-                <p data-en="I'm open to new projects, collaborations, or just a chat about technology and creativity." data-id="Saya terbuka untuk proyek baru, kolaborasi, atau sekadar ngobrol tentang teknologi dan kreativitas.">I'm open to new projects, collaborations, or just a chat about technology and creativity.</p>
-                <div class="social-links">
-                    <a href="https://github.com/GipAtlh23" target="_blank" class="social-link"><i class="fab fa-github"></i>GitHub</a>
-                    <a href="https://www.linkedin.com/in/ghifari-atallah-20a93931b/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i>LinkedIn</a>
-                    <a href="https://www.instagram.com/ghiffariath" target="_blank" class="social-link"><i class="fab fa-instagram"></i>Instagram</a>
+    <!-- CERTIFICATES -->
+    <section id="certificates">
+        <div class="certs-inner">
+            <p class="section-label">// 05 — certificates</p>
+            <h2 class="section-title" data-en="My Certificates" data-id="Sertifikat Saya">My Certificates</h2>
+            <div class="certs-grid">
+                <div class="cert-card fade-up">
+                    <div class="cert-img"><img src="Sertifikat1.png" alt="AI Fundamental" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#eee;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-certificate" style="font-size:2rem;color:#999;"></i><span style="color:#999;">Sertifikat1.png</span></div>
+                    </div>
+                    <div class="cert-body">
+                        <h3 data-en="AI Fundamental" data-id="Dasar-Dasar AI">AI Fundamental</h3>
+                        <p data-en="Deep understanding of fundamental AI concepts including machine learning and deep learning."
+                        data-id="Pemahaman mendalam mengenai konsep dasar AI termasuk machine learning dan deep learning.">Deep understanding of fundamental AI concepts including machine learning and deep learning.</p>
+                    </div>
                 </div>
-                <div class="email-box">
-                    <i class="fas fa-envelope"></i>
-                    <span>atalahghifari333@gmail.com</span>
+                <div class="cert-card fade-up">
+                    <div class="cert-img"><img src="sertifikat2.png" alt="Fundamental Dart" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#eee;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-certificate" style="font-size:2rem;color:#999;"></i><span style="color:#999;">sertifikat2.png</span></div>
+                    </div>
+                    <div class="cert-body">
+                        <h3 data-en="Fundamental Dart" data-id="Dasar-Dasar Dart">Fundamental Dart</h3>
+                        <p data-en="Basic syntax and object-oriented programming in Dart."
+                        data-id="Sintaks dasar dan pemrograman berorientasi objek dalam Dart.">Basic syntax and object-oriented programming in Dart.</p>
+                    </div>
+                </div>
+                <div class="cert-card fade-up">
+                    <div class="cert-img"><img src="sertifikat3.jpg" alt="Fundamental CSS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#eee;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-certificate" style="font-size:2rem;color:#999;"></i><span style="color:#999;">sertifikat3.jpg</span></div>
+                    </div>
+                    <div class="cert-body">
+                        <h3 data-en="Fundamental CSS" data-id="Dasar-Dasar CSS">Fundamental CSS</h3>
+                        <p data-en="Styling, multimedia elements, and responsive layouts."
+                        data-id="Penataan gaya, elemen multimedia, dan tata letak responsif.">Styling, multimedia elements, and responsive layouts.</p>
+                    </div>
+                </div>
+                <div class="cert-card fade-up">
+                    <div class="cert-img"><img src="sertifikat4.png" alt="Fundamental HTML" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#eee;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-certificate" style="font-size:2rem;color:#999;"></i><span style="color:#999;">sertifikat4.png</span></div>
+                    </div>
+                    <div class="cert-body">
+                        <h3 data-en="Fundamental HTML" data-id="Dasar-Dasar HTML">Fundamental HTML</h3>
+                        <p data-en="Web document structure, multimedia, forms, and tables."
+                        data-id="Struktur dokumen web, multimedia, form, dan tabel.">Web document structure, multimedia, forms, and tables.</p>
+                    </div>
+                </div>
+                <div class="cert-card fade-up">
+                    <div class="cert-img"><img src="Sertifikat6.png" alt="SEO With AI" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#eee;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-certificate" style="font-size:2rem;color:#999;"></i><span style="color:#999;">Sertifikat6.png</span></div>
+                    </div>
+                    <div class="cert-body">
+                        <h3 data-en="SEO With AI" data-id="SEO Dengan AI">SEO With AI</h3>
+                        <p data-en="Optimizing websites using AI tools for keyword research, content optimization, and technical SEO."
+                        data-id="Mengoptimalkan website menggunakan alat AI untuk riset kata kunci, optimasi konten, dan SEO teknis.">Optimizing websites using AI tools for keyword research, content optimization, and technical SEO.</p>
+                    </div>
+                </div>
+                <div class="cert-card fade-up">
+                    <div class="cert-img"><img src="Sertifikat5.png" alt="Web with WordPress" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#eee;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-certificate" style="font-size:2rem;color:#999;"></i><span style="color:#999;">Sertifikat5.png</span></div>
+                    </div>
+                    <div class="cert-body">
+                        <h3 data-en="Web with WordPress" data-id="Web dengan WordPress">Web with WordPress</h3>
+                        <p data-en="Building a website using WordPress, covering CMS fundamentals and site publishing."
+                        data-id="Membangun situs web menggunakan WordPress, mencakup dasar CMS dan penerbitan situs.">Building a website using WordPress, covering CMS fundamentals and site publishing.</p>
+                    </div>
+                </div>
+                <div class="cert-card fade-up">
+                    <div class="cert-img"><img src="Sertifikat7.png" alt="Data Analyst With AI" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="jg-placeholder" style="position:absolute;inset:0;background:#eee;display:none;flex-direction:column;align-items:center;justify-content:center;"><i class="fas fa-certificate" style="font-size:2rem;color:#999;"></i><span style="color:#999;">Sertifikat7.png</span></div>
+                    </div>
+                    <div class="cert-body">
+                        <h3 data-en="Data Analyst With AI" data-id="Analis Data Dengan AI">Data Analyst With AI</h3>
+                        <p data-en="Processing and analyzing data using AI, creating visualizations, and data-driven decision-making."
+                        data-id="Mengolah dan menganalisis data menggunakan AI, membuat visualisasi, dan pengambilan keputusan berbasis data.">Processing and analyzing data using AI, creating visualizations, and supporting data-driven decisions.</p>
+                    </div>
                 </div>
             </div>
-            <div class="contact-form">
-                <div class="form-field">
-                    <input type="text" placeholder="Your Name" data-en-placeholder="Your Name" data-id-placeholder="Nama Anda">
-                </div>
-                <div class="form-field">
-                    <input type="email" placeholder="Your Email" data-en-placeholder="Your Email" data-id-placeholder="Email Anda">
-                </div>
-                <div class="form-field">
-                    <textarea placeholder="Your Message" data-en-placeholder="Your Message" data-id-placeholder="Pesan Anda"></textarea>
-                </div>
-                <button class="btn-submit" data-en="Send Message →" data-id="Kirim Pesan →">Send Message →</button>
+        </div>
+    </section>
+
+    <!-- HOBBIES -->
+    <section class="hobbies-section">
+        <div class="hobbies-inner">
+            <h3 data-en="Hobbies" data-id="Hobi">Hobbies</h3>
+            <div class="hobbies-tags">
+                <span class="hobby-tag" data-en="📸 Photography" data-id="📸 Fotografi">📸 Photography</span>
+                <span class="hobby-tag" data-en="✈️ Travel" data-id="✈️ Traveling">✈️ Travel</span>
+                <span class="hobby-tag" data-en="🎵 Music" data-id="🎵 Musik">🎵 Music</span>
             </div>
         </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="contact-inner">
+            <p class="section-label">// 06 — contact</p>
+            <h2 class="section-title" data-en="Get in <span>Touch</span>" data-id="Hubungi <span>Saya</span>">Get in <span>Touch</span></h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 data-en="Let's Work Together" data-id="Mari Bekerja Sama">Let's Work Together</h3>
+                    <p data-en="I'm open to new projects, collaborations, or just a chat about technology and creativity."
+                    data-id="Saya terbuka untuk proyek baru, kolaborasi, atau sekadar ngobrol tentang teknologi dan kreativitas.">I'm open to new projects, collaborations, or just a chat about technology and creativity.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/GipAtlh23" target="_blank" class="social-link"><i class="fab fa-github"></i>GitHub</a>
+                        <a href="https://www.linkedin.com/in/ghifari-atallah-20a93931b/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i>LinkedIn</a>
+                        <a href="https://www.instagram.com/ghiffariath" target="_blank" class="social-link"><i class="fab fa-instagram"></i>Instagram</a>
+                    </div>
+                    <div class="email-box">
+                        <i class="fas fa-envelope"></i>
+                        <span>atalahghifari333@gmail.com</span>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <div class="form-field">
+                        <input type="text" placeholder="Your Name" data-en-placeholder="Your Name" data-id-placeholder="Nama Anda">
+                    </div>
+                    <div class="form-field">
+                        <input type="email" placeholder="Your Email" data-en-placeholder="Your Email" data-id-placeholder="Email Anda">
+                    </div>
+                    <div class="form-field">
+                        <textarea placeholder="Your Message" data-en-placeholder="Your Message" data-id-placeholder="Pesan Anda"></textarea>
+                    </div>
+                    <button class="btn-submit" data-en="Send Message →" data-id="Kirim Pesan →">Send Message →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 <span>Ghiffari Atallah</span> · Built with ❤️ and Neobrutalism</p>
+    </footer>
+
+    <!-- FLOATING CONTROLS -->
+    <div class="floating-controls">
+        <button class="ctrl-btn" id="theme-toggle"><i id="theme-icon" class="fas fa-moon"></i> <span id="theme-text">Dark</span></button>
+        <button class="ctrl-btn" id="lang-en">EN</button>
+        <button class="ctrl-btn" id="lang-id">ID</button>
     </div>
-</section>
 
-<footer>
-    <p>© 2026 <span>Ghiffari Atallah</span> · Built with ❤️ and Neobrutalism</p>
-</footer>
+    <script>
+        // ═══ PRELOADER ═══
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 600);
+        });
 
-<!-- FLOATING CONTROLS -->
-<div class="floating-controls">
-    <button class="ctrl-btn" id="theme-toggle"><i id="theme-icon" class="fas fa-moon"></i> <span id="theme-text">Dark</span></button>
-    <button class="ctrl-btn" id="lang-en">EN</button>
-    <button class="ctrl-btn" id="lang-id">ID</button>
-</div>
+        // ═══ CUSTOM CURSOR ═══
+        const cursor = document.getElementById('customCursor');
+        const cursorDot = document.getElementById('customCursorDot');
+        let mouseX = 0,
+            mouseY = 0;
+        let cursorX = 0,
+            cursorY = 0;
 
-<script>
-    // ═══ TYPING ═══
-    const typedTextEl = document.getElementById('typed-text');
-    const roles = ['Frontend Developer', 'SEO Analyst', 'AI Enthusiast', 'DKV'];
-    let roleIndex = 0, charIndex = 0, isDeleting = false;
-    function typeRole() {
-        const current = roles[roleIndex];
-        typedTextEl.textContent = !isDeleting ? current.substring(0, charIndex + 1) : current.substring(0, charIndex - 1);
-        charIndex += isDeleting ? -1 : 1;
-        if (!isDeleting && charIndex === current.length) { isDeleting = true; setTimeout(typeRole, 1200); }
-        else if (isDeleting && charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; setTimeout(typeRole, 80); }
-        else { setTimeout(typeRole, isDeleting ? 40 : 80); }
-    }
-    setTimeout(typeRole, 500);
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
 
-    // ═══ MOBILE MENU ═══
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-        document.getElementById('mobile-menu').style.display = document.getElementById('mobile-menu').style.display === 'block' ? 'none' : 'block';
-    });
-    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
-        e.preventDefault();
-        const t = document.querySelector(this.getAttribute('href'));
-        if (t) t.scrollIntoView({ behavior: 'smooth' });
-        document.getElementById('mobile-menu').style.display = 'none';
-    }));
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
-    // ═══ SCROLL ANIMATIONS ═══
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.fade-up, .tl-item').forEach(el => observer.observe(el));
+        // Add hover class on interactive elements
+        const hoverTargets = document.querySelectorAll(
+            'a, button, .btn-primary, .btn-secondary, .btn-submit, .ctrl-btn, .jg-card, .project-card, .cert-card, .skill-card, .tl-card, .about-card, .social-link, .hobby-tag, .jg-tab, input, textarea, .profile-card'
+            );
+        hoverTargets.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                cursorDot.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                cursorDot.classList.remove('hover');
+            });
+        });
 
-    // Photo card observer
-    document.querySelectorAll('.jg-card').forEach((card, i) => {
-        const obs = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    setTimeout(() => e.target.classList.add('jg-visible'), i * 100);
-                    obs.unobserve(e.target);
+        // ═══ FLOATING PARTICLES ═══
+        const particlesContainer = document.getElementById('particlesContainer');
+        const particleEmojis = ['◆', '●', '▲', '■', '★', '♦', '⬟', '⬢', '○', '□', '△'];
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('span');
+            particle.classList.add('particle');
+            particle.textContent = particleEmojis[Math.floor(Math.random() * particleEmojis.length)];
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.fontSize = (0.6 + Math.random() * 1.8) + 'rem';
+            particle.style.animationDuration = (8 + Math.random() * 20) + 's';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.opacity = (0.03 + Math.random() * 0.08);
+            particlesContainer.appendChild(particle);
+        }
+
+        // ═══ SPARKLE ON CLICK ═══
+        document.addEventListener('click', (e) => {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            sparkle.style.width = '30px';
+            sparkle.style.height = '30px';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.background = 'radial-gradient(circle, var(--accent3) 0%, transparent 70%)';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 700);
+        });
+
+        // ═══ TYPING ═══
+        const typedTextEl = document.getElementById('typed-text');
+        const roles = ['Frontend Developer', 'SEO Analyst', 'AI Enthusiast', 'DKV'];
+        let roleIndex = 0,
+            charIndex = 0,
+            isDeleting = false;
+
+        function typeRole() {
+            const current = roles[roleIndex];
+            typedTextEl.textContent = !isDeleting ? current.substring(0, charIndex + 1) : current.substring(0, charIndex -
+                1);
+            charIndex += isDeleting ? -1 : 1;
+            if (!isDeleting && charIndex === current.length) { isDeleting = true;
+                setTimeout(typeRole, 1200); } else if (isDeleting && charIndex === 0) { isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                setTimeout(typeRole, 80); } else { setTimeout(typeRole, isDeleting ? 40 : 80); }
+        }
+        setTimeout(typeRole, 500);
+
+        // ═══ MOBILE MENU ═══
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
+            e.preventDefault();
+            const t = document.querySelector(this.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('mobile-menu').style.display = 'none';
+        }));
+
+        // ═══ SCROLL ANIMATIONS ═══
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.fade-up, .tl-item').forEach(el => observer.observe(el));
+
+        // Photo card observer with staggered delay
+        document.querySelectorAll('.jg-card').forEach((card, i) => {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        setTimeout(() => e.target.classList.add('jg-visible'), i * 80);
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            obs.observe(card);
+        });
+
+        // ═══ THEME ═══
+        function applyTheme(isLight) {
+            const r = document.documentElement.style;
+            if (isLight) {
+                r.setProperty('--bg', '#f5f0e8');
+                r.setProperty('--black', '#0d0d0d');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+                document.getElementById('theme-text').textContent = document.documentElement.lang === 'id' ? 'Terang' :
+                    'Light';
+                document.getElementById('theme-toggle').classList.add('active');
+            } else {
+                r.setProperty('--bg', '#f5f0e8');
+                r.setProperty('--black', '#0d0d0d');
+                document.getElementById('theme-icon').className = 'fas fa-moon';
+                document.getElementById('theme-text').textContent = document.documentElement.lang === 'id' ? 'Gelap' :
+                'Dark';
+                document.getElementById('theme-toggle').classList.remove('active');
+            }
+        }
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const isLight = !document.getElementById('theme-toggle').classList.contains('active');
+            applyTheme(isLight);
+            localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
+        });
+        applyTheme(localStorage.getItem('portfolio-theme') === 'light');
+
+        // ═══ LANGUAGE ═══
+        const langEn = document.getElementById('lang-en');
+        const langId = document.getElementById('lang-id');
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-en]').forEach(el => {
+                const val = el.getAttribute('data-' + lang);
+                if (val) { if (el.tagName === 'TITLE') document.title = val;
+                    else el.innerHTML = val; }
+            });
+            document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+                const val = el.getAttribute('data-' + lang + '-placeholder');
+                if (val) el.placeholder = val;
+            });
+            if (lang === 'en') { langEn.classList.add('active');
+                langId.classList.remove('active'); } else { langId.classList.add('active');
+                langEn.classList.remove('active'); }
+            localStorage.setItem('portfolio-lang', lang);
+        }
+        langEn.onclick = () => setLanguage('en');
+        langId.onclick = () => setLanguage('id');
+        setLanguage(localStorage.getItem('portfolio-lang') || 'en');
+
+        // ═══ GALLERY ═══
+        function jgSwitch(id) {
+            document.querySelectorAll('.jg-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.jg-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('jgtab-' + id).classList.add('active');
+            document.getElementById('jgpanel-' + id).classList.add('active');
+            // Re-observe cards in the new panel
+            document.querySelectorAll('#jgpanel-' + id + ' .jg-card').forEach((card, i) => {
+                if (!card.classList.contains('jg-visible')) {
+                    setTimeout(() => card.classList.add('jg-visible'), i * 60);
+                }
+            });
+        }
+
+        function jgOpenModal(src, title, loc, date, folder, desc, icon) {
+            const img = document.getElementById('jgModalImg');
+            const ph = document.getElementById('jgModalPH');
+            img.src = src;
+            img.alt = title;
+            img.style.display = 'block';
+            ph.style.display = 'none';
+            img.onerror = () => { img.style.display = 'none';
+                ph.style.display = 'flex'; };
+            document.getElementById('jgModalTitle').textContent = title;
+            document.getElementById('jgModalLoc').textContent = loc;
+            document.getElementById('jgModalDate').textContent = date;
+            document.getElementById('jgModalDesc').textContent = desc;
+            document.getElementById('jgModalFolder').textContent = folder;
+            document.getElementById('jgModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function jgCloseModal() {
+            document.getElementById('jgModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function jgCloseIfBackdrop(e) {
+            if (e.target === document.getElementById('jgModal')) jgCloseModal();
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') jgCloseModal(); });
+
+        // ═══ PARALLAX ON SCROLL ═══
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const heroDeco = document.querySelector('.hero-deco-1');
+            if (heroDeco) {
+                heroDeco.style.transform = `rotate(${scrollY * 0.05}deg) translate(${scrollY * 0.02}px, ${-scrollY * 0.03}px)`;
+            }
+        });
+
+        // ═══ TILT EFFECT ON CARDS ═══
+        document.querySelectorAll('.profile-card-wrap, .stat-card, .skill-card, .about-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / centerY * -5;
+                const rotateY = (x - centerX) / centerX * 5;
+                card.style.transform =
+                    `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(5px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateZ(0)';
+                card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'transform 0.1s ease';
+            });
+        });
+
+        // ═══ SMOOTH REVEAL ON SCROLL ═══
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
             });
         }, { threshold: 0.1 });
-        obs.observe(card);
-    });
 
-    // ═══ THEME ═══
-    function applyTheme(isLight) {
-        const r = document.documentElement.style;
-        if (isLight) {
-            r.setProperty('--bg', '#f5f0e8');
-            r.setProperty('--black', '#0d0d0d');
-            document.getElementById('theme-icon').className = 'fas fa-sun';
-            document.getElementById('theme-text').textContent = document.documentElement.lang === 'id' ? 'Terang' : 'Light';
-            document.getElementById('theme-toggle').classList.add('active');
-        } else {
-            r.setProperty('--bg', '#f5f0e8');
-            r.setProperty('--black', '#0d0d0d');
-            document.getElementById('theme-icon').className = 'fas fa-moon';
-            document.getElementById('theme-text').textContent = document.documentElement.lang === 'id' ? 'Gelap' : 'Dark';
-            document.getElementById('theme-toggle').classList.remove('active');
-        }
-    }
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-        const isLight = !document.getElementById('theme-toggle').classList.contains('active');
-        applyTheme(isLight);
-        localStorage.setItem('portfolio-theme', isLight ? 'light' : 'dark');
-    });
-    applyTheme(localStorage.getItem('portfolio-theme') === 'light');
-
-    // ═══ LANGUAGE ═══
-    const langEn = document.getElementById('lang-en');
-    const langId = document.getElementById('lang-id');
-    function setLanguage(lang) {
-        document.documentElement.lang = lang;
-        document.querySelectorAll('[data-en]').forEach(el => {
-            const val = el.getAttribute('data-' + lang);
-            if (val) { if (el.tagName === 'TITLE') document.title = val; else el.innerHTML = val; }
+        document.querySelectorAll('.fade-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            revealObserver.observe(el);
         });
-        document.querySelectorAll('[data-en-placeholder]').forEach(el => {
-            const val = el.getAttribute('data-' + lang + '-placeholder');
-            if (val) el.placeholder = val;
-        });
-        if (lang === 'en') { langEn.classList.add('active'); langId.classList.remove('active'); }
-        else { langId.classList.add('active'); langEn.classList.remove('active'); }
-        localStorage.setItem('portfolio-lang', lang);
-    }
-    langEn.onclick = () => setLanguage('en');
-    langId.onclick = () => setLanguage('id');
-    setLanguage(localStorage.getItem('portfolio-lang') || 'en');
 
-    // ═══ GALLERY ═══
-    function jgSwitch(id) {
-        document.querySelectorAll('.jg-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.jg-panel').forEach(p => p.classList.remove('active'));
-        document.getElementById('jgtab-' + id).classList.add('active');
-        document.getElementById('jgpanel-' + id).classList.add('active');
-    }
-    function jgOpenModal(src, title, loc, date, folder, desc, icon) {
-        const img = document.getElementById('jgModalImg');
-        const ph = document.getElementById('jgModalPH');
-        img.src = src; img.alt = title;
-        img.style.display = 'block'; ph.style.display = 'none';
-        img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex'; };
-        document.getElementById('jgModalTitle').textContent = title;
-        document.getElementById('jgModalLoc').textContent = loc;
-        document.getElementById('jgModalDate').textContent = date;
-        document.getElementById('jgModalDesc').textContent = desc;
-        document.getElementById('jgModalFolder').textContent = folder;
-        document.getElementById('jgModal').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-    function jgCloseModal() {
-        document.getElementById('jgModal').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-    function jgCloseIfBackdrop(e) {
-        if (e.target === document.getElementById('jgModal')) jgCloseModal();
-    }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') jgCloseModal(); });
-</script>
+        console.log('%c🚀 Giip Portfolio %cLoaded!',
+            'font-family:Unbounded,sans-serif;font-size:20px;color:#ff6b35;',
+            'font-family:Space Mono,monospace;font-size:12px;color:#0d0d0d;');
+        console.log('%cNeobrutalism + Animations ✨', 'font-family:Syne,sans-serif;font-size:14px;color:#4ecdc4;');
+    </script>
 </body>
 </html>
