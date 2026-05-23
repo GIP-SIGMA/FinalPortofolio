@@ -91,6 +91,41 @@
             color: var(--black);
         }
 
+        /* ═══ SECTION INSPECT BORDERS ═══ */
+        section {
+            position: relative;
+            border: 2px solid rgba(255, 107, 53, 0.25);
+            outline: 1px dashed rgba(255, 107, 53, 0.15);
+            box-shadow: inset 0 0 0 1px rgba(255, 107, 53, 0.08);
+        }
+        section::before {
+            content: attr(id);
+            position: absolute;
+            top: 10px; left: 10px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            background: var(--accent1);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+        [data-theme="dark"] section {
+            border-color: rgba(255, 230, 109, 0.25);
+            outline-color: rgba(255, 230, 109, 0.15);
+            box-shadow: inset 0 0 0 1px rgba(255, 230, 109, 0.08);
+        }
+        [data-theme="dark"] section::before {
+            background: var(--accent3);
+            color: var(--black);
+        }
+
         /* ═══ NAVBAR ═══ */
         nav {
             position: fixed;
